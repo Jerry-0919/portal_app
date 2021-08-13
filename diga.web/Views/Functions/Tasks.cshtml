@@ -1,0 +1,155 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("tasks", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="banner mobile-margin-banner">
+    <div class="container-fluid">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/index"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/crm"> @CultureHelper.GetTranslation("crm", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("tasks", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <div class="row align-items-center py-5">
+                <div class="col-md-6 col-sm-12">
+                    <h1 class="h1-diga mb-5">
+                        @CultureHelper.GetTranslation("tasks", Context.Session.GetString("SiteLanguage"))
+                    </h1>
+                    <div class="w-88">
+                        <p class="text-white font-weight-bold lh-1-5-mobile mb-5">@CultureHelper.GetTranslation("here_you_can_create_delete_tasks", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 text-center m-auto">
+                    <img src="~/Assets/images/zadacha.png" class="img-fluid w-88">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5 text-center"> <img alt="" class="w-88" src="@CultureHelper.GetTranslation("3_tasks_rus.jpg", Context.Session.GetString("SiteLanguage"))" /></div>
+            <div class="col-md-7">
+                <div class="w-88">@Html.Raw(CultureHelper.GetTranslation("program_diga_crm_html", Context.Session.GetString("SiteLanguage")))</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pb-5">
+    <div class="container">
+        <div class="bg-light-blue px-5 py-4 py-lg-5 px-lg-5">
+            <div class="w-88 font-weight-bold fs-24">@CultureHelper.GetTranslation("for_the_ability_to_view_daily_tasks", Context.Session.GetString("SiteLanguage"))</div>
+        </div>
+    </div>
+</section>
+<section class="">
+    <div class="container">
+        <div class="bg-grey text-center py-5">
+            <img alt="" class="w-88" src="@CultureHelper.GetTranslation("add_task.png", Context.Session.GetString("SiteLanguage"))" />
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container">
+        <h4 class="mb-5 font-weight-bold">@CultureHelper.GetTranslation("crm_system_provides_special_tasks", Context.Session.GetString("SiteLanguage"))</h4>
+        <div class="vl mb-5">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="vl-mobile-items ml-5 w-88">
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_1", Context.Session.GetString("SiteLanguage"))</button>
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_2", Context.Session.GetString("SiteLanguage"))</button>
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_3", Context.Session.GetString("SiteLanguage"))</button>
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_4", Context.Session.GetString("SiteLanguage"))</button>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="vl-mobile-items ml-3 w-88">
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_5", Context.Session.GetString("SiteLanguage"))</button>
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_6", Context.Session.GetString("SiteLanguage"))</button>
+                        <button class="btn-azul-square">@CultureHelper.GetTranslation("special_tasks_7", Context.Session.GetString("SiteLanguage"))</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-grey py-5">
+    <div class="container">
+        <h4 class="py-5 font-weight-bold">@CultureHelper.GetTranslation("each_task_contains", Context.Session.GetString("SiteLanguage"))</h4>
+        <div class="vl">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="vl-mobile-items font-weight-normal ml-5">
+                        <p>@CultureHelper.GetTranslation("each_task_contains_1", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("each_task_contains_2", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("each_task_contains_3", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("each_task_contains_4", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("each_task_contains_5", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("each_task_contains_6", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("each_task_contains_7", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="mb-0">@CultureHelper.GetTranslation("each_task_contains_8", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-5 w-88">
+            @CultureHelper.GetTranslation("task_doesnt_have_to_be_tied", Context.Session.GetString("SiteLanguage"))
+            <div class="pt-5">
+                @CultureHelper.GetTranslation("after_you_saved_new_task", Context.Session.GetString("SiteLanguage"))
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="pb-5 div-title text-center w-75 m-auto">
+            @CultureHelper.GetTranslation("benefits_of_task_mgmt_in_diga", Context.Session.GetString("SiteLanguage"))
+        </div>
+        <div class="row">
+            <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center bg-white">
+                    <img class="pt-4" src="~/Assets/images/ligt.svg" />
+                    <div class="media-body mt-4">
+                        <h5 class="font-weight-bold">@CultureHelper.GetTranslation("easy_to_take_over", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p class="py-4 w-88 m-auto lh-1-5">@CultureHelper.GetTranslation("all_info_and_related_docs_are_in_card", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center bg-white">
+                    <img class="pt-4" src="~/Assets/images/hpeople.svg" />
+                    <div class="media-body mt-4">
+                        <h5 class="font-weight-bold">@CultureHelper.GetTranslation("get_rid_of_routine", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p class="py-4 w-88 m-auto lh-1-5">@CultureHelper.GetTranslation("create_a_variety_of_atypical_tasks", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center bg-white">
+                    <img class="pt-4" src="~/Assets/images/attansion.svg" />
+                    <div class="media-body mt-4">
+                        <h5 class="font-weight-bold">@CultureHelper.GetTranslation("attention_to_buyers", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p class="py-4 w-88 m-auto lh-1-5">@CultureHelper.GetTranslation("developed_script_for_each_stage", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-self-stretch ftco-animate">
+                <div class="media block-6 services d-block text-center bg-white">
+                    <img class="pt-4" src="~/Assets/images/uchet.svg" />
+                    <div class="media-body mt-4">
+                        <h5 class="font-weight-bold">@CultureHelper.GetTranslation("control_over_sellers", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p class="py-4 w-88 m-auto lh-1-5">@CultureHelper.GetTranslation("to_see_managers_activity_and_tasks", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

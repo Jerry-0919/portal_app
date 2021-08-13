@@ -1,0 +1,45 @@
+@model diga.bl.Models.ModuleSections
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>ModuleSections</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ModuleId" class="control-label"></label>
+                <select asp-for="ModuleId" class="form-control" asp-items="ViewBag.ModuleId"></select>
+                <span asp-validation-for="ModuleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ButtonTextId" class="control-label"></label>
+                <select asp-for="ButtonTextId" class="form-control" asp-items="ViewBag.ButtonTextId"></select>
+                <span asp-validation-for="ButtonTextId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TextId" class="control-label"></label>
+                <select asp-for="TextId" class="form-control" asp-items="ViewBag.TextId"></select>
+                <span asp-validation-for="TextId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

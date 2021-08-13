@@ -1,0 +1,67 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+@model Questions
+
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("faq", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<section class="mobile-margin-banner banner">
+    <div class="container-fluid">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../helpcenter/knowledgebase">@CultureHelper.GetTranslation("knowledge_base", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation(Model.QuestionTextId, Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <h1 class="h1-title">
+                @CultureHelper.GetTranslation(Model.QuestionTextId, Context.Session.GetString("SiteLanguage"))
+            </h1>
+        </div>
+    </div>
+</section>
+
+
+<section class="bg-light">
+    <div class="container">
+        <div role="tab" id="headingThree">
+            <h6 class="mb-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-left">@CultureHelper.GetTranslation("category", Context.Session.GetString("SiteLanguage"))</th>
+                            <th class="text-left">
+                                @if (Model.Type == 1)
+                                {
+                                    <div> @CultureHelper.GetTranslation("for_administrators", Context.Session.GetString("SiteLanguage"))</div>
+                                }
+                                else if (Model.Type == 2)
+                                {
+                                    <div>@CultureHelper.GetTranslation("for_users", Context.Session.GetString("SiteLanguage"))</div>
+                                }
+                                else if (Model.Type == 3)
+                                {
+                                    <div>@CultureHelper.GetTranslation("for_developers", Context.Session.GetString("SiteLanguage"))</div>
+                                }
+                            </th>
+                            <th class="text-right"><a href="#" onclick="window.print()"><i class="fa fa-print"></i></a></th>
+                        </tr>
+                    </thead>
+                </table>
+            </h6>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        @Html.Raw(CultureHelper.GetTranslation(Model.FullAnswerTextId, Context.Session.GetString("SiteLanguage")))
+    </div>
+</section>
+<partial name="~/Views/Shared/QuestionsAndAnswers.cshtml" />

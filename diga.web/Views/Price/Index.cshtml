@@ -1,0 +1,568 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.EntityFrameworkCore;
+@using diga.dal; 
+@inject DigaContext Db
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("prices", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="mobile-margin-banner banner">
+    <div class="container-fluid">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("prices", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <h1 class="h1-title">
+                @CultureHelper.GetTranslation("prices", Context.Session.GetString("SiteLanguage"))
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table table-bordered table-responsive-lg">
+                    <thead>
+                        <tr class="lh-1-5">
+                            <th scope="col"> </th>
+                            <th scope="col" class="text-center py-5">
+                                <div class="tariff-base">@CultureHelper.GetTranslation("base", Context.Session.GetString("SiteLanguage"))</div>
+                                <div class="free my-4">@CultureHelper.GetTranslation("free", Context.Session.GetString("SiteLanguage"))</div>
+                                <div>
+                                    <a href="#" class="btn_azul" data-toggle="modal" data-target="#StartForFreeModal">@CultureHelper.GetTranslation("start_button", Context.Session.GetString("SiteLanguage"))</a>
+                                </div>
+                            </th>
+                            <th scope="col" class="text-center py-5">
+                                <div class="tariff-custom">@CultureHelper.GetTranslation("custom_erp", Context.Session.GetString("SiteLanguage"))</div>
+                                <div class="font-weight-bold my-4 fs-16 indi">@CultureHelper.GetTranslation("individual_calculation", Context.Session.GetString("SiteLanguage"))</div>
+                                <div>
+                                    <a href="#" class="btn_azul" data-toggle="modal" data-target="#DemoModal">@CultureHelper.GetTranslation("buy_button", Context.Session.GetString("SiteLanguage"))</a>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="lh-1-5">
+                            <th scope="row">
+                                <a tabindex="0"
+                                   class="black i-info"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="right"
+                                   title=""
+                                   data-content='<div >@CultureHelper.GetTranslation("buy_additional_1_user", Context.Session.GetString("SiteLanguage"))</div>'>
+                                    @*<div><a target="_blank" href="#">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div>*@
+                                    <span>i</span>
+                                </a>
+                                <span class="table-text">@CultureHelper.GetTranslation("buy_additional_1_user", Context.Session.GetString("SiteLanguage"))</span>
+                            </th>
+                            <td class="text-center font-weight-bold">€ 3,00 </td>
+                            <td> @*empty*@ </td>
+                        </tr>
+
+                        <tr class="lh-1-5">
+                            <th scope="row">
+                                <a tabindex="0"
+                                   class="black i-info"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="right"
+                                   title=""
+                                   data-content='<div >@CultureHelper.GetTranslation("number_of_users", Context.Session.GetString("SiteLanguage"))</div>'>
+                                    @*<div><a target="_blank" href="#">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div>*@
+                                    <span>i</span>
+                                </a>
+                                <span class="table-text">@CultureHelper.GetTranslation("number_of_users", Context.Session.GetString("SiteLanguage"))</span>
+                            </th>
+                            <td class="text-center font-weight-bold">10</td>
+                            <td class="text-center font-weight-bold fs-18"> <div>@CultureHelper.GetTranslation("unlimited", Context.Session.GetString("SiteLanguage"))</div></td>
+                        </tr>
+
+                        @foreach (var tm in Db.TariffModules.Include(t => t.Module).OrderBy(t => t.Order).ToList())
+                        {
+                            <tr class="lh-1-5">
+                                <th scope="row">
+                                    <a tabindex="0"
+                                       class="black i-info"
+                                       role="button"
+                                       data-html="true"
+                                       data-toggle="popover"
+                                       data-trigger="focus"
+                                       data-container="body"
+                                       data-placement="right"
+                                       title=""
+                                       data-content='<div>@CultureHelper.GetTranslation(tm.Module.SmallTitleTextId, Context.Session.GetString("SiteLanguage"))<div><a style="@(tm.Module.Url == null ? "display: none;" : "")" target="_blank" href="@tm.Module.Url">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div></div>'>
+                                        <span>i</span>
+                                    </a>
+                                    <span class="table-text"> @CultureHelper.GetTranslation(tm.Module.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</span>
+                                </th>
+                                <td class="text-center"><img src="~/Assets/images/plus.green.svg" /></td>
+                                <td class="text-center font-weight-bold"> <img src="~/Assets/images/plus.viol.svg" /> / <img src="~/Assets/images/minus.svg" /></td>
+                            </tr>
+                        }
+
+
+                        <tr class="lh-1-5">
+                            <th scope="row">
+                                <a tabindex="0"
+                                   class="black i-info"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="right"
+                                   title="<b>Example popover</b> - title"
+                                   data-content='<div >@CultureHelper.GetTranslation("audit_and_adaptation_by_a_marketer", Context.Session.GetString("SiteLanguage"))</div>'>
+                                    @*<div><a target="_blank" href="#">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div>*@
+                                    <span>i</span>
+                                </a>
+                                <span class="table-text font-weight-bold">@CultureHelper.GetTranslation("audit_and_adaptation_by_a_marketer", Context.Session.GetString("SiteLanguage"))</span>
+                            </th>
+                            <td class="text-center"><img src="~/Assets/images/minus.svg" /></td>
+                            <td class="text-center font-weight-bold"> <img src="~/Assets/images/plus.viol.svg" /> / <img src="~/Assets/images/minus.svg" /></td>
+                        </tr>
+
+
+                        <tr class="lh-1-5">
+                            <th scope="row">
+                                <a tabindex="0"
+                                   class="black i-info"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="right"
+                                   title=""
+                                   data-content='<div >@CultureHelper.GetTranslation("individual_adaptation_program", Context.Session.GetString("SiteLanguage")) </div>'>
+                                    @*<div><a target="_blank" href="#">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div>*@
+                                    <span>i</span>
+                                </a>
+                                <span class="table-text font-weight-bold">@CultureHelper.GetTranslation("individual_adaptation_program", Context.Session.GetString("SiteLanguage"))</span>
+                            </th>
+                            <td class="text-center"><img src="~/Assets/images/minus.svg" /></td>
+                            <td class="text-center font-weight-bold"> <img src="~/Assets/images/plus.viol.svg" /> / <img src="~/Assets/images/minus.svg" /></td>
+                        </tr>
+
+                        <tr class="lh-1-5">
+                            <th scope="row">
+                                <a tabindex="0"
+                                   class="black i-info"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="right"
+                                   title=""
+                                   data-content='<div >@CultureHelper.GetTranslation("all_modules", Context.Session.GetString("SiteLanguage"))<div><a target="_blank" href="/modules/index">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div></div>'>
+                                    <span>i</span>
+                                </a>
+                                <span class="table-text font-weight-bold">@CultureHelper.GetTranslation("all_modules", Context.Session.GetString("SiteLanguage"))</span>
+                            </th>
+                            <td class="text-center"><img src="~/Assets/images/minus.svg" /></td>
+                            <td class="text-center font-weight-bold"> <img src="~/Assets/images/plus.viol.svg" /> / <img src="~/Assets/images/minus.svg" /></td>
+                        </tr>
+
+                        <tr class="lh-1-5">
+                            <th scope="row">
+                                <a tabindex="0"
+                                   class="black i-info"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="right"
+                                   title=""
+                                   data-content='<div >@CultureHelper.GetTranslation("personal_development_of_modules", Context.Session.GetString("SiteLanguage"))</div>'>
+                                    @*<div><a target="_blank" href="/modules/index">@CultureHelper.GetTranslation("read_more", Context.Session.GetString("SiteLanguage")) > </a></div>*@
+                                    <span>i</span>
+                                </a>
+                                <span class="table-text font-weight-bold">@CultureHelper.GetTranslation("personal_development_of_modules", Context.Session.GetString("SiteLanguage"))</span>
+                            </th>
+                            <td class="text-center"><img src="~/Assets/images/minus.svg" /></td>
+                            <td class="text-center font-weight-bold"> <img src="~/Assets/images/plus.viol.svg" /> / <img src="~/Assets/images/minus.svg" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="font-weight-bold my-5">@CultureHelper.GetTranslation("select_the_number_of_users", Context.Session.GetString("SiteLanguage"))</h3>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-12 col-sm-12 col-xl-6">
+                        <div class="row">
+                            <div class="input-group col-sm-3 col-5 col-lg-4 col-md-5 col-xl-3" style="border: 1px solid #d6d6d6;">
+                                <div class="input-group-prepend">
+                                    <button class="btn-plus-minus number_of_people_minus" type="button">-</button>
+                                </div>
+                                <input class="form-control input-plus-minus number_of_people" value="10" min="1" onkeypress="return event.charCode >= 48" style="padding-left: 8px !important;">
+                                <div class="input-group-append">
+                                    <button class="btn-plus-minus number_of_people_plus" type="button">+</button>
+                                </div>
+                            </div>
+                            <span class="col-sm-7 col-7 col-lg-7 col-md-7 col-xl-7 fs-16-cart font-weight-bold"> @CultureHelper.GetTranslation("users_amount", Context.Session.GetString("SiteLanguage"))</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-12 col-sm-12 col-xl-6 fs-16-cart">
+                        <img style="margin-right: 5px;" src="~/Assets/images/ii.svg" /> <span class=" font-weight-bold"> 3,00 € </span>/ @CultureHelper.GetTranslation("user_per_month", Context.Session.GetString("SiteLanguage"))
+                    </div>
+                </div>
+
+
+
+
+                <h3 class="font-weight-bold my-5">@CultureHelper.GetTranslation("select_the_modules_you_want", Context.Session.GetString("SiteLanguage"))</h3>
+
+                <div class="row cart-margin">
+                    @foreach (var module in Db.Modules.Where(m => m.BigTitleTextId != null && m.Price > 0).OrderBy(m => m.CartOrder).ToList())
+                    {
+                        <div class="col-xss-6 col-md-4 d-flex align-self-stretch ">
+                            <div class="media text-center modules-cart d-block round" style="@(string.IsNullOrEmpty(module.Name) ? "background: #eaeaea;" : "")">
+                                <a tabindex="0"
+                                   class="black i-info float-right i-info-mobile"
+                                   role="button"
+                                   data-html="true"
+                                   data-toggle="popover"
+                                   data-trigger="focus"
+                                   data-container="body"
+                                   data-placement="left"
+                                   title=""
+                                   data-content='<div>@CultureHelper.GetTranslation(module.SmallTitleTextId, Context.Session.GetString("SiteLanguage"))</div><div>@(string.IsNullOrEmpty(module.Name) ?  CultureHelper.GetTranslation("module_stay_tuned", Context.Session.GetString("SiteLanguage")) : "") </div>'>
+                                    <span>i</span>
+                                </a>
+                                <div class="row cart-module-logo">
+                                    <div class="col-md-3 w-100 text-center"> <img class="img-logo" src="@module.LogoUrl" /> </div>
+                                    <div class="col-md-8 pl-2 text-left">
+                                        <div class="font-weight-bold fs-14 lh-1-5 module-title">@CultureHelper.GetTranslation(module.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</div>
+                                        <div class="fs-13 lh-1-5 comment-title">@CultureHelper.GetTranslation(module.CommentTextId, Context.Session.GetString("SiteLanguage"))</div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-11 mt-3 fs-14 lh-1-5 position-absolute" style="bottom: 3%;">
+                                        <span class="font-weight-bold text-center">@module.Price € </span>
+                                        <span>@CultureHelper.GetTranslation("per_month", Context.Session.GetString("SiteLanguage"))</span>
+                                    </div>
+                                    <div>
+                                        <input class="price-check-box" type="checkbox" id="@module.Id" @(string.IsNullOrEmpty(module.Name) ? "disabled" : null) />
+                                        <label for="@module.Id"></label>
+                                    </div>
+                                    @*<div class="col-md-2 mt-4"><input type="checkbox" class="price-check-box checkbox-round float-right" id="@module.Id"></div>*@
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <div class="sidebar-item">
+                    <div class="make-me-sticky cart-mobile fs-14">
+                        <div class="btn-toolbar mx-auto" style="display: block;">
+                            <div role="group" aria-label="First group" class="mr-2 w-100 displa" style="display: grid; grid-template-columns: 50% 50%;">
+                                <button type="button" id="term_1" class="btn btn-cart-term btn-cart-term-active"> @CultureHelper.GetTranslation("monthly", Context.Session.GetString("SiteLanguage"))</button>
+                                <button type="button" id="term_12" class="btn btn-cart-term">@CultureHelper.GetTranslation("annually", Context.Session.GetString("SiteLanguage"))</button>
+                            </div>
+                        </div>
+                        <div class="card cart-border">
+                            <div class="row mb-1">
+                                <span class="col-sm-5 col-5 col-lg-5 col-md-4 col-xl-6 p-cart font-weight-bold text-left pr-0 lh-1-5"> @CultureHelper.GetTranslation("users_amount", Context.Session.GetString("SiteLanguage")): </span>
+                                <div class="input-group col-sm-3 col-4 col-lg-4 col-md-5 col-xl-3" style="border: 1px solid #d6d6d6; height: 40px;">
+                                    <div class="input-group-prepend">
+                                        <button class="btn-plus-minus number_of_people_minus" type="button">-</button>
+                                    </div>
+                                    <input class="form-control input-plus-minus number_of_people" value="10" min="1" onkeypress="return event.charCode >= 48">
+                                    <div class="input-group-append">
+                                        <button class="btn-plus-minus number_of_people_plus" type="button">+</button>
+                                    </div>
+                                </div>
+
+                                <span class="col-sm-4 col-3 col-lg-3 col-md-3 col-xl-3 text-right font-weight-bold pl-0" id="sum_number_of_people"> 0 €</span>
+                            </div>
+                            <div class="border-top"></div>
+                            <div class="row">
+                                <span class="col-sm-8 col-9 text-left pr-0">
+                                    @CultureHelper.GetTranslation("discount_for_users", Context.Session.GetString("SiteLanguage"))
+                                    <a tabindex="0"
+                                       class="black i-info"
+                                       role="button"
+                                       data-html="true"
+                                       data-toggle="popover"
+                                       data-trigger="focus"
+                                       data-container="body"
+                                       data-placement="left"
+                                       title=""
+                                       data-content='<div>@CultureHelper.GetTranslation("discount_for_users_info", Context.Session.GetString("SiteLanguage"))</div>'>
+                                        <span>i</span>
+                                    </a>
+                                </span>
+                                <span class="p-brightblue col-sm-4 col-3 text-right font-weight-bold pl-0" id="sum_number_of_people_with_discount"> 0 €</span>
+
+                            </div>
+                            <div class="border-top"></div>
+                            <div class="row">
+                                <span class="p-cart font-weight-bold col-sm-8 col-8 text-left"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage")):<span id="number_of_modules"></span></span>
+                                <span class="font-weight-bold col-sm-4 col-4 text-right" id="total_modules"> 0 €</span>
+                            </div>
+
+                            <div id="selected_modules_list">
+                            </div>
+                            <div class="border-top"></div>
+                            <div class="row">
+                                <span class="col-sm-8 col-8 text-left" id="term_text">@CultureHelper.GetTranslation("total_per_month", Context.Session.GetString("SiteLanguage")) </span>
+                                <span class="font-weight-bold col-sm-4 col-4 text-right" id="total_payment">0 €</span>
+                            </div>
+                            <div class="border-top"></div>
+                            <div class="row">
+                                <span class="col-sm-8 col-8 text-left" id="term_text">@CultureHelper.GetTranslation("vat", Context.Session.GetString("SiteLanguage")) </span>
+                                <span class="font-weight-bold col-sm-4 col-4 text-right" id="iva">0 €</span>
+                            </div>
+                            <div class="border-top"></div>
+                            <div class="text-left lh-1-5 mt-3">
+                                @Html.Raw(CultureHelper.GetTranslation("without_additional_modules_free_html", Context.Session.GetString("SiteLanguage")))
+                            </div>
+                            <form asp-controller="Price" asp-action="Cart" method="post" asp-anti-forgery="true">
+                                <input type="hidden" name="NumberOfUsers" id="NumberOfUsers" value="10" />
+                                <input type="hidden" name="TariffId" id="TariffId" value="1" />
+                                <input type="hidden" name="ModuleIds" id="ModuleIds" />
+                                <input type="hidden" name="AuthToken" id="AuthToken" />
+                                <input type="hidden" name="Term" id="TermHidden" />
+                                <input type="hidden" name="Country" id="Country" />
+                                <input class="form-control fs-14 grey" placeholder="@CultureHelper.GetTranslation("promocode", Context.Session.GetString("SiteLanguage"))" type="text" name="Promocode" id="Promocode" />
+                                <button id="cartbuy" data-toggle="modal" data-target="#StartForFreeModal" class="btn_rosa my-3" type="button">@CultureHelper.GetTranslation("buy_button", Context.Session.GetString("SiteLanguage"))</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-md-6 banner-min py-5">
+                <div class="my-5">
+                    <div class="div-title text-white">@CultureHelper.GetTranslation("i_want_it_for_free", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class="fs-20 text-white font-weight-bold m-auto w-50">@CultureHelper.GetTranslation("we_provide_free_modules", Context.Session.GetString("SiteLanguage"))</div>
+                    <button href="#" class="btn_rosa mt-5" data-toggle="modal" data-target="#AllFreeModal">@CultureHelper.GetTranslation("get_access", Context.Session.GetString("SiteLanguage"))</button>
+                </div>
+            </div>
+            <div class="col-md-6 banner-min py-5">
+                <div class="my-5">
+                    <div class="div-title text-white">@CultureHelper.GetTranslation("didnot_find_solution", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class="fs-20 text-white font-weight-bold m-auto w-50">@CultureHelper.GetTranslation("do_you_want_own_module", Context.Session.GetString("SiteLanguage"))</div>
+                    <button href="#" class="btn_azul mt-5" data-toggle="modal" data-target="#CallModal">@CultureHelper.GetTranslation("send_request", Context.Session.GetString("SiteLanguage"))</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />
+
+
+@section Scripts
+{
+    <script async src="https://get.geojs.io/v1/ip/geo.js"></script>
+    <script>
+    let country = localStorage.getItem("country");
+    
+    function geoip(json){        
+        if (country === null){
+            country = json.country;
+            localStorage.setItem("country", country);
+        }
+    }
+    $(document).ready(function () {
+        $("[data-toggle=popover]").popover();
+
+        $("#AuthToken").val(Cookies.get("AuthToken"));
+        let modules = @Html.Raw(Json.Serialize(Db.Modules.OrderBy(m => m.Order).ToList()));
+        let selected_modules = [];
+        let number_of_people = 10;
+        let term = 1;
+        let discount = 0;
+
+        $('.number_of_people').change(function () {
+            number_of_people = $(this).val();
+            total_to_pay();
+            render_number_of_people()
+        });
+
+        $(document).on('click', '.number_of_people_plus', function(){
+            number_of_people++;
+            total_to_pay();
+            render_number_of_people();
+        });
+
+        $(document).on('click', '.number_of_people_minus', function(){
+            if (number_of_people > 1){
+                number_of_people--;
+            }
+            total_to_pay();
+            render_number_of_people();
+        });
+
+        $(document).on('click', '#term_12', function(){
+            $(this).addClass("btn-cart-term-active");
+            $('#term_1').removeClass("btn-cart-term-active");
+            term = 12;
+            discount = 15;
+            $.get("/api/translation/get?textId=total_per_year", function (data, status) {
+                $('#term_text').text(data);
+            });
+            total_to_pay();
+            render_number_of_people();
+        });
+
+        $(document).on('click', '#term_1', function(){
+            $(this).addClass("btn-cart-term-active");
+            $('#term_12').removeClass("btn-cart-term-active");
+            term = 1;
+            discount = 0;
+            $.get("/api/translation/get?textId=total_per_month", function (data, status) {
+                $('#term_text').text(data);
+            });
+            total_to_pay();
+            render_number_of_people();
+        });
+
+        $('.price-check-box').change(function () {
+            if (this.checked) {
+                selected_modules.push($(this).attr('id'));
+                $(this).parent().parent().parent().css({ "border": "1px solid #54c4db" });
+            }
+            else {
+                selected_modules.pop($(this).attr('id'));
+                $(this).parent().parent().parent().css({ "border": "none" });
+
+            }
+            total_to_pay();
+            render_selected();
+        });
+
+        $(document).on('click', '.remove_module', function(){
+            var rmid = $(this).attr('id').replace("rm", "");;
+            selected_modules.pop(rmid);
+            $('#' + rmid).prop('checked', false);
+            total_to_pay();
+            render_selected();
+        });
+
+        function render_number_of_people(){
+            $('.number_of_people').each(function(index,item){
+                $(item).val(number_of_people);
+            });
+        }
+
+        function render_selected(){
+            $('#selected_modules_list').html('');
+
+            selected_modules.forEach(module_id => {
+                var module = modules.find(function (element) {
+                        return element.id === parseInt(module_id);
+                    });
+                let name = module.bigTitleTextId;
+                let price = module.price;
+                $.get("/api/translation/get?textId=" + name, function (data, status) {
+                    $('#selected_modules_list').append(`
+                        <div class="row">
+                            <span class="col-sm-1 col-md-1 col-1 px-0 lh-1-5"><img src="../../Assets/images/choice.svg" /></span>
+                            <span class="col-sm-8 col-md-8 col-8 fs-13 text-left px-0 lh-1-5"> ` + data + `</span>
+                            <span class="col-sm-2 col-md-2 col-2 text-right px-0 lh-1-5">` + price + ` €</span>
+                            <span class="col-sm-1 col-1 px-0 lh-1-5"><button id="rm` + module_id + `" type="button" class="remove_module text-right fs-13 text-red border-0 bg-transparent">X</button></span>
+                        </div>
+                    `);
+                });
+            });
+        }
+
+            function total_to_pay() {
+                let price_per_user = 3
+                let sum_total_workers = 0;
+                let sum_total_workers_discount = 0;
+
+                if (number_of_people > 10) {
+                    if (number_of_people > 20) {
+                        sum_total_workers = price_per_user * (number_of_people - 10);
+                        price_per_user = 2.5;
+                        sum_total_workers_discount = price_per_user * (number_of_people - 10);
+                    }
+                    else {
+                        sum_total_workers = price_per_user * (number_of_people - 10);
+                        sum_total_workers_discount = price_per_user * (number_of_people - 10);
+                    }
+                }
+
+                sum_total_workers = sum_total_workers * term;
+                sum_total_workers_discount = sum_total_workers_discount * term;
+
+                $("#sum_number_of_people").text(sum_total_workers + ' €');
+                $("#sum_number_of_people").css("text-decoration", "none");
+
+                if (number_of_people > 20) {
+                    $("#sum_number_of_people").css("text-decoration", "line-through");
+                }
+
+                $("#sum_number_of_people_with_discount").text(sum_total_workers_discount + ' €');
+
+                $("#number_of_modules").text(' ' + selected_modules.length);
+                let modules_total = 0;
+                selected_modules.forEach(sm => {
+                    modules_total += modules.find(function (element) {
+                        return element.id === parseInt(sm);
+                    }).price;
+                });
+                modules_total = modules_total * term;
+                $("#total_modules").text(modules_total + ' €');
+
+                total_sum = sum_total_workers_discount + modules_total;
+                let total_sum_with_discount = total_sum - (total_sum / 100 * discount);
+                let iva = total_sum_with_discount * 0.23;
+                if (country !== "Portugal"){
+                    iva = 0;
+                }
+                $("#iva").text(iva.toFixed(2) + ' €');
+                total_sum_with_discount += iva;
+                $("#total_payment").text(total_sum_with_discount.toFixed(2) + ' €');
+                $("#NumberOfUsers").val(number_of_people);
+                $("#TermHidden").val(term);
+                $("#Country").val(country);
+                $("#ModuleIds").val(selected_modules.join("|"));
+                if (total_sum_with_discount === 0) {
+                    $("#cartbuy").attr("type", "button");
+                    $("#cartbuy").attr("data-toggle", "modal");
+                    $("#cartbuy").attr("data-target", "#StartForFreeModal");
+                } else {
+                    $("#cartbuy").attr("type", "submit");
+                    $("#cartbuy").removeAttr("data-toggle");
+                    $("#cartbuy").removeAttr("data-target");
+
+                }
+
+
+        }
+
+    });
+    </script>
+
+
+}

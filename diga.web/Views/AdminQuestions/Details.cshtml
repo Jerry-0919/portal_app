@@ -1,0 +1,37 @@
+@model diga.bl.Models.Questions
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Questions</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AnswerText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AnswerText.TextId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionText.TextId)
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FullAnswerText.TextId)
+        </dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

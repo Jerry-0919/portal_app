@@ -1,0 +1,131 @@
+﻿@model diga.bl.Models.Texts
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Texts</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IsHtml" class="control-label"></label>
+                <select asp-for="IsHtml" class="form-control">
+                    <option value="true">Html</option>
+                    <option value="false">Non html</option>
+                </select>
+                <span asp-validation-for="IsHtml" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TextId" class="control-label"></label>
+                <input asp-for="TextId" class="form-control" />
+                <span asp-validation-for="TextId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>En</label>
+                <textarea id="froala-editor-en" asp-for="En"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Ru</label>
+                <textarea id="froala-editor-ru" asp-for="Ru"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Pt</label>
+                <textarea id="froala-editor-pt" asp-for="Pt"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Es</label>
+                <textarea id="froala-editor-es" asp-for="Es"></textarea>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts{
+    <script>
+
+        new FroalaEditor('textarea#froala-editor-en', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+            codeBeautifierOptions: {
+                end_with_newline: true,
+                indent_inner_html: true,
+                extra_liners: "['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'ul', 'ol', 'table', 'dl']",
+                brace_style: 'expand',
+                indent_char: ' ',
+                indent_size: 4,
+                wrap_line_length: 0
+            },
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'paragraphStyle', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+            paragraphStyles: {
+                quote_froala: 'quote_froala',
+            },
+        });
+        new FroalaEditor('textarea#froala-editor-ru', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+            codeBeautifierOptions: {
+                end_with_newline: true,
+                indent_inner_html: true,
+                extra_liners: "['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'ul', 'ol', 'table', 'dl']",
+                brace_style: 'expand',
+                indent_char: ' ',
+                indent_size: 4,
+                wrap_line_length: 0
+            },
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'paragraphStyle', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+            paragraphStyles: {
+                quote_froala: 'quote_froala',
+            },
+        });
+        new FroalaEditor('textarea#froala-editor-pt', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+            codeBeautifierOptions: {
+                end_with_newline: true,
+                indent_inner_html: true,
+                extra_liners: "['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'ul', 'ol', 'table', 'dl']",
+                brace_style: 'expand',
+                indent_char: ' ',
+                indent_size: 4,
+                wrap_line_length: 0
+            },
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'paragraphStyle', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+            paragraphStyles: {
+                quote_froala: 'quote_froala',
+            },
+        });
+        new FroalaEditor('textarea#froala-editor-es', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+            codeBeautifierOptions: {
+                end_with_newline: true,
+                indent_inner_html: true,
+                extra_liners: "['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'ul', 'ol', 'table', 'dl']",
+                brace_style: 'expand',
+                indent_char: ' ',
+                indent_size: 4,
+                wrap_line_length: 0
+            },
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'paragraphStyle', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+            paragraphStyles: {
+                quote_froala: 'quote_froala',
+            },
+        });
+    </script>
+}

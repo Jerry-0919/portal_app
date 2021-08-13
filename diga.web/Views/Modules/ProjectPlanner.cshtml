@@ -1,0 +1,97 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("project_planner", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="mobile-margin-banner banner">
+    <div class="container-fluid">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/index"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("project_planner", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <h1 class="h1-title">
+                @CultureHelper.GetTranslation("project_planner", Context.Session.GetString("SiteLanguage"))
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5 my-5">
+    <div class="container">
+        <div class="vl ml-0">
+            <div class="vl-mobile-items ml-5">@CultureHelper.GetTranslation("project_planner_allows_you", Context.Session.GetString("SiteLanguage"))</div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container bg-blue">
+        <div class="py-4 px-5 p-lg-5 w-88">
+            @Html.Raw(CultureHelper.GetTranslation("project_planner_html", Context.Session.GetString("SiteLanguage")))
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5 my-5">
+    <div class="container">
+        <h4 class="font-weight-bold mb-5">@CultureHelper.GetTranslation("object_and_project_planner", Context.Session.GetString("SiteLanguage"))</h4>
+        <div class="vl ml-0">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="vl-mobile-items lh-1-5 ml-5">
+                        <p>@CultureHelper.GetTranslation("1_finance", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("2_deadlines", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("3_materials", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("4_labor_force", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="mb-0">@CultureHelper.GetTranslation("5_equipment", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="vl-mobile-items lh-1-5">
+                        <p>@CultureHelper.GetTranslation("6_tools", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("7_transport", Context.Session.GetString("SiteLanguage"))</p>
+                        <p>@CultureHelper.GetTranslation("8_project_work", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="mb-0">@CultureHelper.GetTranslation("9_info_on_movement", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-5 w-88">@Html.Raw(CultureHelper.GetTranslation("with_help_of_docs_designer_html", Context.Session.GetString("SiteLanguage")))</div>
+        <img class="bg-grey p-1 p-md-5 text-center" src="/Assets/images/planing.jpg" />
+        <h4 class="font-weight-bold my-5">@CultureHelper.GetTranslation("project_planner_works_with_2", Context.Session.GetString("SiteLanguage"))</h4>
+        <div class="row">
+            <div class="col-md-6 col-lg-5 d-flex align-self-stretch">
+                <div class="gant media block-6 text-center services d-block bg-light">
+                    <p class="font-weight-bold mb-0">
+                        <span class="mr-4"><img src="/Assets/images/gant.svg" /></span>
+                        @CultureHelper.GetTranslation("gantt_chart", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-5 d-flex align-self-stretch">
+                <div class="gant media block-6 text-center services d-block bg-light">
+                    <p class="font-weight-bold mb-0">
+                        <span class="mr-4"><img src="/Assets/images/grafik.svg" /></span>
+                        @CultureHelper.GetTranslation("project_schedules", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="azul-textblock">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="w-88">
+                <h4 class="font-weight-bold mb-5">@CultureHelper.GetTranslation("in_general_terms_planning", Context.Session.GetString("SiteLanguage"))</h4>
+                @Html.Raw(CultureHelper.GetTranslation("general_terms_planning_html", Context.Session.GetString("SiteLanguage")))
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

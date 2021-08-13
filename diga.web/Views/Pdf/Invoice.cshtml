@@ -1,0 +1,348 @@
+﻿@using diga.web.Helpers;
+@using diga.web.ViewModels;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+@{
+    Layout = null;
+    var cart = (Carts)ViewBag.cart;
+    var data = (InvoiceModel)ViewBag.data;
+    var user = (ApplicationUser)ViewBag.user;
+    var priceForUsers = (double)ViewBag.priceForUsers;
+    var priceForModules = (double)ViewBag.priceForModules;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            font-size: 14px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: black;
+        }
+
+            .invoice-box table {
+                width: 100%;
+                line-height: inherit;
+                text-align: left;
+            }
+
+                .invoice-box table td {
+                    padding: 5px;
+                    vertical-align: top;
+                }
+
+                .invoice-box table tr td:nth-child(2) {
+                    text-align: right;
+                }
+
+                .invoice-box table tr.top table td {
+                    padding-bottom: 20px;
+                }
+
+                    .invoice-box table tr.top table td.title {
+                        font-size: 45px;
+                        line-height: 45px;
+                        color: #333;
+                    }
+
+                .invoice-box table tr.information table td {
+                    padding-bottom: 40px;
+                }
+
+                .invoice-box table tr.heading td {
+                    background: #eee;
+                    border-bottom: 1px solid #ddd;
+                    font-weight: bold;
+                }
+
+                .invoice-box table tr.details td {
+                    padding-bottom: 20px;
+                }
+
+                .invoice-box table tr.item td {
+                    border-bottom: 1px solid #eee;
+                }
+
+                .invoice-box table tr.item.last td {
+                    border-bottom: none;
+                }
+
+                .invoice-box table tr.total td:nth-child(2) {
+                    border-top: 2px solid #eee;
+                    font-weight: bold;
+                }
+
+        @@media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+        .rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+            .rtl table {
+                text-align: right;
+            }
+
+                .rtl table tr td:nth-child(2) {
+                    text-align: left;
+                }
+    </style>
+</head>
+<body class="position-relative">
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0" style="font-size: 12px; line-height: 1.3;">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="../../Assets/images/logo_big.png" class="w-100" style="max-width:200px;">
+                            </td>
+
+                            <td>
+                                @CultureHelper.GetTranslation("invoice_word", data.Language) FA @DateTime.Now.Year/@cart.Id<br>
+                                @CultureHelper.GetTranslation("created", data.Language) @DateTime.Now.ToString("dd.MM.yyyy")<br>
+                                @CultureHelper.GetTranslation("due_date", data.Language) @DateTime.Now.AddDays(30).ToString("dd.MM.yyyy")
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                ODIGA - DIGITAL INTELLIGENCE & GLOBAL ANALYTICS, LDA<br>
+                                @Html.Raw(CultureHelper.GetTranslation("address", data.Language))     <br>
+                                @Html.Raw(CultureHelper.GetTranslation("invoice_contacts", data.Language))
+                            </td>
+
+                            <td>
+                                @CultureHelper.GetTranslation("invoice_whom", data.Language):<br>
+                                @data.Companyname<br>
+                                @data.Legaladdress<br>
+                                @data.Zipcode @data.City @data.Country<br>
+                                @CultureHelper.GetTranslation("tin", data.Language):  @data.Tin<br>
+                                @user.Email
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <table cellpadding="0" cellspacing="0" style="font-size: 12px; line-height: 1.5;">
+            <tr class="heading">
+                <td>
+                    @CultureHelper.GetTranslation("item", data.Language)
+                </td>
+                <td class="text-left">
+                    @CultureHelper.GetTranslation("description", data.Language)
+                </td>
+                <td>
+                    @CultureHelper.GetTranslation("quantity", data.Language)
+                </td>
+                <td>
+                    @CultureHelper.GetTranslation("units", data.Language)
+                </td>
+                <td>
+                    @CultureHelper.GetTranslation("currency", data.Language)
+                </td>
+                <td>
+                    @CultureHelper.GetTranslation("unit_price", data.Language)
+                </td>
+                <td>
+                    @CultureHelper.GetTranslation("vat", data.Language)
+                </td>
+                <td>
+                    @CultureHelper.GetTranslation("value", data.Language)
+                </td>
+            </tr>
+
+            @if (cart.NumberOfUsers > 10)
+            {
+                <tr class="item">
+                    <td>
+                        @CultureHelper.GetTranslation("number_of_users", data.Language)
+                    </td>
+                    <td class="text-left">
+                        @CultureHelper.GetTranslation("payment_for", data.Language) @CultureHelper.GetTranslation("users_amount", data.Language),
+                        @cart.Term @CultureHelper.GetTranslation("months", data.Language)
+                    </td>
+                    <td>
+                        @(cart.NumberOfUsers - 10)
+                    </td>
+                    <td>
+                        @CultureHelper.GetTranslation("units", data.Language)
+                    </td>
+                    <td>
+                        EUR
+                    </td>
+                    <td>
+                        @if (cart.NumberOfUsers > 20)
+                        {
+                            <span>2.5</span>
+                        }
+                        else
+                        {
+                            <span>3</span>
+                        }
+                    </td>
+                    <td>
+                        23%
+                    </td>
+                    <td>
+                        @priceForUsers
+                    </td>
+                </tr>
+            }
+
+            @if (!string.IsNullOrEmpty(cart.Modules))
+            {
+                var modulesStr = cart.Modules.Split('|');
+
+                @foreach (var module in Db.Modules.Where(m => modulesStr.Contains(m.Id.ToString())).ToList())
+                {
+                    <tr class="item last">
+                        <td>
+                            @CultureHelper.GetTranslation("modules", data.Language)
+                        </td>
+                        <td class="text-left">
+                            @CultureHelper.GetTranslation(module.BigTitleTextId, data.Language), @cart.Term @CultureHelper.GetTranslation("months", data.Language)
+                        </td>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            @CultureHelper.GetTranslation("units", data.Language)
+                        </td>
+                        <td>
+                            EUR
+                        </td>
+                        <td>
+                            @module.Price
+                        </td>
+                        <td>
+                            23%
+                        </td>
+                        <td>
+                            @(module.Price * cart.Term)
+                        </td>
+                    </tr>
+                }
+            }
+
+            <tr class="">
+                <td>
+                    @CultureHelper.GetTranslation("discount", data.Language)
+                </td>
+                <td class="text-left">
+                    @CultureHelper.GetTranslation("discount_by_promocode", data.Language)
+                </td>
+                <td></td>
+                <td></td>
+                <td>EUR</td>
+                <td></td>
+                <td></td>
+                <td>
+                    @data.PromocodeSum.ToString("0.##")
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    @CultureHelper.GetTranslation("discount", data.Language)
+                </td>
+                <td class="text-left">
+                    @CultureHelper.GetTranslation("discount_by_term", data.Language)
+                </td>
+                <td></td>
+                <td></td>
+                <td>EUR</td>
+                <td></td>
+                <td></td>
+                <td>
+                    @data.TermSum.ToString("0.##")
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    @CultureHelper.GetTranslation("discount", data.Language)
+                </td>
+                <td class="text-left">
+                    @CultureHelper.GetTranslation("your_balance", data.Language)
+                </td>
+                <td></td>
+                <td></td>
+                <td>EUR</td>
+                <td></td>
+                <td></td>
+                <td>
+                    @data.Balance.ToString("0.##")
+                </td>
+            </tr>
+            <tr class="total">
+                <td colspan="4"></td>
+
+                <td colspan="4">
+                    @CultureHelper.GetTranslation("value", data.Language) (EUR): @(cart.TotalPriceWithDiscount.Value.ToString("0.##"))
+                </td>
+            </tr>
+            <tr class="total">
+                <td colspan="4"></td>
+
+                <td colspan="4">
+                    @CultureHelper.GetTranslation("vat", data.Language) (EUR): @((cart.TotalPriceWithDiscount *0.23).Value.ToString("0.##"))
+                </td>
+            </tr>
+            <tr class="total">
+                <td colspan="4"></td>
+
+                <td colspan="4">
+                    @CultureHelper.GetTranslation("total", data.Language) (EUR): @((cart.TotalPriceWithDiscount + cart.TotalPriceWithDiscount *0.23).Value.ToString("0.##"))
+                </td>
+            </tr>
+        </table>
+
+
+
+    </div>
+    <div class="position-absolute ml-4" style=" bottom: 3%;">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="information">
+                <td colspan="4" style="border: 1px solid black; font-size: 12px;">
+                    @CultureHelper.GetTranslation("via_bank_transfer", data.Language)<br>
+                    <br>
+                    BANCO: Millenium BCP<br />
+                    IBAN: PT50 0033 0000 4549 5615 3150 5 <br>
+                    BIC SWIFT: BCOMPTPL
+                </td>
+                <td colspan="4" style="border: 1px solid white;"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

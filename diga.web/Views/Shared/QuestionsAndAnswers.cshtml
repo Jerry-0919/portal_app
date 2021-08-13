@@ -1,0 +1,23 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="div-title">@CultureHelper.GetTranslation("q_and_a", Context.Session.GetString("SiteLanguage"))</div>
+        <div class="row">
+            @foreach (var item in Db.Questions.Where(q => q.Type == 0).ToList())
+            {
+                <div class="col-md-6">
+                    <div class="mb-5">
+                        <h4 class="p-cyan mb-5 font-weight-bold w-88">@CultureHelper.GetTranslation(item.QuestionTextId, Context.Session.GetString("SiteLanguage"))</h4>
+                        <p class="w-88">@CultureHelper.GetTranslation(item.AnswerTextId, Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,117 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal;
+@inject DigaContext Db
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("about_company", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="banner mobile-margin-banner">
+    <div class="container-fluid">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage",
+                            Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @CultureHelper.GetTranslation("about_company", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <div class="row align-items-center py-5">
+                <div class="col-md-6 col-sm-12">
+                    <h1 class="h1-diga mb-5"> @CultureHelper.GetTranslation("about_diga",
+                        Context.Session.GetString("SiteLanguage"))</h1>
+                    <p class="text-white font-weight-bold lh-1-5-mobile w-75 mb-5">
+                        @CultureHelper.GetTranslation("diga_is_not_only", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+                <div class="col-md-6 col-sm-12 text-center m-auto">
+                    @*<img class="w-88 img-fluid" src="~/Assets/images/isometriful.gif" alt="">*@
+                    <video class="w-88 img-fluid" src="~/Assets/images/isometriful.webm" autoplay loop muted
+                        playsinline></video>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 my-sm-5 bg-white">
+    <div class="container">
+        <div class="div-title">@CultureHelper.GetTranslation("who_are_we", Context.Session.GetString("SiteLanguage"))
+        </div>
+        <p class="w-88">@CultureHelper.GetTranslation("we_developed_diga", Context.Session.GetString("SiteLanguage"))
+        </p>
+        <p class="w-88 pb-4">@CultureHelper.GetTranslation("we_developed_diga_2",
+            Context.Session.GetString("SiteLanguage"))</p>
+        <div class="div-title">@CultureHelper.GetTranslation("numbers_about_us",
+            Context.Session.GetString("SiteLanguage"))</div>
+        <div class="row">
+            <div class="col-md-3 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 d-block text-center m-auto">
+                    <div class="position-relative">
+                        <img src="~/Assets/images/group13.png">
+                        <h2 class="numbs">+22%</h2>
+                    </div>
+                    <div class="text_circles">@CultureHelper.GetTranslation("repeat_sales_growth",
+                        Context.Session.GetString("SiteLanguage"))</div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 d-block text-center m-auto">
+                    <div class="position-relative">
+                        <img src="~/Assets/images/group13.png">
+                        <h2 class="numbs">+35%</h2>
+                    </div>
+                    <div class="text_circles">@CultureHelper.GetTranslation("increase_in_profits",
+                        Context.Session.GetString("SiteLanguage"))</div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 d-block text-center m-auto">
+                    <div class="position-relative">
+                        <img src="~/Assets/images/group13.png">
+                        <h2 class="numbs">+41%</h2>
+                    </div>
+                    <div class="text_circles">@CultureHelper.GetTranslation("increase_of_customers_loyalty",
+                        Context.Session.GetString("SiteLanguage"))</div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 d-block text-center m-auto">
+                    <div class="position-relative">
+                        <img src="~/Assets/images/group13.png">
+                        <h2 class="numbs">+53%</h2>
+                    </div>
+                    <div class="text_circles">@CultureHelper.GetTranslation("employee_productivity_growth",
+                        Context.Session.GetString("SiteLanguage"))</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container bg-light">
+        <div class="row">
+            <div class="col-md-5 wrap col-sm-12">
+                <div class="div-title my-5">@CultureHelper.GetTranslation("grow_and_develop_with_diga",
+                    Context.Session.GetString("SiteLanguage"))</div>
+                <p class="mb-4 mb-md-5">@CultureHelper.GetTranslation("to_be_a_teammember_write_us_a_letter",
+                    Context.Session.GetString("SiteLanguage"))</p>
+                <a href="mailto:geral@diga.pt?subject=Diga%20team"
+                    class="btn_azul py-3 text-decoration-none">@CultureHelper.GetTranslation("submit_your_application",
+                    Context.Session.GetString("SiteLanguage"))</a>
+            </div>
+            <div class="col-md-7 col-sm-12 text-center m-auto">
+                @*<img src="~/Assets/images/isometric2_1400x1400_looped.gif" class="img-fluid">*@
+                <video class="img-fluid" src="~/Assets/images/isometric2-1400x1400-looped.webm" autoplay loop muted
+                    playsinline></video>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

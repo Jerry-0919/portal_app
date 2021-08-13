@@ -1,0 +1,52 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+
+@{
+    Layout = null;
+    var isError = ViewBag.isError;
+    var errorMessage = ViewBag.errorMessage;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        body {
+            background: #dedede;
+        }
+        .page-wrap {
+            min-height: 100vh;
+        }
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>@CultureHelper.GetTranslation("thank_you", Context.Session.GetString("SiteLanguage"))</title>
+</head>
+<body>
+
+<div class="page-wrap d-flex flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                @if (isError == true){
+                    <span class="display-1 d-block"> @CultureHelper.GetTranslation("oops_error", Context.Session.GetString("SiteLanguage")) </span>
+                    <div class="mb-4 lead"> @errorMessage </div>
+                }
+                else{
+                    <span class="display-1 d-block"> @CultureHelper.GetTranslation("thank_you", Context.Session.GetString("SiteLanguage")) </span>
+                    <div class="mb-4 lead"> @CultureHelper.GetTranslation("your_erp_will_be_generated", Context.Session.GetString("SiteLanguage")) </div>
+                }
+                <a href="~/home/index" class="btn btn-link"> @CultureHelper.GetTranslation("back_to_home", Context.Session.GetString("SiteLanguage")) </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

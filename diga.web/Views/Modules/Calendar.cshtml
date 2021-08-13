@@ -1,0 +1,80 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("calendar", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="mobile-margin-banner banner">
+    <div class="container-fluid">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/index"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("calendar", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <h1 class="h1-title">
+                @CultureHelper.GetTranslation("calendar", Context.Session.GetString("SiteLanguage"))
+            </h1>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center text-md-right">
+                <img class="image-shadow w-88" src=@CultureHelper.GetTranslation("calendar.png", Context.Session.GetString("SiteLanguage"))>
+            </div>
+            <div class="col-md-7 m-auto">
+                <p class="mb-5">@CultureHelper.GetTranslation("calendar_1", Context.Session.GetString("SiteLanguage"))</p>
+                <p>@CultureHelper.GetTranslation("calendar_2", Context.Session.GetString("SiteLanguage"))</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="azul-textblock my-5">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="div-title"> @CultureHelper.GetTranslation("who_is_it_for", Context.Session.GetString("SiteLanguage"))</div>
+            <p class="font-weight-bold">
+                @CultureHelper.GetTranslation("for_any_company_team_1_2_people", Context.Session.GetString("SiteLanguage"))
+            </p>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="div-title">@CultureHelper.GetTranslation("what_problems_does_it_solve", Context.Session.GetString("SiteLanguage"))</div>
+        <div class="vl">
+            <div class="vl-mobile-items ml-5">
+                <div class="lh-1-5">
+                    <p>@CultureHelper.GetTranslation("1_when_tasks_are_postponed_too_often", Context.Session.GetString("SiteLanguage"))</p>
+                    <p>@CultureHelper.GetTranslation("2_when_there_is_no_plan", Context.Session.GetString("SiteLanguage"))</p>
+                    <p>@CultureHelper.GetTranslation("3_when_writing_assignments", Context.Session.GetString("SiteLanguage"))</p>
+                    <p class="mb-0">@CultureHelper.GetTranslation("4_integrations", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-dodgerblue my-5 font-weight-bold">@CultureHelper.GetTranslation("integration_with_google_will_allow", Context.Session.GetString("SiteLanguage"))</div>
+    </div>
+</section>
+<section class="my-5">
+    <div class="container bg-light-blue py-5 px-5 py-4 p-lg-5">
+        <div class="row">
+            <div class="col-md-2 text-md-right text-center">
+                <img src="~/Assets/images/calendar.svg" />
+            </div>
+            <div class="col-md-9">
+                <div class="font-weight-bold fs-24 mb-3">
+                    @CultureHelper.GetTranslation("function_advanced_calendar", Context.Session.GetString("SiteLanguage"))
+                </div>
+                @CultureHelper.GetTranslation("advanced_calendar_allows_you", Context.Session.GetString("SiteLanguage"))
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

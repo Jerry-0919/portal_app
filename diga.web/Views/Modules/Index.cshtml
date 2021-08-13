@@ -1,0 +1,70 @@
+﻿@using diga.web.Helpers;
+@model List<diga.bl.Models.Modules>
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("all_modules", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="banner mobile-margin-banner">
+    <div class="container-fluid">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <div class="row align-items-center py-5">
+                <div class="col-md-7 col-sm-12">
+                    <h1 class="h1-diga mb-5">@CultureHelper.GetTranslation("opportunities_of_diga", Context.Session.GetString("SiteLanguage"))</h1>
+                    <div class="w-88">
+                        <p class="text-white font-weight-bold lh-1-5-mobile mb-5">@CultureHelper.GetTranslation("while_dev_the_system", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12 m-auto text-center">
+                    <img src="~/Assets/images/509.png" class="img-fluid w-100" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white">
+    <div class="container">
+        @foreach (var item in Model.Where(m => m.LongTextId != null).OrderBy(m => m.Order).ToList())
+        {
+
+            var style = "";
+            var id = "";
+            if (Model.Where(m => m.LongTextId != null).OrderBy(m => m.Order).ToList().IndexOf(item) % 2 == 0)
+            {
+                style += "background: #f6f6f6;";
+                id = "section-counter2";
+
+            }
+            else
+            {
+                style += "background: #CDFBFF;";
+                id = "section-counter";
+            }
+            <section class="py-5" id="@id" style="@style">
+                <div class="container" id="@("module" + item.Id)">
+                    <div class="row">
+                        <div class="text-left col-md-7">
+                            <div class="div-title"><a href="@item.Url"> @CultureHelper.GetTranslation(item.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</a></div>
+                            <p>@CultureHelper.GetTranslation(item.LongTextId, Context.Session.GetString("SiteLanguage"))</p>
+                            @foreach (var function in item.Functions)
+                            {
+                                <a href="@function.Url" class="btn_azul btn btn-primary-2 py-2 px-4 my-2 my-md-2">@CultureHelper.GetTranslation(function.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</a><br />
+                            }
+                        </div>
+                        <div class="col-md-5 text-center">
+                            <img src="@(item.PictureUrl)" class="img-module">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+    </div>
+</section>
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

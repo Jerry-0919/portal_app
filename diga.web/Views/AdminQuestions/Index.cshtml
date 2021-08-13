@@ -1,0 +1,71 @@
+@model IEnumerable<diga.bl.Models.Questions>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1 class="h3 mb-2 text-gray-800">Questions</h1>
+
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">All</h6>
+</div>
+
+<div class="card-body">
+    <div class="table-responsive">
+
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AnswerText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QuestionText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullAnswerText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th></th>
+                </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnswerText.TextId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionText.TextId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullAnswerText.TextId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+    </div>
+</div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+          $('#dataTable').DataTable();
+        });
+
+    </script>
+}

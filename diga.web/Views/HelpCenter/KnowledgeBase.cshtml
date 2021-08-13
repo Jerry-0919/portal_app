@@ -1,0 +1,103 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("knowledge_base", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="mobile-margin-banner banner">
+    <div class="container-fluid">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("knowledge_base", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <h1 class="h1-title">
+                @CultureHelper.GetTranslation("knowledge_base", Context.Session.GetString("SiteLanguage"))
+            </h1>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="font-weight-bold my-3">@CultureHelper.GetTranslation("for_administrators", Context.Session.GetString("SiteLanguage"))</h2>
+                @foreach (var item in Db.Questions.Where(q => q.Type == 1).ToList())
+                {
+                    <div class="my-1">
+                        <a href="~/helpcenter/faq?id=@item.Id" target="_blank">@CultureHelper.GetTranslation(item.QuestionTextId, Context.Session.GetString("SiteLanguage"))</a>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6">
+                <h2 class="font-weight-bold my-3">@CultureHelper.GetTranslation("for_users", Context.Session.GetString("SiteLanguage"))</h2>
+                @foreach (var item in Db.Questions.Where(q => q.Type == 2).ToList())
+                {
+                    <div class="my-1">
+                        <a href="~/helpcenter/faq?id=@item.Id" target="_blank">@CultureHelper.GetTranslation(item.QuestionTextId, Context.Session.GetString("SiteLanguage"))</a>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6">
+                <h2 class="font-weight-bold my-3">@CultureHelper.GetTranslation("for_developers", Context.Session.GetString("SiteLanguage"))</h2>
+                @foreach (var item in Db.Questions.Where(q => q.Type == 3).ToList())
+                {
+                    <div class="my-1">
+                        <a href="~/helpcenter/faq?id=@item.Id" target="_blank">@CultureHelper.GetTranslation(item.QuestionTextId, Context.Session.GetString("SiteLanguage"))</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@*VIDEO SECTION*@
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="font-weight-bold text-center mb-5"> @CultureHelper.GetTranslation("latest_video_tutorials", Context.Session.GetString("SiteLanguage"))</h2>
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center m-auto py-md-5 py-3">
+                    <iframe src="@CultureHelper.GetTranslation("video_tutorial_1", Context.Session.GetString("SiteLanguage"))" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center m-auto py-md-5 py-3">
+                    <iframe src="@CultureHelper.GetTranslation("video_tutorial_2", Context.Session.GetString("SiteLanguage"))" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center m-auto py-md-5 py-3">
+                    <iframe src="@CultureHelper.GetTranslation("video_tutorial_3", Context.Session.GetString("SiteLanguage"))" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center m-auto py-md-5 py-3">
+                    <iframe src="@CultureHelper.GetTranslation("video_tutorial_4", Context.Session.GetString("SiteLanguage"))" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center m-auto py-md-5 py-3">
+                    <iframe src="@CultureHelper.GetTranslation("video_tutorial_5", Context.Session.GetString("SiteLanguage"))" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="text-center m-auto py-md-5 py-3">
+                    <iframe src="@CultureHelper.GetTranslation("video_tutorial_6", Context.Session.GetString("SiteLanguage"))" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="text-center fs-24 font-weight-bold">
+            <a href="@CultureHelper.GetTranslation("youtube_channel", Context.Session.GetString("SiteLanguage"))" target="_blank">@CultureHelper.GetTranslation("see_all_video_tutorials", Context.Session.GetString("SiteLanguage"))</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,525 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal;
+@inject DigaContext Db
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("platform", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<section>
+    <div class="container-fluid platform-banner platform-bg-greylight">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="../home/index">
+                            @CultureHelper.GetTranslation("homepage",
+Context.Session.GetString("SiteLanguage"))
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @CultureHelper.GetTranslation("platform",
+Context.Session.GetString("SiteLanguage"))
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="h1-title py-5 w-75 m-auto" style="line-height: normal !important; font-size: 40px;">
+                @CultureHelper.GetTranslation("free_electronic_platform", Context.Session.GetString("SiteLanguage"))
+            </h1>
+            <div class="row lh-1-5">
+                <div class="col-6">
+                    <h4 class="p-green font-weight-bold mb-3">Для заказчиков:</h4>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white"> Публикуйте свой проект</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white">
+                            Подбирайте профильного
+                            исполнителя
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white">
+                            Подписывает елктронный договор
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white">
+                            Контролируйте с помощью удобных
+                            нструментов
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white"> Оценивайте исполнителя</div>
+                    </div>
+                    <div class="row my-5 pl-3">
+                        <a href="/platform/index#/register-with-role/PlatformCustomer" class="btn_green">
+                            Найти
+                            исполнителя
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h4 class="p-cyan2 font-weight-bold mb-3">Исполнитель:</h4>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes2.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white">
+                            Получает доступ к списку
+                            обьектов по своему профилю
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes2.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white"> Участвует в конкуресе</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes2.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white"> Получайте обьекты</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes2.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white">
+                            Создавайте портфолио работ
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes2.svg" /> </div>
+                        <div class="col-md-10 col-10 fs-18 font-weight-bold text-white">
+                            Расширяете финансовые
+                            возможности
+                        </div>
+                    </div>
+                    <div class="row my-5 pl-3">
+                        <a href="/platform/index#/register-with-role/PlatformExecutor" class="btn_cyan">Найти объект</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light">
+    <div class="container text-center">
+        <div class="div-title mt-5 mb-2">Для заказчика.</div>
+        <p class="w-75 text-center m-auto" style="display: none;">
+            Краткое пояснение заголовка в одну-две
+            короткие строки
+        </p>
+        <div class="row my-5">
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/speshial.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Создавайте ТЗ и сметы</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/avtomatik.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Проверенные специалисты</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/lock.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Подписывайте контракты</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/estimate.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Безопасная работа</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/kontrakt.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Автоматизация процессов</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/control.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Контролируйте</h5>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light">
+    <div class="container text-center">
+        <div class="div-title mt-5 mb-2">Для исполнителя.</div>
+        <p class="w-75 text-center m-auto" style="display: none;">
+            Краткое пояснение заголовка в одну-две
+            короткие строки
+        </p>
+        <div class="row my-5">
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/profil.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Создавайте профиль</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/contest.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Участвуйте в конкурсе</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/lock.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Подписывайте контракт</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/execute the project.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Выполняйте проект</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/card.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Выставляйте счета</h5>
+            </div>
+            <div class="col-md-4 my-3">
+                <img src="~/Assets/img/pay.svg.png" alt="Alternate Text" />
+                <h5 class="mt-3 font-weight-bold">Принимайте оплату</h5>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light my-5">
+    <div class="container">
+        <div class="div-title mt-5 mb-2 text-center">Открытые вакансии по категориям.</div>
+        <p class="w-75 text-center m-auto" style="display: none;">
+            Краткое пояснение заголовка в одну-две
+            короткие строки
+        </p>
+        <div class="row my-5">
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0">
+                        <img src="~/Assets/img/repair of apartments.png" alt="Alternate Text" />
+                    </div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Ремонт квартир</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/front.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Фассады</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/roof.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Крыши</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/warming.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Утепление</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/snos.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Снос</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/3050773.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Сеть подачи газа</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/electrik.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Электросеть</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/sewerage.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Канализационная система</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/3779611.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Отделения</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/building box.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Коробки</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/construction.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Строительство</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/tile.png" alt="Alternate Text" /></div>
+                    <div class="col-md-7 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Кафельная плитка</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/water supply.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Сеть водоснабжения</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-2">
+                    <div class="col-md-4 px-0"><img src="~/Assets/img/repaire.png" alt="Alternate Text" /></div>
+                    <div class="col-md-6 px-0 my-auto">
+                        <h6 class="mt-3 font-weight-bold">Другие</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="glass-banner">
+    <div class="container py-5">
+        <div class="div-title text-white text-center w-75 mb-2 mx-auto pt-4">
+            Ищите проверенных специалистов или выгодные
+            заказы с помощью сервиса.
+        </div>
+        <p class="w-50 text-center m-auto text-white" style="display: none;">
+            Краткое пояснение заголовка в одну-две
+            короткие строки
+        </p>
+        <div class="row my-4 mx-auto">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes3.svg" /> </div>
+                    <div class="col-md-10 col-10 fs-18 font-weight-bold text-white p-green-underline ">
+                        Только реальные
+                        проекты
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes3.svg" /> </div>
+                    <div class="col-md-10 col-10 fs-18 font-weight-bold text-white p-green-underline ">
+                        Отсутствие
+                        ограничений
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes3.svg" /> </div>
+                    <div class="col-md-10 col-10 fs-18 font-weight-bold text-white p-green-underline ">
+                        Честный рейтинг
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes3.svg" /> </div>
+                    <div class="col-md-10 col-10 fs-18 font-weight-bold text-white p-green-underline ">
+                        Безопасная работа
+                        с резервированием
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes3.svg" /> </div>
+                    <div class="col-md-10 col-10 fs-18 font-weight-bold text-white p-green-underline ">
+                        Приложения и API
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/img/yes3.svg" /> </div>
+                    <div class="col-md-10 col-10 fs-18 font-weight-bold text-white p-green-underline">
+                        Проверка личных
+                        данных
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="py-4 d-flex mx-auto justify-content-around w-75">
+            <button class="btn_green">Взять заказ</button>
+            <button class="btn_white">Посмотреть сметы</button>
+            <button class="btn_white">Постоянная работа</button>
+        </div>
+        <div class="row bg-violet mb-5 py-4 mt-4 pl-5">
+            <div class="col-md-1 text-right"><img src="~/Assets/img/img 7.png" alt="Alternate Text" /></div>
+            <div class="col-md-9">
+                <p class="font-weight-bold text-white">
+                    После регистрации все исполнтели проходят обязательную проверку профиля.
+                    После этого работа бесплатна - вам не обязательно покупать про аккаунт.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white my-5">
+    <div class="container ">
+        <p class="fs-23 p-purple text-center">Усиливайте свои возможности с нашими инструментами</p>
+        <p class="fs-40 text-center font-weight-bold pb-5 mobile-width">Автоматизируйте бизнесс процесы.</p>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/1.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="p-purple-dark fs-26 font-weight-bold">Учёт клиентов</p>
+                        <p class="m-auto w-75"> Единая база клиентов. <br />Хранится вся история общения с клиентами</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/2.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="p-purple-dark fs-26 font-weight-bold">Управление продажами</p>
+                        <p class="m-auto w-75"> Позволяет контролировать сделку на каждом этапе</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/3.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">Интеграция <br />с каналами продаж</p>
+                        <p class="m-auto w-75">
+                            Все обращения (через сайт, email, IP-телефонию) фиксируются в системе.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/4.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">Автоматизация процессов</p>
+                        <p class="m-auto w-75">
+                            Позволяет автоматически ставить задачи ответственным специалистам, отправлять документы и
+                            рассылки, напоминать о необходимости перезвона клиенту и т.д.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/5.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">Аналитика</p>
+                        <p class="m-auto w-75">
+                            Позволяет в режиме онлайн формировать отчеты по основным показателям компании с подробной
+                            информацией в виде графиков и диаграмм
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/6.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">Управление задачами</p>
+                        <p class="m-auto w-75">
+                            В случае просрочки задачи, руководитель мгновенно получает уведомление и предпринимает
+                            корректирующие действия.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/7.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">Безопасность</p>
+                        <p class="m-auto w-75">
+                            Гибкая настройка доступов <br />
+                            Backup
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/8.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">HR</p>
+                        <p class="m-auto w-75">
+                            Единая база работников
+                            Отчеты по графику работ
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="media block-6  text-center shadow-box">
+                    <img src="~/Assets/img/9.svg" />
+                    <div class="media-body p-2 mt-3 lh-1-5">
+                        <p class="fs-26 font-weight-bold">Бизнес процессы</p>
+                        <p class="m-auto w-75">
+                            Гибкая настройка процессов
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white my-5" style="display: none;">
+    <div class="container">
+        <div class="div-title">Информация о платформе.</div>
+        <div>
+            <p>
+                Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum
+                используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное
+                распределение букв и пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст..
+                Здесь ваш текст.. Здесь ваш текст.."
+            </p>
+            <p>
+                Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по
+                умолчанию, так что поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц всё
+                ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий.
+                Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).
+            </p>
+            <p>
+                Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его
+                корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад.
+                Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых
+                странных слов в Lorem Ipsum, "consectetur", и занялся его поисками в классической латинской литературе.
+            </p>
+            <p>
+                В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги "de
+                Finibus Bonorum et Malorum" ("О пределах добра и зла"), написанной Цицероном в 45 году н.э. Этот трактат
+                по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, "Lorem ipsum dolor
+                sit amet..", происходит от одной из строк в разделе 1.10.32
+            </p>
+        </div>
+    </div>
+</section>

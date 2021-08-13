@@ -1,0 +1,749 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal;
+@inject DigaContext Db
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("home_index", Context.Session.GetString("SiteLanguage"));
+}
+
+
+<section>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-12 col-md-5 my-auto">
+                <h1 class="mt-5">
+                    @CultureHelper.GetTranslation("platform_1", Context.Session.GetString("SiteLanguage"))
+                    <span class="blue">
+                        @CultureHelper.GetTranslation("platform_2", Context.Session.GetString("SiteLanguage"))
+                    </span> / <span class="orange">
+                        @CultureHelper.GetTranslation("platform_3", Context.Session.GetString("SiteLanguage"))
+                    </span><br />
+                    @CultureHelper.GetTranslation("platform_4", Context.Session.GetString("SiteLanguage"))<br />
+                    @CultureHelper.GetTranslation("platform_5", Context.Session.GetString("SiteLanguage"))
+                </h1>
+                <div class="my-5">
+                    <a type="button" href="/platform/index#/register-with-role/PlatformCustomer" class="btn-blue fs-18">
+                        @CultureHelper.GetTranslation("place_order", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                    <a type="button" href="/platform/index#" class="btn-orange my-3 fs-18">
+                        @CultureHelper.GetTranslation("find_object", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                    <a type="button" href="/platform/index#/register-with-role/PlatformCustomer" class="btn-greydark fs-18">
+                        @CultureHelper.GetTranslation("find_executor", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-7 m-auto px-1">
+                <img src="@CultureHelper.GetTranslation("img_main", Context.Session.GetString("SiteLanguage"))" alt="main" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="my-5">
+    <div class="container-fluid platform-bg-greylight">
+        <div class="container position-relative">
+            <div class="d-flex justify-content-start">
+                <div class="h">
+                    @CultureHelper.GetTranslation("about_platform", Context.Session.GetString("SiteLanguage"))
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-7 py-5 m-auto">
+                    <p class="t1">
+                        <span class="font-weight-bold">
+                            @CultureHelper.GetTranslation("diga_platform", Context.Session.GetString("SiteLanguage"))
+                        </span>
+                        @CultureHelper.GetTranslation("diga_platform_is", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                    <p class="t1">
+                        <span class="font-weight-bold blue">
+                            @CultureHelper.GetTranslation("our_customer", Context.Session.GetString("SiteLanguage"))
+                        </span>
+                        @CultureHelper.GetTranslation("our_customer_is", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                    <div class="blue-markers p-3">
+                        <ul class="list-unstyled">
+                            <li>@CultureHelper.GetTranslation("publishes_his_project", Context.Session.GetString("SiteLanguage")) </li>
+                            <li>@CultureHelper.GetTranslation("selects_profile_executor", Context.Session.GetString("SiteLanguage"))</li>
+                            <li>@CultureHelper.GetTranslation("signs_econtract", Context.Session.GetString("SiteLanguage"))</li>
+                            <li>@CultureHelper.GetTranslation("controls_with_convenient_tools", Context.Session.GetString("SiteLanguage"))</li>
+                            <li>@CultureHelper.GetTranslation("evaluates_contractor", Context.Session.GetString("SiteLanguage"))</li>
+                        </ul>
+                    </div>
+                    <div class="d-flex justify-content-around pt-4">
+                        <a type="button" href="/platform/index#/register-with-role/PlatformCustomer" class="btn-blue fs-18">
+                            @CultureHelper.GetTranslation("place_order", Context.Session.GetString("SiteLanguage"))
+                        </a>
+                        <a type="button" href="/platform/index#/register-with-role/PlatformCustomer" class="btn-blue-outline fs-18">
+                            @CultureHelper.GetTranslation("find_executor", Context.Session.GetString("SiteLanguage"))
+                        </a>
+                    </div>
+                </div>
+                <div class="col-5 py-5 m-auto">
+                    <img src="~/Assets/platform/img/img_customer.png" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-5 m-auto">
+                <img src="~/Assets/platform/img/img_contractor.png" alt="" />
+            </div>
+            <div class="col-7 m-auto">
+                <p class="t1">
+                    <span class="font-weight-bold orange">
+                        @CultureHelper.GetTranslation("our_executor", Context.Session.GetString("SiteLanguage"))
+                    </span>
+                    @CultureHelper.GetTranslation("our_executor_is", Context.Session.GetString("SiteLanguage"))
+                </p>
+                <div class="orange-markers p-3">
+                    <ul class="list-unstyled">
+                        <li>@CultureHelper.GetTranslation("gets_access_objects_profile", Context.Session.GetString("SiteLanguage")) </li>
+                        <li>@CultureHelper.GetTranslation("participating_contest", Context.Session.GetString("SiteLanguage"))</li>
+                        <li>@CultureHelper.GetTranslation("wins_objects", Context.Session.GetString("SiteLanguage"))</li>
+                        <li>@CultureHelper.GetTranslation("creates_portfolio_works", Context.Session.GetString("SiteLanguage"))</li>
+                        <li>@CultureHelper.GetTranslation("expands_financial_opportunities", Context.Session.GetString("SiteLanguage"))</li>
+                    </ul>
+                </div>
+                <div class="d-flex justify-content-around pt-4">
+                    <a type="button" href="/platform/index#" class="btn-orange fs-18">
+                        @CultureHelper.GetTranslation("find_object", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                    <a type="button" href="/platform/index#/register-with-role/PlatformExecutor" class="btn-orange-outline fs-18">
+                        @CultureHelper.GetTranslation("apply", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="my-5">
+    <div class="container-fluid platform-bg-greylight">
+        <div class="container reverse position-relative">
+            <div class="d-flex justify-content-end">
+                <div class="h">
+                    @CultureHelper.GetTranslation("benefits_of_diga", Context.Session.GetString("SiteLanguage"))
+                </div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="col-md-4 col-12 px-0">
+                    <div class=" p-4 card d-flex flex-column text-center m-2">
+                        <div class="bg-greylight"><img width="65" src="~/Assets/platform/icons/opportunities/crm.svg" /> </div>
+                        <div class="h4 my-3">@CultureHelper.GetTranslation("complete_relationship_mgmt", Context.Session.GetString("SiteLanguage"))</div>
+                        <div class="t2">@CultureHelper.GetTranslation("complete_relationship_mgmt_is", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 px-0">
+                    <div class=" p-4 card d-flex flex-column  text-center m-2">
+                        <div class="bg-greylight"><img width="65" src="~/Assets/platform/icons/opportunities/admin.svg" /> </div>
+                        <div class="h4 my-3">@CultureHelper.GetTranslation("planning_and_accounting", Context.Session.GetString("SiteLanguage"))</div>
+                        <div class="t2">@CultureHelper.GetTranslation("planning_and_accounting_is", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 px-0">
+                    <div class=" p-4 card d-flex flex-column  text-center m-2">
+                        <div class="bg-greylight"><img width="65" src="~/Assets/platform/icons/opportunities/megaphone.svg" /> </div>
+                        <div class="h4 my-3">@CultureHelper.GetTranslation("service_promotion", Context.Session.GetString("SiteLanguage"))</div>
+                        <div class="t2">@CultureHelper.GetTranslation("service_promotion_is", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-2 pb-5">
+                <div class="col-md-4 col-12 px-0">
+                    <div class=" p-4 card d-flex flex-column  text-center m-2">
+                        <div class="bg-greylight"><img width="65" src="~/Assets/platform/icons/opportunities/safe.svg" /> </div>
+                        <div class="h4 my-3">@CultureHelper.GetTranslation("safe_payments", Context.Session.GetString("SiteLanguage"))</div>
+                        <div class="t2">@CultureHelper.GetTranslation("safe_payments_is", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 px-0">
+                    <div class=" p-4 card d-flex flex-column  text-center m-2">
+                        <div class="bg-greylight"><img width="65" src="~/Assets/platform/icons/opportunities/customer.svg" /> </div>
+                        <div class="h4 my-3">@CultureHelper.GetTranslation("reliable_customers", Context.Session.GetString("SiteLanguage"))</div>
+                        <div class="t2">@CultureHelper.GetTranslation("reliable_customers_is", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 px-0">
+                    <div class=" p-4 card d-flex flex-column  text-center m-2">
+                        <div class="bg-greylight"><img width="65" src="~/Assets/platform/icons/opportunities/efficiency.svg" /> </div>
+                        <div class="h4 my-3">@CultureHelper.GetTranslation("verified_executors", Context.Session.GetString("SiteLanguage"))</div>
+                        <div class="t2">@CultureHelper.GetTranslation("verified_executors_is", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+    <div class="container-fluid">
+        <div class="container position-relative">
+            <div class="d-flex justify-content-start">
+                <div class="h">@CultureHelper.GetTranslation("additional_functions", Context.Session.GetString("SiteLanguage"))</div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 m-auto">
+                    <img src="~/Assets/platform/img/img_opportunities.png" alt="" />
+                </div>
+                <div class="col-12 col-md-6 my-auto">
+                    <p class="t1">
+                        <span class="font-weight-bold">
+                            @CultureHelper.GetTranslation("diga_platform", Context.Session.GetString("SiteLanguage"))
+                        </span>
+                        @CultureHelper.GetTranslation("diga_platform_provides", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                    <p class="t1 pb-5">
+                        @CultureHelper.GetTranslation("all_project_participants_able", Context.Session.GetString("SiteLanguage"))
+                        <span class="font-weight-bold orange">
+                            @CultureHelper.GetTranslation("see", Context.Session.GetString("SiteLanguage"))
+                        </span>
+                        @CultureHelper.GetTranslation("and", Context.Session.GetString("SiteLanguage"))
+                        <span class="font-weight-bold orange">
+                            @CultureHelper.GetTranslation("control", Context.Session.GetString("SiteLanguage"))
+                        </span>
+                        @CultureHelper.GetTranslation("stages_of_proccess_anytime", Context.Session.GetString("SiteLanguage"))
+                        <span class="font-weight-bold blue">Mobile App Team Time Tracker</span>
+                        @CultureHelper.GetTranslation("and", Context.Session.GetString("SiteLanguage"))
+                        <span class="font-weight-bold blue">Mobile App CRM Building</span>
+                    </p>
+                    <p class="mt-5 h3">@CultureHelper.GetTranslation("working_tools_modules", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/crm.svg" />CRM</div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/hr.svg" />@CultureHelper.GetTranslation("hr", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/dashboard-interface.svg" />Dashboard</div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/calendar.svg" />@CultureHelper.GetTranslation("calendar", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/money-bag.svg" />@CultureHelper.GetTranslation("estimates", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/gantt-chart.svg" />@CultureHelper.GetTranslation("gantt", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/alarm-clock.svg" />@CultureHelper.GetTranslation("time_tracker", Context.Session.GetString("SiteLanguage")) </div>
+                    <div> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/statistics.svg" />@CultureHelper.GetTranslation("project_schedules", Context.Session.GetString("SiteLanguage")) </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/budget.svg" />@CultureHelper.GetTranslation("finances", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/kpi.svg" />@CultureHelper.GetTranslation("kpi", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/discount.svg" />@CultureHelper.GetTranslation("price_fork", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/email.svg" />Email</div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/fincalendar.svg" />@CultureHelper.GetTranslation("financial_calendar", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/analysis.svg" />@CultureHelper.GetTranslation("analytics", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/planning.svg" />@CultureHelper.GetTranslation("project_planner", Context.Session.GetString("SiteLanguage")) </div>
+                    <div> <img class="mr-3" width="40" src="~/Assets/platform/icons//tools/log-in.svg" />@CultureHelper.GetTranslation("access_settings", Context.Session.GetString("SiteLanguage")) </div>
+                </div>
+                <div class="col-12 col-md-4 mb-5">
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/salary.svg" />@CultureHelper.GetTranslation("calculation_of_salaries", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/billing.svg" />@CultureHelper.GetTranslation("consumption_of_materials", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/voip.svg" /> @CultureHelper.GetTranslation("ip_telephony", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/engineer.svg" />@CultureHelper.GetTranslation("subcontractors", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/clipboard.svg" />@CultureHelper.GetTranslation("checklist", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/packages.svg" />@CultureHelper.GetTranslation("supply_module", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="my-3"> <img class="mr-3" width="40" src="~/Assets/platform/icons/tools/report.svg" />@CultureHelper.GetTranslation("reports", Context.Session.GetString("SiteLanguage")) </div>
+                    <div> <img class="mr-3" width="40" src="~/Assets/platform/icons//tools/auto.svg" />@CultureHelper.GetTranslation("automation", Context.Session.GetString("SiteLanguage")) </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="my-5">
+    <div class="container-fluid platform-bg-greylight">
+        <div class="container reverse position-relative">
+            <div class="d-flex justify-content-end">
+                <div class="h">@CultureHelper.GetTranslation("prices_and_modules", Context.Session.GetString("SiteLanguage"))</div>
+            </div>
+            <div class="row">
+                <div class="pt-5 col-md-6">
+                    <p class="h3 text-center py-4">@CultureHelper.GetTranslation("tariffs_and_plans", Context.Session.GetString("SiteLanguage"))</p>
+                   <a href="~/price/index"> <img class="box-shadow" src="~/Assets/platform/img/Video1.png" /></a>
+                    <div class="text-right"><a type="button" href="/platform/index#/register" class="btn-blue fs-18 my-5">@CultureHelper.GetTranslation("register", Context.Session.GetString("SiteLanguage"))</a></div>
+                    <div class="text-right"><a type="button" target="_blank" href="https://www.apple.com/app-store/"><img src="~/Assets/platform/img/apple.png" /></a></div>
+                </div>
+                <div class="pt-sm-5 col-md-6">
+                    <p class="h3 text-center py-4">@CultureHelper.GetTranslation("all_modules", Context.Session.GetString("SiteLanguage"))</p>
+                    <a href="~/price/index"> <img class="box-shadow" src="~/Assets/platform/img/Video2.png" /></a>
+                    <div><a type="button" href="/platform/index#/login" class="btn-orange fs-18 my-5">@CultureHelper.GetTranslation("log_in", Context.Session.GetString("SiteLanguage"))</a></div>
+                    <div><a type="button" target="_blank" href="https://play.google.com"><img src="~/Assets/platform/img/googleplay.png" /></a></div>
+                </div>
+            </div>
+            <p class="text-center h4 mt-4 pb-5"> @CultureHelper.GetTranslation("download_diga_app_construction_and_repair", Context.Session.GetString("SiteLanguage")) </p>
+
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <div class="container position-relative">
+            <div class="d-flex justify-content-start">
+                <p class="h">@CultureHelper.GetTranslation("for_executors", Context.Session.GetString("SiteLanguage"))</p>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 my-auto pt-5">
+                    <p class="t1">
+                        @CultureHelper.GetTranslation("on", Context.Session.GetString("SiteLanguage"))
+                        <span class="font-weight-bold orange">@CultureHelper.GetTranslation("diga_platform", Context.Session.GetString("SiteLanguage"))</span>
+                        @CultureHelper.GetTranslation("executors_find_orders", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                    <p class="t1 pb-5">@CultureHelper.GetTranslation("required_of_you_is_profile_etc", Context.Session.GetString("SiteLanguage")) </p>
+                </div>
+                <div class="col-12 col-md-6 m-auto">
+                    <img src="~/Assets/platform/img/img_for_contractor.jpg" alt="" />
+                </div>
+                <div class="col-12 text-center"><p class="w-50 m-auto py-5 h3">@CultureHelper.GetTranslation("its_easy_get_order_diga_p", Context.Session.GetString("SiteLanguage"))</p></div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column mx-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("registration_on_diga", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/log-in-orange.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("register_on_platform_profile", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column mx-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("filling_in_profile", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/paper-orange.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("fill_portfolio_text", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column mx-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("search_projects", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/search-orange.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("select_ad_and_offer", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column mx-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("getting_result", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/insurance-orange.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("confirm_terms_contract", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-5"><a type="button" href="/platform/index#" class="btn-orange fs-18">@CultureHelper.GetTranslation("find_object", Context.Session.GetString("SiteLanguage"))</a></div>
+        </div>
+    </div>
+</section>
+@* <section class="container-fluid bg-greylight my-5">
+    <div class="container py-5">
+        <p class="h3 mt-4 text-center">@CultureHelper.GetTranslation("executors_reviews", Context.Session.GetString("SiteLanguage"))</p>
+        <div>
+            <div id="executorReviews" class="carousel slide" data-ride="false" data-wrap="true">
+                <ol class="carousel-indicators">
+                    <li data-target="#executorReviews" data-slide-to="0" class="active"><i class='bx bxs-circle'></i></li>
+                    <li data-target="#executorReviews" data-slide-to="1"> <i class='bx bx-circle'></i></li>
+                </ol>
+                <div class="carousel-inner py-2">
+                    <div class="carousel-item active">
+                        <div class="row my-5">
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4 text-center position-relative">
+                                    <img class="text-review-avatar" src="~/Assets/platform/avatar.png" width="100" />
+                                    <p class="h4 mt-5 mb-1"> Алесандр Осипов </p>
+                                    <p class="t2">Строй Проект</p>
+                                    <div class="text-center my-2"><img src="~/Assets/platform/icons/reviews/quote-orange.svg" width="30" /></div>
+                                    <p class="t2 text-left"> Платформа отличная! Помогает нам, строителям, ремонтникам, разнорабочим, выполнять свою работу эффективно и быстро, экономит время и деньги на поиске клиентов.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4 text-center position-relative">
+                                    <img class="text-review-avatar" src="~/Assets/platform/avatar.png" width="100" />
+                                    <p class="h4 mt-5 mb-1"> Алесандр Осипов </p>
+                                    <p class="t2">Строй Проект</p>
+                                    <div class="text-center my-2"><img src="~/Assets/platform/icons/reviews/quote-orange.svg" width="30" /></div>
+                                    <p class="t2 text-left"> Платформа отличная! Помогает нам, строителям, ремонтникам, разнорабочим, выполнять свою работу эффективно и быстро, экономит время и деньги на поиске клиентов.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4 text-center position-relative">
+                                    <img class="text-review-avatar" src="~/Assets/platform/avatar.png" width="100" />
+                                    <p class="h4 mt-5 mb-1"> Виктор Касперски </p>
+                                    <p class="t2">Биг Строй Сервис</p>
+                                    <div class="text-center my-2"><img src="~/Assets/platform/icons/reviews/quote-orange.svg" width="30" /></div>
+                                    <p class="t2 text-left"> Удобная площадка для коммуникации с заказчиками, которые зачастую становятся постоянными партнерами. У всех всегда есть четкое понимание сроков, условий, задач, оплаты и ответственности с обеих сторон.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row my-5">
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4">
+                                    <iframe height="200" src="https://www.youtube.com/embed/xlxfvbiFxxI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="row mt-3 mb-2">
+                                        <img class="col-2" src="~/Assets/platform/icons/reviews/quote-orange.svg" width="30" />
+                                        <div class="col-10">
+                                            <p class="h4 mb-1"> Питер Хейнс </p>
+                                            <p class="t2">Нью Билд Компани</p>
+                                        </div>
+                                    </div>
+                                    <p class="t2 text-left"> Все просто и понятно работает, четко и без сбоев. А что ещё нужно? Рекомендую, однозначно! </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4">
+                                    <iframe height="200" src="https://www.youtube.com/embed/xlxfvbiFxxI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="row mt-3 mb-2">
+                                        <img class="col-2" src="~/Assets/platform/icons/reviews/quote-orange.svg" width="30" />
+                                        <div class="col-10">
+                                            <p class="h4 mb-1"> Питер Хейнс </p>
+                                            <p class="t2">Нью Билд Компани</p>
+                                        </div>
+                                    </div>
+                                    <p class="t2 text-left"> Все просто и понятно работает, четко и без сбоев. А что ещё нужно? Рекомендую, однозначно! </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4">
+                                    <iframe height="200" src="https://www.youtube.com/embed/xlxfvbiFxxI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="row mt-3 mb-2">
+                                        <img class="col-2" src="~/Assets/platform/icons/reviews/quote-orange.svg" width="30" />
+                                        <div class="col-10">
+                                            <p class="h4 mb-1"> Питер Хейнс </p>
+                                            <p class="t2">Нью Билд Компани</p>
+                                        </div>
+                                    </div>
+                                    <p class="t2 text-left"> Все просто и понятно работает, четко и без сбоев. А что ещё нужно? Рекомендую, однозначно! </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#executorReviews" role="button" data-slide="prev">
+                    <img class="carousel-control-prev-icon" aria-hidden="true" src="~/Assets/platform/icons/reviews/left.svg" />
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#executorReviews" role="button" data-slide="next">
+                    <img class="carousel-control-next-icon" aria-hidden="true" src="~/Assets/platform/icons/reviews/right-orange.svg" />
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section> *@
+<section class="my-5">
+    <div class="container-fluid">
+        <div class="container reverse position-relative">
+            <div class="d-flex justify-content-end">
+                <p class="h">@CultureHelper.GetTranslation("for_customers", Context.Session.GetString("SiteLanguage"))</p>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 m-auto">
+                    <img src="~/Assets/platform/img/img_for customer.png" alt="" />
+                </div>
+                <div class="col-12 col-md-6 my-auto pt-5">
+                    <p class="t1">
+                        @CultureHelper.GetTranslation("on", Context.Session.GetString("SiteLanguage"))
+                        <span class="font-weight-bold blue">@CultureHelper.GetTranslation("diga_platform", Context.Session.GetString("SiteLanguage"))</span>
+                        @CultureHelper.GetTranslation("everyday_customers", Context.Session.GetString("SiteLanguage"))
+                    </p>
+                    <p class="t1 pb-5">@CultureHelper.GetTranslation("you_no_longer_need", Context.Session.GetString("SiteLanguage")) </p>
+                </div>
+
+                <div class="col-12 text-center"><p class="w-50 m-auto py-5 h3">@CultureHelper.GetTranslation("how_to_customer", Context.Session.GetString("SiteLanguage"))</p></div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column m-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("registration_on_diga", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/log-in-blue.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("register_on_platform_profile", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column m-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("publishing_ad", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/sound-blue.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("publishing_ad_text", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column m-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("selecting_executor", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/search-blue.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("selecting_executor_text", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <div class="p-4 card d-flex flex-column m-2">
+                        <div class="h4 my-3 d-flex justify-content-between">@CultureHelper.GetTranslation("getting_result", Context.Session.GetString("SiteLanguage")) <img width="60" src="~/Assets/platform/icons/icons for steps/insurance-blue.svg" /></div>
+                        <div class="t2">@CultureHelper.GetTranslation("getting_result_executor", Context.Session.GetString("SiteLanguage"))</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5">
+                <div class="col-6 text-right pr-2">
+                    <a type="button" href="/platform/index#/register-with-role/PlatformCustomer" class="btn-blue fs-18">
+                        @CultureHelper.GetTranslation("place_order", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                </div>
+                <div class="col-6 pl-2">
+                    <a type="button" href="/platform/index#/register-with-role/PlatformCustomer" class="btn-blue-outline fs-18">
+                        @CultureHelper.GetTranslation("find_executor", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@* <section class="container-fluid bg-greylight my-5">
+    <div class="container text-center py-5">
+        <p class="h3 my-4">@CultureHelper.GetTranslation("customer_reviews", Context.Session.GetString("SiteLanguage"))</p>
+        <div>
+            <div id="customerReviews" class="carousel slide" data-ride="false" data-wrap="true">
+                <ol class="carousel-indicators">
+                    <li data-target="#customerReviews" data-slide-to="0" class="active"><i class='bx bxs-circle'></i></li>
+                    <li data-target="#customerReviews" data-slide-to="1"> <i class='bx bx-circle'></i></li>
+                </ol>
+                <div class="carousel-inner py-2">
+                    <div class="carousel-item active">
+                        <div class="row my-5">
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4 text-center position-relative">
+                                    <img class="text-review-avatar" src="~/Assets/platform/avatar.png" width="100" />
+                                    <p class="h4 mt-5 mb-1"> Алесандр Осипов </p>
+                                    <p class="t2">Строй Проект</p>
+                                    <div class="text-center my-2"><img src="~/Assets/platform/icons/reviews/quote-blue.svg" width="30" /></div>
+                                    <p class="t2 text-left"> Платформа отличная! Помогает нам, строителям, ремонтникам, разнорабочим, выполнять свою работу эффективно и быстро, экономит время и деньги на поиске клиентов.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4 text-center position-relative">
+                                    <img class="text-review-avatar" src="~/Assets/platform/avatar.png" width="100" />
+                                    <p class="h4 mt-5 mb-1"> Алесандр Осипов </p>
+                                    <p class="t2">Строй Проект</p>
+                                    <div class="text-center my-2"><img src="~/Assets/platform/icons/reviews/quote-blue.svg" width="30" /></div>
+                                    <p class="t2 text-left"> Платформа отличная! Помогает нам, строителям, ремонтникам, разнорабочим, выполнять свою работу эффективно и быстро, экономит время и деньги на поиске клиентов.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4 text-center position-relative">
+                                    <img class="text-review-avatar" src="~/Assets/platform/avatar.png" width="100" />
+                                    <p class="h4 mt-5 mb-1"> Виктор Касперски </p>
+                                    <p class="t2">Биг Строй Сервис</p>
+                                    <div class="text-center my-2"><img src="~/Assets/platform/icons/reviews/quote-blue.svg" width="30" /></div>
+                                    <p class="t2 text-left"> Удобная площадка для коммуникации с заказчиками, которые зачастую становятся постоянными партнерами. У всех всегда есть четкое понимание сроков, условий, задач, оплаты и ответственности с обеих сторон.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row my-5">
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4">
+                                    <iframe height="200" src="https://www.youtube.com/embed/xlxfvbiFxxI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="row mt-3 mb-2">
+                                        <img class="col-2" src="~/Assets/platform/icons/reviews/quote-blue.svg" width="30" />
+                                        <div class="col-10">
+                                            <p class="h4 mb-1"> Питер Хейнс </p>
+                                            <p class="t2">Нью Билд Компани</p>
+                                        </div>
+                                    </div>
+                                    <p class="t2 text-left"> Все просто и понятно работает, четко и без сбоев. А что ещё нужно? Рекомендую, однозначно! </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4">
+                                    <iframe height="200" src="https://www.youtube.com/embed/xlxfvbiFxxI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="row mt-3 mb-2">
+                                        <img class="col-2" src="~/Assets/platform/icons/reviews/quote-blue.svg" width="30" />
+                                        <div class="col-10">
+                                            <p class="h4 mb-1"> Питер Хейнс </p>
+                                            <p class="t2">Нью Билд Компани</p>
+                                        </div>
+                                    </div>
+                                    <p class="t2 text-left"> Все просто и понятно работает, четко и без сбоев. А что ещё нужно? Рекомендую, однозначно! </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12 px-2">
+                                <div class="card p-4">
+                                    <iframe height="200" src="https://www.youtube.com/embed/xlxfvbiFxxI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <div class="row mt-3 mb-2">
+                                        <img class="col-2" src="~/Assets/platform/icons/reviews/quote-blue.svg" width="30" />
+                                        <div class="col-10">
+                                            <p class="h4 mb-1"> Питер Хейнс </p>
+                                            <p class="t2">Нью Билд Компани</p>
+                                        </div>
+                                    </div>
+                                    <p class="t2 text-left"> Все просто и понятно работает, четко и без сбоев. А что ещё нужно? Рекомендую, однозначно! </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#customerReviews" role="button" data-slide="prev">
+                    <img class="carousel-control-prev-icon" aria-hidden="true" src="~/Assets/platform/icons/reviews/left.svg" />
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#customerReviews" role="button" data-slide="next">
+                    <img class="carousel-control-next-icon" aria-hidden="true" src="~/Assets/platform/icons/reviews/right-blue.svg" />
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section> *@
+
+<section class="my-5">
+    <div class="container-fluid">
+        <div class="container position-relative">
+            <div class="d-flex justify-content-start">
+                <p class="h">@CultureHelper.GetTranslation("contacts", Context.Session.GetString("SiteLanguage"))</p>
+            </div>
+            <div class="row pt-5">
+                <div class="col-12 col-md-5 px-2 my-auto">
+                    <form id="contact_us" class="card p-4 text-center">
+                        <p class="h3 blue mb-4">@CultureHelper.GetTranslation("write_to_us", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t2"> @CultureHelper.GetTranslation("write_us_text", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t4 form__success-msg">@CultureHelper.GetTranslation("your_request_was_successfully_sent", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t4 form__error-msg">@CultureHelper.GetTranslation("form_error", Context.Session.GetString("SiteLanguage"))</p>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="contact_name" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage")) *">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" id="contact_phone" placeholder="@CultureHelper.GetTranslation("telephone", Context.Session.GetString("SiteLanguage")) *">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="contact_email" placeholder="Email *">
+                        </div>
+                        <div class="form-group text-left">
+                            <textarea aria-describedby="contact_textarea" type="text" class="form-control" id="contact_message" rows="8" placeholder="@CultureHelper.GetTranslation("your_message", Context.Session.GetString("SiteLanguage"))"></textarea>
+                            <small id="contact_textarea" class="form-text fs-13 text-muted">@CultureHelper.GetTranslation("by_sending_message", Context.Session.GetString("SiteLanguage"))</small>
+                        </div>
+                        <button type="submit" class="mt-4 mx-auto btn-blue fs-18">@CultureHelper.GetTranslation("send", Context.Session.GetString("SiteLanguage"))</button>
+                    </form>
+                </div>
+                <div class="col-12 px-0 col-md-7 m-auto">
+                    <img src="~/Assets/platform/img/img_contacts.svg" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--<section class="banner mobile-margin-banner" style="margin-top: 700px">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row align-items-center py-5">
+                <div class="col-md-6 col-sm-12">
+                    <h1 class="mb-5 h1-diga">@CultureHelper.GetTranslation("earn_more", Context.Session.GetString("SiteLanguage"))</h1>
+                    <div class="w-75 mb-5 mb-sm-0">
+                        <p class="text-white font-weight-bold lh-1-5-mobile">@CultureHelper.GetTranslation("diga_is", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 text-center m-auto">-->
+@*<img src="~/Assets/images/isometriful.gif" class="img-fluid w-88">*@
+<!--<video class="img-fluid w-88" src="~/Assets/images/isometriful.webm" autoplay loop muted playsinline></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>-->
+@* advantages section *@
+<!--<section class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="mb-5 w-75">
+            <div class="div-title">@CultureHelper.GetTranslation("what_is_diga_CRM", Context.Session.GetString("SiteLanguage"))</div>
+            <p>@CultureHelper.GetTranslation("diga_crm_is", Context.Session.GetString("SiteLanguage"))</p>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Db.Advantages.ToList())
+            {
+                <div class="col-md-6 col-lg-4 d-flex align-self-stretch">
+                    <div class="media block-6 services d-block text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="@item.PictureUrl"></span>
+                            </div>
+                        </div>
+                        <div class="media-body p-2 mt-3">
+                            <h5>@CultureHelper.GetTranslation(item.TitleTextId, Context.Session.GetString("SiteLanguage"))</h5>
+                            <p>@CultureHelper.GetTranslation(item.ShortTextId, Context.Session.GetString("SiteLanguage"))</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>-->
+@* modules section *@
+<!--<section class="bg-light">
+    <div class="container">
+        @foreach (var item in Db.Modules.Where(m => m.Enabled == true).ToList())
+        {
+
+            var colorstyle = "";
+            var colorcounter = "";
+            if (Db.Modules.ToList().IndexOf(item) % 2 == 0)
+            {
+                colorstyle = "background: #CDFBFF";
+                colorcounter = "section-counter";
+            }
+            else
+            {
+                colorstyle = "background: ##f6f6f6;";
+                colorcounter = "section-counter2";
+            }
+
+            <section class="" id="@colorcounter" style="@colorstyle">
+                <div class="container">
+
+                    @if (Db.Modules.ToList().IndexOf(item) % 2 == 0)
+                    {
+                        <div class="container-fluid">
+                            <div class="row py-4">
+                                <div class="col-md-5 col-lg-7 col-sm-12 text-center m-auto">
+                                    <img src="@item.PictureUrl" class="img-fluid">
+                                </div>
+
+                                <div class="col-md-7 col-lg-5 col-sm-12">
+                                    <div class="my-5 div-title">@CultureHelper.GetTranslation(item.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</div>
+                                    <h3 class="p-brightblue mb-4 font-weight-bold fs-24">@CultureHelper.GetTranslation(item.SmallTitleTextId, Context.Session.GetString("SiteLanguage"))</h3>
+                                    <p class="mb-4 mb-md-5">
+                                        @CultureHelper.GetTranslation(item.LongTextId, Context.Session.GetString("SiteLanguage"))
+                                    </p>
+                                    <p>
+                                        <a href="@item.Url">
+                                            <h5 class="p-brightblue mb-4 font-weight-bold fs-20">@CultureHelper.GetTranslation("more_about_the_module", Context.Session.GetString("SiteLanguage"))</h5>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="container-fluid">
+                            <div class="row py-4">
+                                <div class="col-md-7 col-lg-5 col-sm-12">
+                                    <div class="my-5 div-title">@CultureHelper.GetTranslation(item.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</div>
+                                    <h3 class="p-brightblue mb-4 font-weight-bold fs-24">@CultureHelper.GetTranslation(item.SmallTitleTextId, Context.Session.GetString("SiteLanguage"))</h3>
+                                    <p class="mb-4 mb-md-5 sub-p">@CultureHelper.GetTranslation(item.LongTextId, Context.Session.GetString("SiteLanguage"))</p>
+                                    <p>
+                                        <a href="@item.Url">
+                                            <h5 class="p-brightblue mb-4 font-weight-bold fs-20">@CultureHelper.GetTranslation("more_about_the_module", Context.Session.GetString("SiteLanguage"))</h5>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col-md-5 col-lg-7 col-sm-12 text-center m-auto">
+                                    <img src="@item.PictureUrl" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+    </div>
+</section>
+
+<section class="py-5 banner-min">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-7 text-center m-auto">
+                <div class="div-title text-white">@CultureHelper.GetTranslation("connect_digacrm", Context.Session.GetString("SiteLanguage"))</div>
+                <p class="text-white font-weight-bold fs-23 mb-5">@CultureHelper.GetTranslation("7_days_free", Context.Session.GetString("SiteLanguage"))</p>
+                <button href="#" class="btn_rosa" data-toggle="modal" data-target="#StartForFreeModal">@CultureHelper.GetTranslation("try_for_free", Context.Session.GetString("SiteLanguage"))</button>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="~/Views/Shared/EffectOfDigaImplementation.cshtml" />
+<partial name="~/Views/Shared/IfYouChooseDigaYouWillReceive.cshtml" />
+<partial name="~/Views/Shared/ReviewSection.cshtml" />
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />-->

@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\fonts\" />
+    <Folder Include="src\assets\img\" />
+    <Folder Include="Views\Message\" />
+    <Folder Include="Assets\admin\" />
+    <Folder Include="Assets\admin\css\" />
+    <Folder Include="Assets\admin\js\" />
+    <Folder Include="Views\Text\" />
+    <Folder Include="wwwroot\docs\src\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="CloudFlare.Client" Version="1.1.11" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
+    <PackageReference Include="FluentValidation" Version="9.3.0" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.17" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.17" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.17" />
+    <PackageReference Include="MailKit" Version="2.10.1" />
+    <PackageReference Include="mangopay2-sdk" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <!-- <PackageReference Include="NAudio" Version="2.0.0" /> -->
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="Sentry" Version="2.1.6" />
+    <PackageReference Include="Sentry.AspNetCore" Version="2.1.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.12" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Content Remove="Views\TeamMembers\Create.cshtml" />
+    <Content Remove="Views\TeamMembers\Edit.cshtml" />
+    <Content Remove="Views\TeamMembers\Details.cshtml" />
+    <Content Remove="Views\TeamMembers\Delete.cshtml" />
+    <Content Remove="Views\TeamMembers\Index.cshtml" />
+    <Content Include="Assets\**" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Compile Remove="Assets\NewFolder\**" />
+    <Content Remove="Assets\NewFolder\**" />
+    <EmbeddedResource Remove="Assets\NewFolder\**" />
+    <None Remove="Assets\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\css\Editor.css" />
+    <None Remove="Assets\css\style.css" />
+    <None Remove="Assets\images\ico.png" />
+    <None Remove="Assets\js\site.js" />
+    <None Remove="Db\Dockerfile-db" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\diga.bl\diga.bl.csproj" />
+    <ProjectReference Include="..\diga.dal\diga.dal.csproj" />
+    <ProjectReference Include="..\Diga.Parsing\Diga.Parsing.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="libwkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libwkhtmltox.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libwkhtmltox.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <UserSecretsId>49ba91b2-6da6-4041-af1b-0c5d9c77a766</UserSecretsId>
+  </PropertyGroup>
+</Project>

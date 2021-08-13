@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Platform PEC.PT";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diga.pt | Platform</title>
+    <link href="~/Assets/admin/css/font-awesome-all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    @if (ViewBag.isDebug != true)
+    {
+        <link rel="stylesheet" href="~/Assets/js/vue/css/app.css">
+    }
+</head>
+
+<body>
+    <section id="app">
+        @* <personal_area_index /> *@
+        <router-view></router-view>
+    </section>
+    @if (ViewBag.isDebug == true)
+    {
+        <script src="http://localhost:8081/js/app.js"></script>
+    }
+    else
+    {
+        <script src="~/Assets/js/vue/js/app.js"></script>
+    }
+</body>
+
+</html>

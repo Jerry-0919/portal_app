@@ -1,0 +1,309 @@
+﻿@using diga.web.Helpers;
+@using diga.dal; 
+@inject DigaContext Db
+@{ 
+    var user = User.Identity;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Diga Admin</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="~/Assets/admin/css/font-awesome-all.min.css" rel="stylesheet" type="text/css">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/Assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="~/Assets/admin/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Assets/css/Editor.css">
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body id="page-top">
+
+      <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="~/administration/index">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-sun"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Diga admin</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="~/administration/index">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Main</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Content
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Texts</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="~/AdminTexts/Index">All</a>
+                <a class="collapse-item" href="~/AdminTexts/Create">Add Html</a>
+                <a class="collapse-item" href="~/AdminTexts/CreateNonHtml">Add Non html</a>
+            </div>
+          @*<div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Simple:</h6>
+            <a class="collapse-item" href="~/Text/AllNonHtml">All</a>
+            <a class="collapse-item" href="~/Text/nonhtmlcreate">Add</a>
+          </div>*@
+        </div>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Modules</span>
+        </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminModules/Index">All</a>
+            <a class="collapse-item" href="~/AdminModules/Create">Add</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Module Sections</span>
+        </a>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminModuleSections/Index">All</a>
+            <a class="collapse-item" href="~/AdminModuleSections/Create">Add</a>
+          </div>
+        </div>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Functions</span>
+        </a>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminFunctions/Index">All</a>
+            <a class="collapse-item" href="~/AdminFunctions/Create">Add</a>
+          </div>
+        </div>
+      </li>
+           <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Advantages</span>
+        </a>
+        <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminAdvantages/Index">All</a>
+            <a class="collapse-item" href="~/AdminAdvantages/Create">Add</a>
+          </div>
+        </div>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Articles</span>
+        </a>
+        <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminArticles/Index">All</a>
+            <a class="collapse-item" href="~/AdminArticles/Create">Add</a>
+          </div>
+        </div>
+      </li>
+          <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Cases</span>
+        </a>
+        <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminCases/Index">All</a>
+            <a class="collapse-item" href="~/AdminCases/Create">Add</a>
+          </div>
+        </div>
+      </li>
+          <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Questions</span>
+        </a>
+        <div id="collapseNine" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminQuestions/Index">All</a>
+            <a class="collapse-item" href="~/AdminQuestions/Create">Add</a>
+          </div>
+        </div>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTen" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Reviews</span>
+        </a>
+        <div id="collapseTen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminReviews/Index">All</a>
+            <a class="collapse-item" href="~/AdminReviews/Create">Add</a>
+          </div>
+        </div>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEleven" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Sectors</span>
+        </a>
+        <div id="collapseEleven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminSectors/Index">All</a>
+            <a class="collapse-item" href="~/AdminSectors/Create">Add</a>
+          </div>
+        </div>
+      </li>
+          <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwelve" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>TeamMembers</span>
+        </a>
+        <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="~/AdminTeamMembers/Index">All</a>
+            <a class="collapse-item" href="~/AdminTeamMembers/Create">Add</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@user.Name</span>
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="~/Account/Logout" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            @RenderBody()
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Diga @DateTime.Now.Year</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+    
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="~/Assets/admin/js/jquery.min.js"></script>
+  <script src="~/Assets/admin/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="~/Assets/admin/js/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="~/Assets/admin/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="~/Assets/admin/js/jquery.dataTables.min.js"></script>
+  <script src="~/Assets/admin/js/dataTables.bootstrap4.min.js"></script>
+  <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js'></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.1.0/js/plugins/file.min.js"></script>
+
+  @RenderSection("Scripts", required: false)
+
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+
+<section class="py-5 bg-cyan">
+    <div class="container">
+        <div class="my-5 fs-40">@CultureHelper.GetTranslation("if_you_choose_diga_you_will_receive", Context.Session.GetString("SiteLanguage"))</div>
+        <div class="row mb-5">
+            <div class="col-md-6 col-lg-4 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 services d-block text-center">
+                    <div class="media-body p-2 mt-3">
+                        <h5 class="font-weight-bold">@CultureHelper.GetTranslation("implementation_assistance", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p>@CultureHelper.GetTranslation("free_training_and_rapid_ts", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 services d-block text-center bg-brightblue">
+                    <div class="media-body p-2 mt-3">
+                        <h5 class="text-white font-weight-bold">@CultureHelper.GetTranslation("cloud-based_and_retail_software", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p class="text-white">@CultureHelper.GetTranslation("choose_a_comfortable_version", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 d-flex align-self-stretch fadeInUp">
+                <div class="media block-6 services d-block text-center">
+                    <div class="media-body p-2 mt-3">
+                        <h5 class="font-weight-bold">@CultureHelper.GetTranslation("international_work_experience", Context.Session.GetString("SiteLanguage"))</h5>
+                        <p>@CultureHelper.GetTranslation("possibility_to_use_in_multinational", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

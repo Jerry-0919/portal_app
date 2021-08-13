@@ -1,0 +1,36 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+<section class="pt-5 py-md-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="div-title">@CultureHelper.GetTranslation("connect_digacrm", Context.Session.GetString("SiteLanguage"))</div>
+                <div class="mb-5 fs-24 font-weight-bold grey">@CultureHelper.GetTranslation("seven_days", Context.Session.GetString("SiteLanguage"))</div>
+                <form id="FormCallMan">
+                    <p class="text-left m-0 lh-1-5"><label for="nameMan" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                    <input placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage"))" id="nameMan" class="inputssect" type="text" name="name" minlength="5" required><br>
+                    <p class="text-left m-0 lh-1-5"><label for="telefoneMan" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                    <input placeholder="@CultureHelper.GetTranslation("telephone", Context.Session.GetString("SiteLanguage"))" id="telefoneMan" class="inputssect" type="text" name="telephone" minlength="13" required>
+                    <p class="text-left m-0 lh-1-5"><label for="emailMan" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                    <input placeholder="Email" class="inputssect" id="emailMan" type="email" name="email" required>
+                    <div class="my-3">
+                        <div>
+                            <button disabled id="form_submit_man" data-sitekey="6Lcyvd8ZAAAAABBwNi_O5GSbzPxnqoDND_yB1ln_" data-callback='onSubmitFormCallMan' data-action='submit' class="btn_azul btn px-xl-5 py-xl-3">
+                                @CultureHelper.GetTranslation("request_a_call", Context.Session.GetString("SiteLanguage"))
+                            </button>
+                        </div>
+                    </div>
+                    <p class="fs-14 lh-1-5">
+                        @Html.Raw(CultureHelper.GetTranslation("by_clicking_try_for_free", Context.Session.GetString("SiteLanguage")))
+                    </p>
+                </form>
+            </div>
+            <div class="col-md-7 text-center m-md-auto">
+                <img src="~/Assets/images/sample-hero-image.png">
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,941 @@
+@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("cart", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var modules = (List<Modules>)ViewBag.modules;
+    var tariff = (Tariffs)ViewBag.tariff;
+    var totalPrice = (double)ViewBag.totalPrice;
+    var promocode = (Promocodes)ViewBag.promocode;
+    var priceForUsers = (double)ViewBag.priceForUsers;
+    var priceForModules = (double)ViewBag.priceForModules;
+    var discountForTerm = (double)ViewBag.discountForTerm;
+    var numberOfUsers = (int)ViewBag.numberOfUsers;
+    var cartId = (int)ViewBag.cartId;
+    var cart = (Carts)ViewBag.cart;
+    var promocodeSum = (double)ViewBag.discountForPromocode;
+}
+
+<section class="bg-white py-5 my-5">
+    <div class="container">
+
+        <ul class="nav nav-tabs nav-justified" id="cartTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link small text-uppercase active" id="a_login" data-toggle="tab" href="#authorization" role="tab" aria-controls="authorization" aria-selected="true">@CultureHelper.GetTranslation("login", Context.Session.GetString("SiteLanguage"))</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link small text-uppercase" id="a_confirmation" data-toggle="tab" href="#confirmation" role="tab" aria-controls="confirmation" aria-selected="false">@CultureHelper.GetTranslation("confirmation", Context.Session.GetString("SiteLanguage"))</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link small text-uppercase" id="a_payment" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">@CultureHelper.GetTranslation("payment", Context.Session.GetString("SiteLanguage"))</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="authorization" class="tab-pane fade active show" role="tabpanel" aria-labelledby="a_login">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="register">
+                            <div class="p-3 p-md-3 p-xl-5 p-lg-5">
+                                <p class="p-purple-dark fs-24 font-weight-bolder text-center">@CultureHelper.GetTranslation("register", Context.Session.GetString("SiteLanguage"))</p>
+                                <div class="m-auto cart-forms">
+                                    <p class="text-center m-0 lh-1-5"><label for="inputNameRegister" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="form-group input-group diga-input-hover">
+                                        <span class="input-group-text form-name"><img src="~/Assets/img/name1.png" /></span>
+                                        <input type="text" name="name" class="form-control diga-input border-0" id="inputNameRegister" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                    </div>
+                                    <p class="text-center m-0 lh-1-5"><label for="inputEmailRegister" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="form-group input-group diga-input-hover">
+                                        <span class="input-group-text"><img src="~/Assets/img/mail1.png" /></span>
+                                        <input type="email" name="email" class="form-control diga-input" id="inputEmailRegister" placeholder="Email" style="border: none;" required>
+                                    </div>
+                                    <p class="text-center m-0 lh-1-5"><label for="inputPasswordRegister" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="form-group input-group diga-input-hover">
+                                        <span class="input-group-text form-icon"><i class="fas fa-lock"></i></span>
+                                        <input type="password" name="password" id="inputPasswordRegister" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("password", Context.Session.GetString("SiteLanguage"))" minlength="6" required>
+                                    </div>
+                                    <p class="text-center m-0 lh-1-5"><label for="inputTelephoneRegister" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="form-group input-group diga-input-hover">
+                                        <span class="input-group-text"><img src="~/Assets/img/call1.png" /></span>
+                                        <input type="tel" name="telephone" id="inputTelephoneRegister" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("telephone", Context.Session.GetString("SiteLanguage"))" minlength="16" required>
+                                    </div>
+                                    <p class="text-center ml-0 lh-1-5"><label for="domainvalRegister" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="input-group form-group diga-input-hover ml-0">
+                                        <span class="input-group-text border-0"><img src="~/Assets/img/domen1.png" /></span>
+                                        <input id="domainvalRegister" type="text" name="domain" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("domain", Context.Session.GetString("SiteLanguage"))" required maxlength="25">
+                                        <div class="spinner-border" id="domain_spinner_register" role="status" style="margin-top: 3px; display: none;">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <input type="text" class="col-sm-4 form-control diga-input diga-disabled border-0 pl-0 bg-white font-weight-bold p-valid" value="| .diga.pt" disabled="disabled">
+                                    </div>
+                                    <p id="domainIsBusyRegister" class="text-center text-red" style="display: none;">@CultureHelper.GetTranslation("domain_is_busy", Context.Session.GetString("SiteLanguage"))</p>
+                                    <div class="fs-14 mb-3 ml-2 text-left lh-1-5">* @CultureHelper.GetTranslation("modal_domain_text", Context.Session.GetString("SiteLanguage"))</div>
+                                    <div class="form-group my-4">
+                                        <div id="LangDropdown" class="m-auto" name="language"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button id="register_submit" disabled type="submit" class="btn_azul fs-18">@CultureHelper.GetTranslation("register", Context.Session.GetString("SiteLanguage"))</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form id="login">
+                            <div class="p-3 p-md-3 p-xl-5 p-lg-5">
+                                <p class="p-purple-dark fs-24 font-weight-bolder text-center">@CultureHelper.GetTranslation("login", Context.Session.GetString("SiteLanguage"))</p>
+                                <div class="m-auto cart-forms">
+                                    <p class="text-center m-0 lh-1-5"><label for="inputEmailLogin" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="form-group input-group diga-input-hover">
+                                        <span class="input-group-text"><img src="~/Assets/img/mail1.png" /></span>
+                                        <input type="email" name="email" class="form-control diga-input border-0" id="inputEmailLogin" placeholder="Email" required>
+                                    </div>
+                                    <p class="text-center m-0 lh-1-5"><label for="inputPasswordLogin" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                    <div class="form-group input-group diga-input-hover">
+                                        <span class="input-group-text form-icon"><i class="fas fa-lock"></i></span>
+                                        <input type="password" name="password" id="inputPasswordLogin" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("password", Context.Session.GetString("SiteLanguage"))" minlength="4" required>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button id="login_submit" disabled type="submit" class="btn_azul fs-18">@CultureHelper.GetTranslation("login", Context.Session.GetString("SiteLanguage"))</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="confirmation" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("tariff", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="col-md-3 col-3 text-right borderbottom">@tariff.Name  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("price_of_tariff", Context.Session.GetString("SiteLanguage"))  </div>
+                    <div class="col-md-3 col-3 text-right borderbottom">@tariff.Price.ToString("0.##") €  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-4 borderbottom">@CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))   </div>
+                    <div class="col-md-3 col-8 text-right borderbottom">
+                        @foreach (var module in modules)
+                        {
+                            <span>@CultureHelper.GetTranslation(module.BigTitleTextId, Context.Session.GetString("SiteLanguage")), </span>
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("price_for_modules", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class="col-md-3 col-3 text-right borderbottom">@priceForModules.ToString("0.##") € </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("number_of_users", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="col-md-3 col-3 text-right borderbottom">@numberOfUsers </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("price_for_users", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="col-md-3 col-3 text-right borderbottom">@priceForUsers.ToString("0.##") € </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("promocode", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class="col-md-3 col-3 text-right borderbottom">@(promocode == null ? "-" : promocode.Value) </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("discount_by_promocode", Context.Session.GetString("SiteLanguage")) @(promocode == null ? 0.0 : promocode.Discount)%</div>
+                    <div class="col-md-3 col-3 text-right borderbottom">- @(promocodeSum.ToString("0.##")) € </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("discount_by_term", Context.Session.GetString("SiteLanguage")) @( cart.Term == 12 ? 15 : 0)%</div>
+                    <div class="col-md-3 col-3 text-right borderbottom">- @discountForTerm.ToString("0.##") € </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("your_balance", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="col-md-3 col-3 text-right borderbottom"><span id="balance">0.00</span> € </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-6 borderbottom"><h2>@CultureHelper.GetTranslation("total_sum", Context.Session.GetString("SiteLanguage"))</h2> </div>
+                    <div class="col-md-3 col-6 text-right borderbottom"><h2><span id="total_sum">@totalPrice.ToString("0.##")</span> €</h2> </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-9 borderbottom">@CultureHelper.GetTranslation("vat", Context.Session.GetString("SiteLanguage")) </div>
+                    <div class="col-md-3 col-3 text-right borderbottom"><span>@ViewBag.iva.ToString("0.##")</span> € </div>
+                </div>
+
+                <div class="row">
+                    <button id="proceed_payment" class="btn_azul m-auto-mobile mt-5">@CultureHelper.GetTranslation("confirm_and_pay", Context.Session.GetString("SiteLanguage"))</button>
+                </div>
+            </div>
+            <div id="payment" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-4 col-6">@CultureHelper.GetTranslation("you_pay", Context.Session.GetString("SiteLanguage"))  <hr class="solid"></div>
+                    <div class="col-md-3 col-6 text-right"><span id="to_pay">0.00</span> €  <hr class="solid"></div>
+                </div>
+                <h2 style="display:none;" id="paid_from_balance">@CultureHelper.GetTranslation("subscriptions_were_paid_from_your_balance", Context.Session.GetString("SiteLanguage"))</h2>
+                <div id="money" style="display: none">
+                    <div class="row mb-5">
+                        <div class="col-md-4 col-6">@CultureHelper.GetTranslation("from_balance", Context.Session.GetString("SiteLanguage"))  <hr class="solid"></div>
+                        <div class="col-md-3 col-6 text-right"><span id="from_balance">0.00</span> €  <hr class="solid"></div>
+                    </div>
+                    <ul class="nav bg-white nav-pills rounded nav-fill mb-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active cart-payment" data-toggle="pill" href="#nav-tab-card"><i class="fa fa-credit-card"></i> Credit Card</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cart-payment" data-toggle="pill" href="#nav-tab-multibanco">@*<img style=" width: 5%;" src="../../Assets/img/multibanco.png" />*@ Multibanco</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cart-payment" data-toggle="pill" href="#nav-tab-mbway">@*<img style=" width: 5%;" src="../../Assets/img/MBWay.png" />*@ MBWAY</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link cart-payment" data-toggle="pill" href="#nav-tab-invoice"><i class="fa fa-university"></i>  @CultureHelper.GetTranslation("invoice", Context.Session.GetString("SiteLanguage"))</a>
+                        </li>
+                    </ul>
+                    <div class="row">                        
+                        <div class="col-md-9 col-xl-6 col-lg-7 m-auto py-3">
+                            <article class="card">
+                                <div class="card-body p-5">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="nav-tab-card">
+                                            <form role="form" id="credit_card">
+                                                <div class="form-group">
+                                                    <label for="username">@CultureHelper.GetTranslation("name_from_card", Context.Session.GetString("SiteLanguage"))</label>
+                                                    <p class="text-center m-0 lh-1-5"><label for="name_credit_card" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                    <div class="input-group">
+                                                        <input id="name_credit_card" type="text" class="form-control" name="name" placeholder="" required minlength="5" pattern="[A-Za-z]+">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="cardNumber">@CultureHelper.GetTranslation("card_number", Context.Session.GetString("SiteLanguage"))</label>
+                                                    <p class="text-center m-0 lh-1-5"><label for="number_credit_card" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                    <div class="input-group">
+                                                        <input id="number_credit_card" class="form-control" name="cardNumber" placeholder="****-****-****-****" required minlength="19" maxlength="19">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text text-muted">
+                                                                <i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div class="form-group">
+                                                            <label><span class="hidden-xs">@CultureHelper.GetTranslation("expiration", Context.Session.GetString("SiteLanguage"))</span> </label>
+
+                                                            <div class="input-group">
+                                                                <input id="mm_credit_card" type="number" class="form-control" placeholder="MM" name="validToMm" maxlength="2" min="1" max="12">
+                                                                <input id="yy_credit_card" type="number" class="form-control" placeholder="YYYY" name="validToYy" minlength="4" maxlength="4" min="2020" max="2030">
+                                                            </div>
+                                                            <p class="text-center m-0 lh-1-5"><label for="mm_credit_card" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                            <p class="text-center m-0 lh-1-5"><label for="yy_credit_card" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV @*<i class="fa fa-question-circle"></i>*@</label>
+                                                            <div class="input-group">
+                                                                <input id="cvv_credit_card" type="number" class="form-control" required="" name="cvv" minlength="3" maxlength="4" min="1" max="9999">
+                                                            </div>
+                                                            <p class="text-center m-0 lh-1-5"><label for="cvv_credit_card" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="CartId" id="cart_credit_card" value="@cartId" />
+                                                <div class="text-center"> <button id="credit_card_submit" disabled class="btn_azul fs-18 mt-3" type="submit"> @CultureHelper.GetTranslation("confirm_and_pay", Context.Session.GetString("SiteLanguage"))  </button></div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-tab-multibanco">
+                                            <div class="text-center mb-3"><img style="width:13%; max-width: 13%;" src="../../Assets/img/multibanco.png" /></div>
+                                            <p>@CultureHelper.GetTranslation("multibanco_1", Context.Session.GetString("SiteLanguage")) </p>
+                                            <p class="text-center">
+                                                <button id="get_multibanco" type="button" class="btn_azul fs-18 my-3"> @CultureHelper.GetTranslation("get_payment_details", Context.Session.GetString("SiteLanguage")) </button>
+                                            </p>
+                                            <p>@CultureHelper.GetTranslation("reference", Context.Session.GetString("SiteLanguage")) <span id="reference"></span></p>
+                                            <p> @CultureHelper.GetTranslation("entity", Context.Session.GetString("SiteLanguage")) <span id="entity"></span></p>
+                                            <p class="fs-13 lh-1-5"><span class="i-info">i</span> @CultureHelper.GetTranslation("multibanco_2", Context.Session.GetString("SiteLanguage"))</p>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-tab-mbway">
+                                            <form id="mbway">
+                                                <div class="text-center mb-3"><img style="width:20%; max-width: 20%;" src="../../Assets/img/MBWay.png" /></div>
+                                                <p>@CultureHelper.GetTranslation("mbway_1", Context.Session.GetString("SiteLanguage"))</p>
+                                                <p class="text-center m-0 lh-1-5"><label for="mbway_phone" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <input id="mbway_phone" name="mbway_phone" type="tel" class="form-control" placeholder="@CultureHelper.GetTranslation("telephone", Context.Session.GetString("SiteLanguage"))" minlength="9" maxlength="9" />
+                                                <p class="text-center">
+                                                    <input type="hidden" name="CartId" id="cart_mbway" value="@cartId" />
+                                                    <button id="mbway_submit" disabled type="submit" class="btn_azul fs-18 my-3"> @CultureHelper.GetTranslation("confirm_and_pay", Context.Session.GetString("SiteLanguage")) </button>
+                                                </p>
+                                            </form>
+                                            <p class="fs-13 lh-1-5"><span class="i-info">i</span> @CultureHelper.GetTranslation("mbway_2", Context.Session.GetString("SiteLanguage"))</p>
+                                        </div> <!-- tab-pane.// -->
+                                        <div class="tab-pane fade" id="nav-tab-invoice">
+                                            <p>@CultureHelper.GetTranslation("system_will_generate_invoice", Context.Session.GetString("SiteLanguage"))</p>
+                                            <form id="invoice_form">
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <select class="form-control" id="lngselectinvoice">
+                                                        <option value="ru">Русский</option>
+                                                        <option value="en" selected>English</option>
+                                                        <option value="pt">Português</option>
+                                                        <option value="es">Español</option>
+                                                    </select>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputCompanyName" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <input type="text" name="companyname" class="form-control diga-input border-0" id="inputCompanyName" placeholder="@CultureHelper.GetTranslation("company_name", Context.Session.GetString("SiteLanguage"))" minlength="3" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputTin" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <input type="text" name="tin" class="form-control diga-input border-0" id="inputTin" placeholder="@CultureHelper.GetTranslation("tin", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputLegalAddress" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <input type="text" name="legaladdress" class="form-control diga-input border-0" id="inputLegalAddress" placeholder="@CultureHelper.GetTranslation("legal_address", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputZipcode" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <input type="text" name="zipcode" id="inputZipcode" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("zipcode", Context.Session.GetString("SiteLanguage"))" minlength="6" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputCity" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <input type="text" name="city" id="inputCity" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("city", Context.Session.GetString("SiteLanguage"))" minlength="3" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputCountry" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <input type="text" name="country" id="inputCountry" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("country", Context.Session.GetString("SiteLanguage"))" minlength="2" required>
+                                                </div>
+                                                <div class="text-center mb-4">
+                                                    <button id="invoice_submit" disabled type="submit" class="btn_azul fs-18">@CultureHelper.GetTranslation("generate", Context.Session.GetString("SiteLanguage"))</button>
+                                                </div>
+                                            </form>
+                                            <p class="fs-13 lh-1-5"><span class="i-info">i</span> @CultureHelper.GetTranslation("invoice_1", Context.Session.GetString("SiteLanguage"))</p>
+                                        </div>
+                                    </div> <!-- tab-pane.// -->
+                                </div> <!-- tab-content .// -->
+                            </article> <!-- card.// -->
+                        </div> <!-- card-body.// -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-success" role="alert" style="display:none;" id="success_alert">
+
+            <h4 class="alert-heading">
+                @CultureHelper.GetTranslation("congratulations", Context.Session.GetString("SiteLanguage"))
+            </h4>
+            @CultureHelper.GetTranslation("success_payment_alert", Context.Session.GetString("SiteLanguage"))
+            <button type="button" class="close" id="alert_close_success">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-danger" role="alert" style="display:none;" id="error_alert">
+
+            <h4 class="alert-heading">
+                @CultureHelper.GetTranslation("oops", Context.Session.GetString("SiteLanguage"))
+            </h4>
+            @CultureHelper.GetTranslation("error_alert", Context.Session.GetString("SiteLanguage"))
+            <a href="../home/contacts" target="_blank">@CultureHelper.GetTranslation("contacts", Context.Session.GetString("SiteLanguage"))</a>
+
+            <button type="button" class="close" id="alert_close_error">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#alert_close_success").click(function () {
+            $('#success_alert').hide();
+        });
+        $("#alert_close_error").click(function () {
+            $('#error_alert').hide();
+        });
+
+        var ddData = [
+            {
+                text: "Русский",
+                value: "ru",
+                selected: true,
+                imageSrc: "../../Assets/img/ru.png"
+            },
+            {
+                text: "English",
+                value: "en",
+                selected: false,
+                imageSrc: "../../Assets/img/eng.png"
+            },
+            {
+                text: "Português",
+                value: "pt",
+                selected: true,
+
+                imageSrc: "../../Assets/img/por.png"
+            },
+            {
+                text: "Español",
+                value: "es",
+                selected: false,
+                imageSrc: "../../Assets/img/sp.png"
+            }
+        ];
+        $('#LangDropdown').ddslick({
+            data: ddData,
+            width: 176,
+            //height: 45,
+            background: 'white',
+            imagePosition: "left",
+            onSelected: function (selectedData) {
+                //callback function: do something with selectedData;
+            }
+        });
+        $("#domainvalRegister").on("change paste keyup", function () {
+            $("#domain_spinner_register").show();
+            $("#domainIsBusyRegister").hide();
+            $("#register_submit").prop('disabled', true);
+            $.get("/request/CheckDomain?domain=" + $(this).val(), function (data, status) {
+                if (data === false) {
+                    $("#domain_spinner_register").hide();
+                    $("#domainIsBusyRegister").show();
+                    $("#domainvalRegister").parent().removeClass('diga-input-valid');
+                    $("#domainvalRegister").parent().addClass('diga-input-invalid');
+                    $("#domainvalRegister").removeClass('is-valid');
+                    $("#register_submit").prop('disabled', true);
+                }
+                else {
+                    $("#domain_spinner_register").hide();
+                    $("#domainIsBusyRegister").hide();
+                    $("#domainvalRegister").parent().addClass('diga-input-valid');
+                    $("#domainvalRegister").parent().removeClass('diga-input-invalid');
+                    $("#domainvalRegister").addClass('is-valid');
+                    $("#register_submit").prop('disabled', false);
+                }
+
+            });
+
+        });
+
+        var form_register = $('#register');
+        form_register.validate({
+            highlight: function (element) {
+                $(element).parent().addClass('diga-input-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).parent().removeClass('diga-input-invalid');
+                $(element).parent().addClass('diga-input-valid');
+                $(element).addClass('is-valid');
+            },
+            name: {
+                required: true,
+                minlength: 5,
+            },
+            password: {
+                required: true,
+                minlength: 6,
+            },
+            telephone: {
+                required: true,
+                minlength: 13,
+            },
+            email: {
+                required: true,
+                email: true,
+                regex: '/^\b[A-Z0-9._%+-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i'
+            },
+            messages: {
+                name: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                },
+                email: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    email: "@CultureHelper.GetTranslation("valid_email", Context.Session.GetString("SiteLanguage"))",
+                },
+                password: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 6",
+                },
+                telephone: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                },
+            }
+        });
+
+        form_register.submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            if (!form.valid) return false;
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/external_trial",
+                data: JSON.stringify({
+                    "name": $("#inputNameRegister").val(),
+                    "email": $("#inputEmailRegister").val(),
+                    "password": $("#inputPasswordRegister").val(),
+                    "telephone": $("#inputTelephoneRegister").val(),
+                    "domain": $("#domainvalRegister").val(),
+                    "language": $(".dd-selected-value").val()
+                }),
+                success: function (data) {
+                    bearer_token = data.access_token;
+                    $('#cartTabs a[href="#confirmation"]').tab('show');
+                    $('#a_login').removeAttr("data-toggle");
+                    $('#a_login').css("cursor", "no-drop");
+
+                    $('#a_confirmation').attr("data-toggle", "tab");
+                    $('#a_confirmation').addClass("active");
+                    $('#a_confirmation').css("cursor", "pointer");
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+        form_register.on('blur keyup change', 'input', function (event) {
+            var valid = $('#register').validate().checkForm();
+            if (valid) {
+                $("#register_submit").prop('disabled', false);
+            } else {
+                $("#register_submit").prop('disabled', true);
+            }
+        });
+
+        var form_login = $('#login');
+        form_login.validate({
+            highlight: function (element) {
+                $(element).parent().addClass('diga-input-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).parent().removeClass('diga-input-invalid');
+                $(element).parent().addClass('diga-input-valid');
+                $(element).addClass('is-valid');
+            },
+            email: {
+                required: true,
+                email: true,
+                regex: '/^\b[A-Z0-9._%+-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i'
+            },
+            password: {
+                required: true,
+                minlength: 4,
+            },
+            messages: {
+                email: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    email: "@CultureHelper.GetTranslation("valid_email", Context.Session.GetString("SiteLanguage"))",
+
+                },
+                password: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 4",
+                },
+            }
+        });
+        form_login.submit(function (e) {
+            var $form = $(this);
+            if (!$form.valid) return false;
+            e.preventDefault();
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/api/Account/token",
+                data: JSON.stringify({
+                    "email": $("#inputEmailLogin").val(),
+                    "password": $("#inputPasswordLogin").val(),
+                }),
+                success: function (data) {
+                    bearer_token = data.access_token;
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/profile/balance",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + bearer_token);
+                        },
+                        success: function (data) {
+                            $("#balance").text(data.balance);
+                            if (data.balance > 0){
+                                var sum = total_sum - data.balance;
+                                if (sum > 0){
+                                    $("#total_sum").text(parseFloat(sum).toFixed(2));
+                                }
+                                else{
+                                    $("#total_sum").text("0.00");
+                                }
+                            }
+                            $('#cartTabs a[href="#confirmation"]').tab('show');
+                            $('#a_login').removeAttr("data-toggle");
+                            $('#a_login').css("cursor", "no-drop");
+                            let q = $('#a_confirmation');
+                            q.attr("data-toggle", "tab");
+                            $('#a_confirmation').addClass("active");
+                            $('#a_confirmation').css("cursor", "pointer");
+                        },
+                        error: function (data) {
+                            $('#error_alert').show();
+                        },
+                    });
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+        form_login.on('blur keyup change', 'input', function (event) {
+            var valid = $('#login').validate().checkForm();
+            if (valid) {
+                $("#login_submit").prop('disabled', false);
+            } else {
+                $("#login_submit").prop('disabled', true);
+            }
+        });
+
+        let total_sum = @totalPrice;
+        let cart_id = @cartId;
+        let bearer_token = "";
+        let payment_type = "";
+        let balance = 0.0;
+
+        $('#cartTabs a[href="#authorization"]').tab('show');
+        $('#a_confirmation').removeAttr("data-toggle");
+        $('#a_confirmation').css("cursor", "no-drop");
+        $('#a_payment').removeAttr("data-toggle");
+        $('#a_payment').css("cursor", "no-drop");
+
+        $("#number_credit_card").inputmask("9999-9999-9999-9999");
+        $("#inputTelephoneRegister").inputmask("+999-999-999-999");
+        $("#mbway_phone").inputmask("999999999");
+
+
+        var form_mbway = $('#mbway');
+        form_mbway.validate({
+            highlight: function (element) {
+                $(element).addClass('diga-input-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).removeClass('diga-input-invalid');
+                $(element).addClass('diga-input-valid');
+                $(element).addClass('is-valid');
+            },
+            mbway_phone: {
+                required: true,
+                minlength: 9,
+                maxlength: 9,
+            },
+            messages: {
+                mbway_phone: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 9",
+                    maxlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 9",
+                },
+            }
+        });
+        form_mbway.submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            if (!form.valid) return false;
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/api/payment/mbway",
+                data: form.serialize(),
+                data: JSON.stringify({
+                    "Phone": $("#mbway_phone").val(),
+                    "CartId": $("#cart_mbway").val(),
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + bearer_token);
+                },
+                success: function (data) {
+                    $('#success_alert').show();
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+        form_mbway.on('blur keyup change', 'input', function (event) {
+            var valid = $('#mbway').validate().checkForm();
+            if (valid) {
+                $("#mbway_submit").prop('disabled', false);
+            } else {
+                $("#mbway_submit").prop('disabled', true);
+            }
+        });
+
+        $("#get_multibanco").click(function(){
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/api/payment/multibanco",
+                data: JSON.stringify({
+                    "CartId": cart_id,
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + bearer_token);
+                },
+                success: function (data) {
+                    $("#reference").text(data.reference);
+                    $("#entity").text(data.entity);
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+
+        var form_credit_card = $('#credit_card');
+        form_credit_card.validate({
+            highlight: function (element) {
+                $(element).parent().addClass('diga-input-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).parent().removeClass('diga-input-invalid');
+                $(element).parent().addClass('diga-input-valid');
+                $(element).addClass('is-valid');
+            },
+            name: {
+                required: true,
+                minlength: 5,
+
+            },
+            cardNumber: {
+                required: true,
+                creditcard: true
+            },
+            validToMm: {
+                required: true,
+            },
+            validToYy: {
+                required: true,
+            },
+            cvv: {
+                required: true,
+                minlength: 3,
+            },
+            messages: {
+                name: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                },
+                cardNumber: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                },
+                validToMm: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                },
+                validToYy: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                },
+                cvv: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 3",
+                },
+            }
+        });
+        form_credit_card.submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            if (!form.valid) return false;
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/api/payment/creditCard",
+                data: form.serialize(),
+                data: JSON.stringify({
+                    "Name": $("#name_credit_card").val(),
+                    "CartId": $("#cart_credit_card").val(),
+                    "CardNumber": $("#number_credit_card").val(),
+                    "ValidToMm": $("#mm_credit_card").val(),
+                    "ValidToYy": $("#yy_credit_card").val(),
+                    "Cvv": $("#cvv_credit_card").val(),
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + bearer_token);
+                },
+                success: function (data) {
+                    window.location.replace(data.url);
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+        form_credit_card.on('blur keyup change', 'input', function (event) {
+            var valid = $('#credit_card').validate().checkForm();
+            if (valid) {
+                $("#credit_card_submit").prop('disabled', false);
+            } else {
+                $("#credit_card_submit").prop('disabled', true);
+            }
+        });
+
+
+        $("#proceed_payment").click(function(){
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/api/payment/confirmPayment",
+                data: JSON.stringify({
+                    "CartId": cart_id,
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + bearer_token);
+                },
+                success: function (data) {
+                    $('#cartTabs a[href="#payment"]').tab('show');
+                    $('#a_confirmation').removeAttr("data-toggle");
+                    $('#a_confirmation').css("cursor", "no-drop");
+
+                    $("#to_pay").text(data.payMoney);
+                    $("#from_balance").text(data.payBalance);
+
+                    $('#a_payment').attr("data-toggle", "tab");
+                    $('#a_payment').css("cursor", "pointer");
+                    balance = data.payBalance;
+                    payment_type = data.paymentType;
+
+                    if (data.paymentType === 'money'){
+                        $('#paid_from_balance').hide();
+                        $('#money').show();
+                    }
+                    else if (data.paymentType === 'balance'){
+                        $('#money').hide();
+                        $('#paid_from_balance').show();
+                    }
+
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+
+        var form_invoice = $('#invoice_form');
+        form_invoice.validate({
+            highlight: function (element) {
+                $(element).parent().addClass('diga-input-invalid');
+            },
+            unhighlight: function (element) {
+                $(element).parent().removeClass('diga-input-invalid');
+                $(element).parent().addClass('diga-input-valid');
+                $(element).addClass('is-valid');
+            },
+            companyname: {
+                required: true,
+                minlength: 3,
+            },
+            tin: {
+                required: true,
+                minlength: 5,
+            },
+            legaladdress: {
+                required: true,
+                minlength: 5,
+            },
+            zipcode: {
+                required: true,
+                email: true,
+                //regex: '/^\b[A-Z0-9._%+-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i'
+                minlength: 5,
+            },
+            city: {
+                required: true,
+                minlength: 3,
+            },
+            country: {
+                required: true,
+                minlength: 2,
+            },
+            messages: {
+                companyname: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 3",
+                },
+                tin: {
+                    required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                },
+                legaladdress: {
+                      required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                },
+                zipcode: {
+                      required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                },
+                city: {
+                     required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 3",
+                },
+                country: {
+                     required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 2",
+                },
+            }
+        });
+
+        form_invoice.submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            if (!form.valid) return false;
+            $.ajax({
+                contentType: 'application/json',
+                type: "POST",
+                url: "/invoice/generate",
+                data: JSON.stringify({
+                    "CartId": cart_id,
+                    "language": $("#lngselectinvoice").val(),
+                    "companyname": $("#inputCompanyName").val(),
+                    "tin": $("#inputTin").val(),
+                    "legaladdress": $("#inputLegalAddress").val(),
+                    "zipcode": $("#inputZipcode").val(),
+                    "city": $("#inputCity").val(),
+                    "country": $("#inputCountry").val(),
+                    "priceForUsers": @priceForUsers,
+                    "priceForModules": @priceForModules,
+                    "promocodeSum": @promocodeSum,
+                    "termSum": @discountForTerm,
+                    "balance": balance,
+
+                }),
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function (data) {
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(data);
+                    a.href = url;
+                    a.download = 'invoiceDiga.pdf';
+                    document.body.append(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                },
+                error: function (data) {
+                    $('#error_alert').show();
+                },
+            });
+        });
+        form_invoice.on('blur keyup change', 'input', function (event) {
+            var valid = $('#invoice_form').validate().checkForm();
+            if (valid) {
+                $("#invoice_submit").prop('disabled', false);
+            } else {
+                $("#invoice_submit").prop('disabled', true);
+            }
+        });
+    </script>
+}

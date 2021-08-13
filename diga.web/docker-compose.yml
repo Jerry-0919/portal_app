@@ -1,0 +1,28 @@
+﻿version: "2.1"
+services:
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "digaErp!12345"
+            ACCEPT_EULA: "Y"
+        healthcheck:
+            test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "digaErp!12345", "-Q", "select 1" ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:80"
+        depends_on:
+            db:
+                condition: service_healthy
+       # restart: on-failure
+       # restart: unless-stopped
+    start_dependencies:
+        image: dadarek/wait-for-dependencies
+        depends_on:
+          - db
+        command: db:1433

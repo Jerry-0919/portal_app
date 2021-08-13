@@ -1,0 +1,41 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal; 
+@inject DigaContext Db
+<style type="text/css">
+    .owl-carousel.home-slider .slider-item:after {
+        background: none !important;
+    }
+
+    .owl-carousel.home-slider .slider-item .overlay {
+        background: none !important;
+    }
+</style>
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="div-title text-center">@CultureHelper.GetTranslation("reviews_of_digacrm", Context.Session.GetString("SiteLanguage"))</div>
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div id="owl-demo-review" class="owl-carousel owl-theme">
+                    @foreach (var item in Db.Reviews.ToList())
+                    {
+                        <div class="item">
+                            <div class="d-flex align-self-stretch fadeInUp">
+                                <div class="media block-6 services reviews d-block text-center">
+                                    <div class="media-body p-2 mt-3 position-relative">
+                                        <img src="@item.PictureUrl" class="person_img" id="person">
+                                        <h4 class="heading">@CultureHelper.GetTranslation(item.NameTextId, Context.Session.GetString("SiteLanguage"))</h4>
+                                        <p>@CultureHelper.GetTranslation(item.PositionTextId, Context.Session.GetString("SiteLanguage"))</p>
+                                        <p>@CultureHelper.GetTranslation(item.ReviewTextId, Context.Session.GetString("SiteLanguage"))</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

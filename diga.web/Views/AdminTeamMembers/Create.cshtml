@@ -1,0 +1,60 @@
+@model diga.bl.Models.TeamMembers
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>TeamMembers</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameTextId" class="control-label"></label>
+                <select asp-for="NameTextId" class ="form-control" asp-items="ViewBag.NameTextId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhotoUrl" class="control-label"></label>
+                <input asp-for="PhotoUrl" class="form-control" />
+                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentTextId" class="control-label"></label>
+                <select asp-for="DepartmentTextId" class ="form-control" asp-items="ViewBag.DepartmentTextId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PositionTextId" class="control-label"></label>
+                <select asp-for="PositionTextId" class ="form-control" asp-items="ViewBag.PositionTextId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryTextId" class="control-label"></label>
+                <select asp-for="CountryTextId" class ="form-control" asp-items="ViewBag.CountryTextId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileUrl" class="control-label"></label>
+                <input asp-for="ProfileUrl" class="form-control" />
+                <span asp-validation-for="ProfileUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileIcon" class="control-label"></label>
+                <input asp-for="ProfileIcon" class="form-control" />
+                <span asp-validation-for="ProfileIcon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

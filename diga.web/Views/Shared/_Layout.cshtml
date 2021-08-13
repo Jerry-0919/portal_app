@@ -1,0 +1,1306 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@using diga.dal;
+@inject DigaContext Db
+@{
+    var user = User.Identity;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">(function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(69489847, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });</script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/69489847" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - diga.pt</title>
+    <link href="~/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/Assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="~/Assets/admin/css/font-awesome-all.min.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" type="image/png" href="~/Assets/images/ico.png" />
+    <link rel="stylesheet" href="~/Assets/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/Assets/css/animate.css">
+    <link rel="stylesheet" href="~/Assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Assets/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Assets/css/editor.css">
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+
+    <link rel="stylesheet" href="~/Assets/css/flaticon.css">
+    <link rel="stylesheet" href="~/Assets/css/icomoon.css">
+</head>
+<body>
+
+
+
+    <div id="overlay"></div>
+    <div style="display:none !important;" id="toaster_section" aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center">
+        <div class="toast position-fixed toast-props" data-autohide="false">
+            <div id="success_toast" class="toast-header bg-white toast-border">
+
+                <img class="py-4 p-md-5" src="~/Assets/img/ok.bg.svg" />
+                <div class="text-center p-md-5 m-auto">
+
+                    <div class="mr-auto p-purple-dark fs-18 font-weight-bold pt-4 pt-md-0"> @CultureHelper.GetTranslation("congratulations", Context.Session.GetString("SiteLanguage")) </div>
+                    <p class="p-purple-dark fs-18"> @CultureHelper.GetTranslation("your_request_was_successfully_sent", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+                <button type="button" class="close toast-close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true"><img src="~/Assets/img/close.png" /></span></button>
+            </div>
+
+            <div id="error_toast" class="toast-header bg-white toast-border">
+                <img class="py-4 p-md-5" src="~/Assets/img/error.svg" />
+                <div class="text-center p-md-5 m-auto">
+                    <div class="m-auto p-purple-dark fs-18 font-weight-bold pt-4 pt-md-0">
+                        @CultureHelper.GetTranslation("oops", Context.Session.GetString("SiteLanguage"))
+                    </div>
+                    <p class="p-purple-dark fs-18">@CultureHelper.GetTranslation("wrong", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+                <button type="button" class="close toast-close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true"><img src="~/Assets/img/close.png" /></span></button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container-fluid">
+            <div class="container mt-2">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="navbar-header"> <a class="" href="~/home/index"><img src="~/Assets/platform/logo.png"></a></div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle black p-nav" href="/platform/index#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @CultureHelper.GetTranslation("platform", Context.Session.GetString("SiteLanguage"))
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/platform/index#/register-with-role/PlatformExecutor"> @CultureHelper.GetTranslation("for_executors", Context.Session.GetString("SiteLanguage")) </a>
+                                    <a class="dropdown-item" href="/platform/index#/register-with-role/PlatformCustomer">@CultureHelper.GetTranslation("for_customers", Context.Session.GetString("SiteLanguage"))</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle black p-nav" href="~/modules/index" id="mobile_opps" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @CultureHelper.GetTranslation("opportunities", Context.Session.GetString("SiteLanguage"))
+                                </a>
+                                <div class="dropdown-menu fs-14" aria-labelledby="mobile_opps">
+                                    @foreach (var mod in Db.Modules.Where(m => string.IsNullOrEmpty(m.Url) != true).ToList())
+                                    {
+                                        <a class="dropdown-item" href="@mod.Url">@CultureHelper.GetTranslation(mod.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</a>
+                                    }
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="~/modules/index">@CultureHelper.GetTranslation("all_modules", Context.Session.GetString("SiteLanguage"))</a>
+                                </div>
+                                <div class="dropdown-menu big-navbar" aria-labelledby="drop-common">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <a type="button" class="btn btn-navbar" href="~/modules/crm">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/crm.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("crm", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>
+                                                    <div class="dropdown-header-description">@CultureHelper.GetTranslation("crm_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+                                                <a type="button" class="btn btn-navbar" href="~/modules/hr">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/hr.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("hr", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>  <div class="dropdown-header-description">@CultureHelper.GetTranslation("hr_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+
+                                                <a type="button" class="btn btn-navbar" href="~/modules/email">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/email.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("email", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>  <div class="dropdown-header-description">@CultureHelper.GetTranslation("email_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <a type="button" class="btn btn-navbar" href="~/modules/dashboard">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/dashboard.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("dashboard", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>   <div class="dropdown-header-description">@CultureHelper.GetTranslation("dashboard_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+
+                                                <a type="button" class="btn btn-navbar" href="~/modules/accesssettings">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/log-in.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("access_settings", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>
+                                                    <div class="dropdown-header-description">@CultureHelper.GetTranslation("access_settings_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+
+                                                <a type="button" class="btn btn-navbar" href="~/modules/projectplanner">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/planning.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("project_planner", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div> <div class="dropdown-header-description">@CultureHelper.GetTranslation("planning_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+                                            </div>
+
+                                            <div class=" col-sm-4">
+                                                <a type="button" class="btn btn-navbar" href="~/modules/calendar">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/calendar.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("calendar", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div><div class="dropdown-header-description">@CultureHelper.GetTranslation("calendar_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+
+                                                <a type="button" class="btn btn-navbar" href="~/modules/estimates">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/estimates.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("estimates", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>  <div class="dropdown-header-description">@CultureHelper.GetTranslation("estimates_navbar", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+
+                                                <a type="button" class="btn btn-navbar" href="~/modules/ganttchart">
+                                                    <div class="d-flex">
+                                                        <img class="dropdown-icon align-self-end" src="~/Assets/platform/icons/menu/gantt-chart.svg" /><span class="dropdown-header">@CultureHelper.GetTranslation("gantt_chart", Context.Session.GetString("SiteLanguage"))</span>
+                                                    </div>
+                                                    <div class="dropdown-header-description">@CultureHelper.GetTranslation("now_planning_is_easy", Context.Session.GetString("SiteLanguage"))</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 mx-auto mt-5 mb-3 text-center px-1">
+                                            <a type="button" class="mt-3 btn-orange" href="~/modules/index">
+                                                @CultureHelper.GetTranslation("see_all_modules", Context.Session.GetString("SiteLanguage"))
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item"><a href="~/price/index" class="nav-link black p-nav">@CultureHelper.GetTranslation("prices", Context.Session.GetString("SiteLanguage"))</a></li>
+                            <li class="nav-item"><a href="~/home/contacts" class="nav-link black p-nav">@CultureHelper.GetTranslation("contacts", Context.Session.GetString("SiteLanguage"))</a></li>
+                            <li class="nav-item">
+                                <span class="nav-link dropdown-toggle black" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <a class="btn-blue" id="dropdownMenuButton" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@CultureHelper.GetTranslation("lng", Context.Session.GetString("SiteLanguage"))</a>
+                                </span>
+                                <div class="dropdown">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a onclick="ChangeLanguage('en')" class="dropdown-item">English</a>
+                                        <a onclick="ChangeLanguage('ru')" class="dropdown-item">Русский</a>
+                                        <a onclick="ChangeLanguage('pt')" class="dropdown-item">Portuguese</a>
+                                        <a onclick="ChangeLanguage('es')" class="dropdown-item">Espanol</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a type="button" href="/platform/index#/register" class="btn-blue-outline t3">
+                                    <i class="fas fa-user"></i> @CultureHelper.GetTranslation("login", Context.Session.GetString("SiteLanguage")) | @CultureHelper.GetTranslation("sign_up", Context.Session.GetString("SiteLanguage"))
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div>
+        @RenderBody()
+        <a href="#" id="toTopBtn" class="cd-top text-replace js-cd-top cd-top--is-visible cd-top--fade-out" data-abc="true"></a>
+        <a href="#" id="toContactBtn" data-toggle="modal" data-target="#contactUsModal" class="cd-contact text-replace js-cd-top cd-contact--is-visible cd-contact--fade-out" data-abc="true"></a>
+    </div>
+    <footer class="mt-3">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-12 col-md-2">
+                    <img src="~/Assets/platform/logo-footer.png" />
+                </div>
+                <div class="col-12 col-md-2">
+                    <p class="h4">@CultureHelper.GetTranslation("platform", Context.Session.GetString("SiteLanguage"))</p>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="t5">@CultureHelper.GetTranslation("for_customers", Context.Session.GetString("SiteLanguage"))</a></li>
+                        <li><a href="#" class="t5">@CultureHelper.GetTranslation("for_executors", Context.Session.GetString("SiteLanguage"))</a></li>
+                    </ul>
+                    <a href="~/price/index" class="h4">@CultureHelper.GetTranslation("prices", Context.Session.GetString("SiteLanguage"))</a>
+                </div>
+                <div class="col-12 col-md-2">
+                    <p class="h4">@CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</p>
+                    <ul class="list-unstyled">
+                        @foreach (var item in Db.Modules.Where(f => f.Enabled == true).ToList())
+                        {
+                            <li><a href="@item.Url" class="t5">@CultureHelper.GetTranslation(item.BigTitleTextId, Context.Session.GetString("SiteLanguage"))</a></li>
+                        }
+                        <li class="mt-3"><a href="~/modules/index" class="t2">@CultureHelper.GetTranslation("all_modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-3">
+                    <p class="h4"><a href="~/price/index">@CultureHelper.GetTranslation("contacts", Context.Session.GetString("SiteLanguage"))</a></p>
+                    <div class="row mt-3">
+                        <i class="col-2 fas fa-map-marker-alt"></i><span class="col-10 t2">@Html.Raw(CultureHelper.GetTranslation("address", Context.Session.GetString("SiteLanguage")))</span>
+                    </div>
+                    <div class="row mt-5">
+                        <i class="col-2 fas fa-phone-alt"></i><a class="col-10" href="tel:@CultureHelper.GetTranslation("phone_number", Context.Session.GetString("SiteLanguage"))"><span class="fs-18 font-weight-bold orange">@CultureHelper.GetTranslation("phone_number", Context.Session.GetString("SiteLanguage"))</span></a>
+                    </div>
+                    <div class="row mt-2">
+                        <i class="col-2 fas fa-envelope"></i><a class="col-10" href="mailto:geral@diga.pt"><span class="fs-18 font-weight-bold orange">geral@diga.pt</span></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 text-center">
+                    <a type="button" href="/platform/index#/register" class="btn-outline t3">
+                        <i class="fas fa-user align-middle"></i> @CultureHelper.GetTranslation("login", Context.Session.GetString("SiteLanguage")) | @CultureHelper.GetTranslation("sign_up", Context.Session.GetString("SiteLanguage"))
+                    </a>
+                    <div class="row mt-3">
+                        <a class=" col-6" type="button" target="_blank" href="https://www.apple.com/app-store/"><img src="~/Assets/platform/img/apple.png" /></a>
+                        <a class="col-6 ml-auto" type="button" target="_blank" href="https://play.google.com"><img src="~/Assets/platform/img/googleplay.png" /></a>
+                    </div>
+                    <div class="d-flex justify-content-around my-4">
+                        <div><a href="https://www.facebook.com/DIGA.PT" target="_blank"><img src="~/Assets/platform/icons/facebook.svg" /></a></div>
+                        <div><a href="@CultureHelper.GetTranslation("whatsapp_number", Context.Session.GetString("SiteLanguage"))" target="_blank"><img src="~/Assets/platform/icons/whatsapp.svg" /></a></div>
+                        <div><a href="@CultureHelper.GetTranslation("youtube_channel", Context.Session.GetString("SiteLanguage"))" target="_blank"><img src="~/Assets/platform/icons/youtube.svg" /></a></div>
+                        <div><a href="https://www.linkedin.com/company/diga-pt/about/" target="_blank"><img src="~/Assets/platform/icons/linkedin.svg" /></a></div>
+                    </div>
+                    <a type="button" href="#" data-toggle="modal" data-target="#DemoModal" class="btn-orange-footer t3">@CultureHelper.GetTranslation("order_a_demo", Context.Session.GetString("SiteLanguage"))</a>
+                </div>
+                <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="t4 align-self-end">
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> DigaPlatform. @CultureHelper.GetTranslation("all_rights_reserved", Context.Session.GetString("SiteLanguage"))
+                        </div>
+                        <div class=" t4">
+                            <a class="orange" href="~/home/privacy" target="_blank">@CultureHelper.GetTranslation("privacy_policy", Context.Session.GetString("SiteLanguage"))</a>
+                            <a class="orange d-block" href="~/Assets/documents/ЛИЦЕНЗИОННЫЙ ДОГОВОР.pdf">@CultureHelper.GetTranslation("contract_offer", Context.Session.GetString("SiteLanguage"))</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="contactUsForm">
+                <div class="modal-content">
+                    <div class="modal-body p-5 text-center">
+                        <span type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true"><img src="~/Assets/img/close.png" /></span>
+
+                        <p class="h3 blue mb-4">@CultureHelper.GetTranslation("write_to_us", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t2"> @CultureHelper.GetTranslation("write_us_text", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t4 form__success-msg">@CultureHelper.GetTranslation("your_request_was_successfully_sent", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t4 form__error-msg">@CultureHelper.GetTranslation("form_error", Context.Session.GetString("SiteLanguage"))</p>
+                        <div class="form-group">
+                            <input required aria-required="true" data-required data-validator="letters" type="text" class="form-control" id="contact_name" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage")) *">
+                        </div>
+                        <div class="form-group">
+                            <input required aria-required="true"  type="tel" class="form-control" id="contact_phone" placeholder="@CultureHelper.GetTranslation("telephone", Context.Session.GetString("SiteLanguage")) *">
+                        </div>
+                        <div class="form-group">
+                            <input required aria-required="true" data-validator="regexp" data-validator-pattern="/^[a-z0-9._%+-]+@@\[a-z0-9.-]+\.[a-z]{2,4}$/" type="email" class="form-control" id="contact_email" placeholder="Email *">
+                        </div>
+                        <div class="form-group text-left">
+                            <textarea aria-describedby="contact_textarea" type="text" class="form-control" id="contact_message" rows="8" placeholder="@CultureHelper.GetTranslation("your_message", Context.Session.GetString("SiteLanguage"))"></textarea>
+                            <small id="contact_textarea" class="form-text fs-13 text-muted">@CultureHelper.GetTranslation("by_sending_message", Context.Session.GetString("SiteLanguage"))</small>
+                        </div>
+                        <button type="submit" class="mt-4 mx-auto btn-orange fs-18">@CultureHelper.GetTranslation("send", Context.Session.GetString("SiteLanguage"))</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="DemoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="FormDemo">
+                <div class="modal-content">
+                    <div class="modal-body p-5 text-center">
+                        <span type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true"><img src="~/Assets/img/close.png" /></span>
+                        <p class="h3 blue mb-4"> @CultureHelper.GetTranslation("fill_this_form_call", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t4 form__success-msg">@CultureHelper.GetTranslation("your_request_was_successfully_sent", Context.Session.GetString("SiteLanguage"))</p>
+                        <p class="t4 form__error-msg">@CultureHelper.GetTranslation("form_error", Context.Session.GetString("SiteLanguage"))</p>
+                        <div class="form-group">
+                            <input required aria-required="true" data-validator="letters" type="text" class="form-control" id="demo_name" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage")) *">
+                        </div>
+                        <div class="form-group">
+                            <input required aria-required="true"  type="tel" class="form-control" id="demo_phone" placeholder="@CultureHelper.GetTranslation("telephone", Context.Session.GetString("SiteLanguage")) *">
+                        </div>
+                        <button type="submit" id="form_submit_demo" data-sitekey="6Lcyvd8ZAAAAABBwNi_O5GSbzPxnqoDND_yB1ln_" class="btn-orange fs-18 mt-4">@CultureHelper.GetTranslation("order_a_demo", Context.Session.GetString("SiteLanguage"))</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> 
+    <div class="modal fade" id="StartForFreeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="FormTryForFree">
+                <input type="hidden" id="PacketToken" value="6a61c25a-aa9e-4fa2-abd8-63d490fff60f" name="PacketToken" />
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="~/Assets/img/close.png" /></span></button>
+                        <div class="p-2 p-sm-5">
+                            <p class="p-purple-dark fs-24 font-weight-bolder text-center"> @CultureHelper.GetTranslation("trial_version", Context.Session.GetString("SiteLanguage"))</p>
+                            <p class="p-purple-dark fs-13 text-center font-weight-bold mb-4">@CultureHelper.GetTranslation("your_copy_of_erp", Context.Session.GetString("SiteLanguage")) </p>
+                            <div class="m-auto w-88">
+                                <p class="text-center m-0 lh-1-5"><label for="inputName" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text form-name"><img src="~/Assets/img/name1.png" /></span>
+                                    <input type="text" name="name" class="form-control diga-input border-0" id="inputName" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                </div>
+                                <p class="text-center m-0 lh-1-5"><label for="inputEmail" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text border-0"><img src="~/Assets/img/mail1.png" /></span>
+                                    <input type="email" name="email" class="form-control diga-input border-0" id="inputEmail" placeholder="Email" required>
+                                </div>
+                                <p class="text-center m-0 lh-1-5"><label for="inputPassword" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text border-0 form-icon"><i class="fas fa-lock"></i></span>
+                                    <input type="password" name="password" id="inputPassword" class="form-control diga-input border-0" placeholder="A Sua senha" minlength="6" required>
+                                </div>
+                                <p class="text-center m-0 lh-1-5"><label for="inputTelephone" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text border-0"><img src="~/Assets/img/call1.png" /></span>
+                                    <input type="text" name="telephone" id="inputTelephone" class="form-control diga-input border-0" placeholder="Telefone" minlength="16" required>
+                                </div>
+                                <p class="text-center ml-0 lh-1-5"><label for="domainval" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="input-group form-group diga-input-hover ml-0">
+                                    <span class="input-group-text border-0"><img src="~/Assets/img/domen1.png" /></span>
+                                    <input id="domainval" type="text" name="domain" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("domain", Context.Session.GetString("SiteLanguage"))" required maxlength="25">
+                                    <div class="spinner-border" id="domain_spinner" role="status" style="margin-top: 3px; display: none;">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <input type="text" class="col-sm-4 form-control diga-input diga-disabled border-0 pl-0 bg-white font-weight-bold p-valid" value="| .diga.pt" disabled="disabled">
+                                </div>
+                                <p id="domainIsBusy" class="text-center text-red" style="display: none;">@CultureHelper.GetTranslation("domain_is_busy", Context.Session.GetString("SiteLanguage"))</p>
+                                <div class="fs-14 mb-3 ml-2 text-left lh-1-5">* @CultureHelper.GetTranslation("modal_domain_text", Context.Session.GetString("SiteLanguage"))</div>
+                                <div class="form-group my-4">
+                                    <div id="myDropdown" class="m-auto" name="language"></div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button id="form_submit" data-sitekey="6Lcyvd8ZAAAAABBwNi_O5GSbzPxnqoDND_yB1ln_" data-callback='onSubmitTryForFree' data-action='submit' disabled class="btn btn_azul fs-18 width-300 text-center mt-3">@CultureHelper.GetTranslation("send", Context.Session.GetString("SiteLanguage"))</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="ImplementationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="FormImplementation">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="~/Assets/img/close.png" /></span></button>
+                        <div class="p-2 p-sm-5">
+                            <p class="p-purple-dark fs-24 font-weight-bolder text-center mb-5">@CultureHelper.GetTranslation("fill_this_form_call", Context.Session.GetString("SiteLanguage"))</p>
+
+                            <div class="m-auto w-88">
+
+                                <p class="text-center m-0 lh-1-5"><label for="inputNameImplementation" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text form-name"><img src="~/Assets/img/name1.png" /></span>
+                                    <input type="text" name="name" class="form-control diga-input border-0" id="inputNameImplementation" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                </div>
+                                <p class="text-center m-0 lh-1-5"><label for="inputTelephoneImplementation" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text border-0"><img src="~/Assets/img/call1.png" /></span>
+                                    <input type="text" name="telephone" id="inputTelephoneImplementation" class="form-control diga-input border-0" placeholder="Telefone" minlength="16" required>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button id="form_submit_implementation" disabled data-sitekey="6Lcyvd8ZAAAAABBwNi_O5GSbzPxnqoDND_yB1ln_" data-callback='onSubmitFormImplementation' data-action='submit' class="btn btn_azul fs-18 width-300 text-center mt-3">@CultureHelper.GetTranslation("order_the_implementation", Context.Session.GetString("SiteLanguage"))</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="CallModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="FormCall">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="~/Assets/img/close.png" /></span></button>
+                        <div class="p-2 p-sm-5">
+                            <p class="p-purple-dark fs-24 font-weight-bolder text-center mb-5">@CultureHelper.GetTranslation("fill_this_form_call", Context.Session.GetString("SiteLanguage"))</p>
+                            <div class="m-auto w-88">
+                                <p class="text-center m-0 lh-1-5"><label for="inputNameCall" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text form-name"><img src="~/Assets/img/name1.png" /></span>
+                                    <input type="text" name="name" class="form-control diga-input border-0" id="inputNameCall" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                </div>
+                                <p class="text-center m-0 lh-1-5"><label for="inputTelephoneCall" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                <div class="form-group input-group diga-input-hover">
+                                    <span class="input-group-text border-0"><img src="~/Assets/img/call1.png" /></span>
+                                    <input type="text" name="telephone" id="inputTelephoneCall" class="form-control diga-input border-0" placeholder="Telefone" minlength="13" required>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button id="form_submit_call" data-sitekey="6Lcyvd8ZAAAAABBwNi_O5GSbzPxnqoDND_yB1ln_" data-callback='onSubmitFormCall' data-action='submit' disabled class="btn btn_azul fs-18 width-300 text-center mt-3">@CultureHelper.GetTranslation("request_a_call", Context.Session.GetString("SiteLanguage"))</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="AllFreeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body p-0">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="allfree-modal lh-1-5">
+                                    <div>
+                                        <div class="fs-16 text-white font-weight-bold mb-3"> @CultureHelper.GetTranslation("meet_the_criteria", Context.Session.GetString("SiteLanguage"))</div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("startup", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("non_profit_org", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("i_want_to_become_a_partner", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("web_studios", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("financial_auditor", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("accounting_auditor", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("call_center", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("lead_generation_service", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-1 col-2 pr-0"> <img src="~/Assets/images/tick_azul.svg" /> </div>
+                                            <div class="col-md-10 col-10 fs-15 text-white"> @CultureHelper.GetTranslation("read_discount", Context.Session.GetString("SiteLanguage"))</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12 mobile-free-activation">
+                                <div class="mobile-allfree-modal">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="~/Assets/img/close.png" /></span></button>
+                                    <div class="p-2 p-sm-5">
+                                        <p class="p-purple-dark fs-24 font-weight-bold text-center mb-4 mt-2">@CultureHelper.GetTranslation("free_activation", Context.Session.GetString("SiteLanguage"))</p>
+
+                                        <div class="m-auto text-center w-88">
+                                            <form id="FormAllFree">
+                                                <p class="text-center m-0 lh-1-5"><label for="inputNameAllFree" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <span class="input-group-text form-name"><img src="~/Assets/img/name1.png" /></span>
+                                                    <input type="text" name="name" class="form-control diga-input border-0" id="inputNameAllFree" placeholder="@CultureHelper.GetTranslation("name", Context.Session.GetString("SiteLanguage"))" minlength="5" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputTelephoneAllFree" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <span class="input-group-text border-0"><img src="~/Assets/img/call1.png" /></span>
+                                                    <input type="text" name="telephone" id="inputTelephoneAllFree" class="form-control diga-input border-0" placeholder="Telefone" minlength="16" required>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputWebsiteAllFree" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <span class="input-group-text border-0"><img src="~/Assets/img/domen1.png" /></span>
+                                                    <input type="text" name="website" id="inputWebsiteAllFree" class="form-control diga-input border-0" placeholder="Website" minlength="4" required>
+                                                </div>
+                                                <p class="mb-2 fs-14 lh-1-5"> @CultureHelper.GetTranslation("why_reason", Context.Session.GetString("SiteLanguage"))</p>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputReasonAllFree" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <select name="selectReasonAllFree" id="inputReasonAllFree" class="form-control form-control-lg border-0">
+                                                        <option selected> @CultureHelper.GetTranslation("select_from_list", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("startup", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("non_profit_org", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("web_studios", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("financial_auditor", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("accounting_auditor", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("call_center", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("lead_generation_service", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                        <option> @CultureHelper.GetTranslation("read_discount", Context.Session.GetString("SiteLanguage")).Replace(";", "")</option>
+                                                    </select>
+                                                </div>
+                                                <p class="text-center m-0 lh-1-5"><label for="inputMessageAllFree" generated="true" class="error fs-13 text-red" style="display: none"></label></p>
+                                                <div class="form-group input-group diga-input-hover">
+                                                    <span class="input-group-text border-0 bg-white"><img src="~/Assets/images/comment.svg" /></span>
+                                                    <textarea type="text" name="message" id="inputMessageAllFree" class="form-control diga-input border-0" placeholder="@CultureHelper.GetTranslation("write_free", Context.Session.GetString("SiteLanguage"))" minlength="1" required></textarea>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button id="form_submit_allfree" disabled data-sitekey="6Lcyvd8ZAAAAABBwNi_O5GSbzPxnqoDND_yB1ln_" data-callback='onSubmitFormAllFree' data-action='submit' class="btn btn_azul fs-18 width-300 text-center mt-3">@CultureHelper.GetTranslation("send_request", Context.Session.GetString("SiteLanguage"))</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Assets/js/jquery.min.js"></script>
+    <script src="~/Assets/js/popper.min.js"></script>
+    <script src="~/Assets/bootstrap/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@@rc/dist/js.cookie.min.js"></script>
+    <script src="https://use.fontawesome.com/6546e5de92.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="/Assets/js/owl.carousel.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="~/Assets/js/jquery.inputmask.min.js"></script>
+    <script src="~/Assets/js/jquery.ddslick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="~/Assets/js/site.js"></script>
+    <script>$(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 20) {
+                    $('#toTopBtn').fadeIn();
+                } else {
+                    $('#toTopBtn').fadeOut();
+                }
+            });
+
+            $('#toTopBtn').click(function () {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 1000);
+                return false;
+            });
+        });</script>
+
+    <script>function validateForm(data) {
+
+            var form = document.getElementById(data.formId);
+            form.addEventListener('submit', (event) => {
+                validateWholeForm(data);
+                event.preventDefault();
+            });
+
+            form.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    validateWholeForm(data);
+                }
+            });
+
+            var inputs = Array.from(document.querySelectorAll('input'));
+            inputs.forEach(input => {
+                input.addEventListener("focus", (event) => {
+                    input.classList.remove(data.inputErrorClass);
+                    // form.classList.remove(data.formInvalidClass);
+                    // form.classList.remove(data.formValidClass);
+
+                });
+                input.addEventListener("blur", (event) => {
+                    validateOneInput(input, data.inputErrorClass);
+
+                });
+
+            });
+        }
+
+        function validateWholeForm(data) {
+            var isFormValid = true;
+            var form = document.getElementById(data.formId);
+            var inputs = Array.from(document.querySelectorAll('input'));
+            for (let input of inputs) {
+                var isInputValid = validateOneInput(input, data.inputErrorClass);
+                if (isInputValid === false) {
+                    isFormValid = false;
+                    break;
+                }
+            }
+            if (isFormValid === false) {
+                form.classList.remove(data.formValidClass);
+                form.classList.add(data.formInvalidClass);
+            } else {
+                form.classList.remove(data.formInvalidClass);
+                form.classList.add(data.formValidClass);
+            }
+        }
+
+        function validateOneInput(input, inputErrorClass) {
+            var isInputValid = true;
+            var validator = input.dataset.validator;
+            var required = input.dataset.required;
+
+
+            if (input.value !== "") {
+                switch (validator) {
+                    case "letters":
+                        var reg = /^[a-zР°-СЏ]+$/i;
+                        if (input.value === '') {
+                            isInputValid = false;
+                            break;
+                        }
+                        if (input.value.match(reg) === null) {
+                            isInputValid = false;
+                        }
+                        break;
+                    case "regexp":
+                        var reg = input.dataset.validatorPattern;
+                        if (input.value.match(reg) === null) {
+                            isInputValid = false;
+                        }
+                        break;
+
+                }
+            } else {
+                if (required !== undefined) {
+                    isInputValid = false;
+                }
+            }
+
+            if (isInputValid === false) {
+                input.classList.add(inputErrorClass);
+            } else {
+                input.classList.remove(inputErrorClass);
+
+            }
+
+            return isInputValid;
+        }</script>
+
+    @*<script>validateForm({
+            formId: 'contactUsForm',
+            formValidClass: 'form_valid',
+            formInvalidClass: 'form_invalid',
+            inputErrorClass: 'input_error'
+        });
+        </script>
+    <script>validateForm({
+            formId: 'FormDemo',
+            formValidClass: 'form_valid',
+            formInvalidClass: 'form_invalid',
+            inputErrorClass: 'input_error'
+        });</script>
+    <script>$(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 20) {
+                    $('#toContactBtn').fadeIn();
+                } else {
+                    $('#toContactBtn').fadeOut();
+                }
+            });
+        });</script>*@
+    <script>function onSubmitTryForFree(token) {
+            document.getElementById("FormTryForFree").submit();
+        }
+        function onSubmitFormCall(token) {
+            document.getElementById("FormCall").submit();
+        }
+        function onSubmitFormImplementation(token) {
+            document.getElementById("FormImplementation").submit();
+        }
+        //function onSubmitFormDemo(token) {
+        //    document.getElementById("FormDemo").submit();
+        //}
+
+        function onSubmitFormAllFree(token) {
+            document.getElementById("FormAllFree").submit();
+        }
+
+        function onSubmitFormCallMan(token) {
+            document.getElementById("FormCallMan").submit();
+        }</script>
+
+    <script>
+        function ChangeLanguage(language) {
+            localStorage.setItem("language", language);
+            $.post("/api/culture/set/" + language, function (data) {
+                location.reload();
+            });
+        }
+        var language = localStorage.getItem("language");
+        if (language === null) {
+            language = (window.navigator.userLanguage || window.navigator.language).toLowerCase();
+            if (language === 'pt-pt' || language === 'pt-br') {
+                ChangeLanguage('pt');
+            }
+            if (language.includes('ru')) {
+                ChangeLanguage('ru');
+            }
+            if (language.includes('es')) {
+                ChangeLanguage('es');
+            }
+        }
+        $(document).ready(function () {
+
+            $('.toast').on('shown.bs.toast', function () {
+                $("#overlay").show();
+            });
+            $('.toast').on('hidden.bs.toast', function () {
+                $("#overlay").hide();
+            });
+
+
+            $(":input").inputmask();
+
+            $("#inputTelephone").inputmask({ "mask": "+999 999-999-999" });
+            $("#inputTelephoneCall").inputmask({ "mask": "+999 999-999-999" });
+            $("#inputTelephoneDemo").inputmask({ "mask": "+999 999-999-999" });
+            $("#inputTelephoneImplementation").inputmask({ "mask": "+999 999-999-999" });
+            $("#inputTelephoneAllFree").inputmask({ "mask": "+999 999-999-999" });
+            $("#telefoneMan").inputmask({ "mask": "+999 999-999-999" });
+            $("#demo_phone").inputmask({ "mask": "+999 999-999-999" });
+            $("#contact_phone").inputmask({ "mask": "+999 999-999-999" });
+
+
+
+            var ddData = [
+                {
+                    text: "Русский",
+                    value: "ru",
+                    selected: true,
+                    imageSrc: "../../Assets/img/ru.png"
+                },
+                {
+                    text: "English",
+                    value: "en",
+                    selected: false,
+                    imageSrc: "../../Assets/img/eng.png"
+                },
+                {
+                    text: "Português",
+                    value: "pt",
+                    selected: true,
+
+                    imageSrc: "../../Assets/img/por.png"
+                },
+                {
+                    text: "Español",
+                    value: "es",
+                    selected: false,
+                    imageSrc: "../../Assets/img/sp.png"
+                }
+            ];
+            $('#myDropdown').ddslick({
+                data: ddData,
+                width: 176,
+                //height: 45,
+                background: 'white',
+                imagePosition: "left",
+                onSelected: function (selectedData) {
+                    //callback function: do something with selectedData;
+                }
+            });
+
+
+            $('#FormTryForFree').on('blur keyup change', 'input', function (event) {
+                var valid = $('#FormTryForFree').validate().checkForm();
+                if (valid) {
+                    $("#form_submit").prop('disabled', false);
+                } else {
+                    $("#form_submit").prop('disabled', true);
+                }
+            });
+
+            var frm = $('#FormTryForFree');
+            frm.submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    contentType: 'application/json',
+                    type: "POST",
+                    url: "/external_trial",
+                    data: JSON.stringify({
+                        "name": $("#inputName").val(),
+                        "email": $("#inputEmail").val(),
+                        "password": $("#inputPassword").val(),
+                        "telephone": $("#inputTelephone").val(),
+                        "domain": $("#domainval").val(),
+                        "language": $(".dd-selected-value").val()
+                    }),
+                    success: function (data) {
+                        $('#StartForFreeModal').modal('hide');
+                        $('#toaster_section').show();
+                        $('#success_toast').show();
+                        $('#error_toast').hide();
+                        $('.toast').toast('show');
+                    },
+                    error: function (data) {
+                        $('#StartForFreeModal').modal('hide');
+                        $('#toaster_section').show();
+                        $('#success_toast').hide();
+                        $('#error_toast').show();
+                        $('.toast').toast('show');
+                    },
+                });
+            });
+
+            $('#FormTryForFree').validate({
+                highlight: function (element) {
+                    $(element).parent().addClass('diga-input-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).parent().removeClass('diga-input-invalid');
+                    $(element).parent().addClass('diga-input-valid');
+                    $(element).addClass('is-valid');
+                },
+                name: {
+                    required: true,
+                    minlength: 5,
+                },
+                domain: {
+                    required: true,
+                    uniqueDomain: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                },
+                telephone: {
+                    required: true,
+                    minlength: 13,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    regex: '/^\b[A-Z0-9._%+-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i'
+                },
+
+                messages: {
+                    domain: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        uniqueDomain: "@CultureHelper.GetTranslation("domain_is_busy", Context.Session.GetString("SiteLanguage"))",
+                    },
+                    name: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                    },
+                    email: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        email:  "@CultureHelper.GetTranslation("valid_email", Context.Session.GetString("SiteLanguage"))",
+                    },
+                    password: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 6",
+                    },
+                    telephone: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                    },
+                }
+            });
+
+
+            let message = "new client wants to call";
+            $('#crmBonusModule').on('click', function (e) {
+                console.log("i am pressed");
+                message = "Со страницы CRM, хочет бонусный модуль";
+            });
+            $('#companycardGetStarted').on('click', function (e) {
+                console.log("i am pressed");
+                message = "С Карточки Компании/Клиента";
+            });
+            $('#estimatesBonusModule').on('click', function (e) {
+                console.log("i am pressed");
+                message = "Со страницы Сметы, хочет бонусный модуль";
+            });
+            $('#hrBtn').on('click', function (e) {
+                console.log("i am pressed");
+                message = "Со страницы HR";
+            });
+            $('#FormCall').on('blur keyup change', 'input', function (event) {
+                var valid = $('#FormCall').validate().checkForm();
+                if (valid) {
+                    $("#form_submit_call").prop('disabled', false);
+                } else {
+                    $("#form_submit_call").prop('disabled', true);
+                }
+            });
+
+            var frm = $('#FormCall');
+            frm.submit(function (e) {
+                e.preventDefault();
+                $.post('https://clients.diga.pt/api', {
+                    token: '5f896c8ba28e39-70029578',
+                    type: 'new_client',
+                    name: $("#inputNameCall").val(),
+                    phone: $("#inputTelephoneCall").val(),
+                    email: 'no@email.com',
+                    message: message
+                }, function () {
+                });
+                $('#CallModal').modal('hide');
+                $('#toaster_section').show();
+                $('#success_toast').show();
+                $('#error_toast').hide();
+                $('.toast').toast('show');
+            });
+
+            $('#FormCall').validate({
+                highlight: function (element) {
+                    $(element).parent().addClass('diga-input-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).parent().removeClass('diga-input-invalid');
+                    $(element).parent().addClass('diga-input-valid');
+                    $(element).addClass('is-valid');
+                },
+                name: {
+                    required: true,
+                    minlength: 5,
+                },
+                telephone: {
+                    required: true,
+                    minlength: 13,
+                },
+                messages: {
+                    name: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                    },
+                    telephone: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                    },
+                }
+            });
+
+            @*$('#FormDemo').on('blur keyup change', 'input', function (event) {
+                var valid = $('#FormDemo').validate().checkForm();
+                if (valid) {
+                    $("#form_submit_demo").prop('disabled', false);
+                } else {
+                    $("#form_submit_demo").prop('disabled', true);
+                }
+            });
+
+            var frm = $('#FormDemo');
+            frm.submit(function (e) {
+                e.preventDefault();
+                $.post('https://clients.diga.pt/api', {
+                    token: '5f896c8ba28e39-70029578',
+                    type: 'new_client',
+                    name: $("#inputNameDemo").val(),
+                    phone: $("#inputTelephoneDemo").val(),
+                    email: 'no@email.com',
+                    message: 'new client wants demonstration'
+                }, function () {
+                });
+                $('#DemoModal').modal('hide');
+                $('#toaster_section').show();
+                $('#success_toast').show();
+                $('#error_toast').hide();
+                $('.toast').toast('show');
+            });
+
+            $('#FormDemo').validate({
+                highlight: function (element) {
+                    $(element).parent().addClass('diga-input-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).parent().removeClass('diga-input-invalid');
+                    $(element).parent().addClass('diga-input-valid');
+                    $(element).addClass('is-valid');
+                },
+                name: {
+                    required: true,
+                    minlength: 5,
+                },
+                telephone: {
+                    required: true,
+                    minlength: 13,
+                },
+                messages: {
+                    name: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                    },
+                    telephone: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                    },
+                }
+            });*@
+
+             $('#FormImplementation').on('blur keyup change', 'input', function (event) {
+                 var valid = $('#FormImplementation').validate().checkForm();
+                if (valid) {
+                    $("#form_submit_implementation").prop('disabled', false);
+                } else {
+                    $("#form_submit_implementation").prop('disabled', true);
+                }
+            });
+
+            var frm = $('#FormImplementation');
+            frm.submit(function (e) {
+                e.preventDefault();
+                $.post('https://clients.diga.pt/api', {
+                    token: '5f896c8ba28e39-70029578',
+                    type: 'new_client',
+                    name: $("#inputNameImplementation").val(),
+                    phone: $("#inputTelephoneImplementation").val(),
+                    email: 'no@email.com',
+                    message: 'new client wants implementation'
+                }, function () {
+                });
+                $('#ImplementationModal').modal('hide');
+                $('#toaster_section').show();
+                $('#success_toast').show();
+                $('#error_toast').hide();
+                $('.toast').toast('show');
+            });
+
+            $('#FormImplementation').validate({
+                highlight: function (element) {
+                    $(element).parent().addClass('diga-input-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).parent().removeClass('diga-input-invalid');
+                    $(element).parent().addClass('diga-input-valid');
+                    $(element).addClass('is-valid');
+                },
+                name: {
+                    required: true,
+                    minlength: 5,
+                },
+                telephone: {
+                    required: true,
+                    minlength: 13,
+                },
+                messages: {
+                    name: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                    },
+                    telephone: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                    },
+                }
+            });
+
+
+            $('#FormAllFree').on('blur keyup change', 'input', function (event) {
+                var valid = $('#FormAllFree').validate().checkForm();
+                if (valid) {
+                    $("#form_submit_allfree").prop('disabled', false);
+                } else {
+                    $("#form_submit_allfree").prop('disabled', true);
+                }
+            });
+             var frm = $('#FormAllFree');
+            frm.submit(function (e) {
+                e.preventDefault();
+                $.post('https://clients.diga.pt/api', {
+                    token: '5f896c8ba28e39-70029578',
+                    type: 'new_client',
+                    name: $("#inputNameAllFree").val(),
+                    phone: $("#inputTelephoneAllFree").val(),
+                    email: 'no@email.com',
+                    message: $("#inputWebsiteAllFree").val() + "; " + $("#inputReasonAllFree").val() + "; " + $("#inputMessageAllFree").val(),
+                }, function () {
+                });
+                $('#AllFreeModal').modal('hide');
+                $('#toaster_section').show();
+                $('#success_toast').show();
+                $('#error_toast').hide();
+                $('.toast').toast('show');
+            });
+
+            $('#FormAllFree').validate({
+                highlight: function (element) {
+                    $(element).parent().addClass('diga-input-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).parent().removeClass('diga-input-invalid');
+                    $(element).parent().addClass('diga-input-valid');
+                    $(element).addClass('is-valid');
+                },
+                name: {
+                    required: true,
+                    minlength: 5,
+                },
+                telephone: {
+                    required: true,
+                    minlength: 13,
+                },
+                website: {
+                    required: true,
+                    minlength: 4,
+                },
+                message: {
+                    required: true,
+                    minlength: 1,
+                },
+                selectReasonAllFree: {
+                    required: true,
+                },
+                messages: {
+                    name: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                    },
+                    telephone: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                    },
+                    website: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 4",
+                    },
+                    message: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 1",
+                    },
+                    selectReasonAllFree: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                    },
+                }
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">$(document).ready(function () {
+
+            $("#domainval").on("change paste keyup", function () {
+                $("#domain_spinner").show();
+                $("#domainIsBusy").hide();
+                $("#form_submit").prop('disabled', true);
+                $.get("/request/CheckDomain?domain=" + $(this).val(), function (data, status) {
+                    if (data === false) {
+                        $("#domain_spinner").hide();
+                        $("#domainIsBusy").show();
+                        $("#domainval").parent().removeClass('diga-input-valid');
+                        $("#domainval").parent().addClass('diga-input-invalid');
+                        $("#domainval").removeClass('is-valid');
+                    }
+                    else {
+                        $("#domain_spinner").hide();
+                        $("#domainIsBusy").hide();
+                        $("#domainval").parent().addClass('diga-input-valid');
+                        $("#domainval").parent().removeClass('diga-input-invalid');
+                        $("#domainval").addClass('is-valid');
+                    }
+                    $("#form_submit").prop('disabled', false);
+                });
+
+            });
+
+
+            $("#owl-demo").owlCarousel({
+
+                navigation: true, // Show next and prev buttons
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true,
+
+                // "singleItem:true" is a shortcut for:
+                items: 1,
+                itemsDesktop: false,
+                itemsDesktopSmall: false,
+                itemsTablet: false,
+                itemsMobile: false
+
+            });
+
+            $("#owl-demo-review").owlCarousel({
+
+                navigation: true, // Show next and prev buttons
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true,
+
+                // "singleItem:true" is a shortcut for:
+                items: 1,
+                itemsDesktop: false,
+                itemsDesktopSmall: false,
+                itemsTablet: false,
+                itemsMobile: false
+
+            });
+
+
+        });</script>
+
+    <script>
+    $(document).ready(function () {
+
+        $('#FormCallMan').on('blur keyup change', 'input', function (event) {
+            var valid = $('#FormCallMan').validate().checkForm();
+                if (valid) {
+                    $("#form_submit_man").prop('disabled', false);
+                } else {
+                    $("#form_submit_man").prop('disabled', true);
+                }
+            });
+
+        var frm = $('#FormCallMan');
+            frm.submit(function (e) {
+                e.preventDefault();
+                $.post('https://clients.diga.pt/api', {
+                    token: '5f896c8ba28e39-70029578',
+                    type: 'new_client',
+                    name: $("#nameMan").val(),
+                    phone: $("#telefoneMan").val(),
+                    email: $("#emailMan").val(),
+                    message: 'Client wants a call (Connect DigaCRM with Man)'
+                }, function () {
+                });
+                $('#toaster_section').show();
+                $('#success_toast').show();
+                $('#error_toast').hide();
+                $('.toast').toast('show');
+            });
+
+        $('#FormCallMan').validate({
+                highlight: function (element) {
+                    $(element).addClass('diga-input-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('diga-input-invalid');
+                    $(element).addClass('diga-input-valid');
+                    $(element).addClass('is-valid');
+                },
+                name: {
+                    required: true,
+                    minlength: 5,
+                },
+                telephone: {
+                    required: true,
+                    minlength: 13,
+            },
+            email: {
+                required: true,
+                email: true,
+                regex: '/^\b[A-Z0-9._%+-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i'
+            },
+
+                messages: {
+                    name: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength:  "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 5",
+                    },
+                    telephone: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        minlength: "@CultureHelper.GetTranslation("min_number_of_symbols", Context.Session.GetString("SiteLanguage"))" + " 13",
+                    },
+                     email: {
+                        required: "@CultureHelper.GetTranslation("required", Context.Session.GetString("SiteLanguage"))",
+                        email:  "@CultureHelper.GetTranslation("valid_email", Context.Session.GetString("SiteLanguage"))",
+                    },
+                }
+            });
+    });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿@using diga.bl.Models; using diga.dal;
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Html Texts</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Create</h6>
+</div>
+<div class="card-body">
+    <form asp-action="Post" asp-controller="Text" asp-anti-forgery="true" >
+        <input type="hidden" name="IsHtml" value="true" />
+      <div class="form-group">
+        <label>TextId</label>
+        <input type="text" class="form-control" placeholder="Enter textId" name="TextId">
+      </div>
+      <div class="form-group">
+        <label>En</label>
+        <textarea id="froala-editor-en" name="En">
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label>Ru</label>
+        <textarea id="froala-editor-ru" name="Ru">
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label>Pt</label>
+        <textarea id="froala-editor-pt" name="Pt">
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label>Es</label>
+        <textarea id="froala-editor-es" name="Es">
+        </textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+</div>
+</div>
+
+@section Scripts{
+    <script>
+        new FroalaEditor('textarea#froala-editor-en', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+        });
+        new FroalaEditor('textarea#froala-editor-ru', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+        });
+        new FroalaEditor('textarea#froala-editor-pt', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+        });
+        new FroalaEditor('textarea#froala-editor-es', {
+            pastePlain: true,
+            imageUploadURL: '/api/uploads',
+        });
+    </script>
+}

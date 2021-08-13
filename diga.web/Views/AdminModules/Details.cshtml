@@ -1,0 +1,61 @@
+@model diga.bl.Models.Modules
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Modules</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PictureUrl)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PictureUrl)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Enabled)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Enabled)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BigTitleText)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BigTitleText.TextId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LongText)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LongText.TextId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SmallTitleText)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SmallTitleText.TextId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

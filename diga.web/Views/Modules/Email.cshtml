@@ -1,0 +1,87 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("diga_email", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="mobile-margin-banner banner">
+    <div class="container-fluid">
+        <div class="container pb-2 pb-sm-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/index"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("diga_email", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <h1 class="h1-title">
+                @CultureHelper.GetTranslation("diga_email", Context.Session.GetString("SiteLanguage"))
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Raw(CultureHelper.GetTranslation("diga_email_html", Context.Session.GetString("SiteLanguage")))
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="@CultureHelper.GetTranslation("diga_email.PNG", Context.Session.GetString("SiteLanguage"))" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="azul-textblock py-5">
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="div-title"> @CultureHelper.GetTranslation("functions", Context.Session.GetString("SiteLanguage")):</div>
+            <div class="vl">
+                <div class="vl-mobile-items w-88 fs-24 lh-1-5 ml-5">
+                    <div>@CultureHelper.GetTranslation("message_exchange", Context.Session.GetString("SiteLanguage"))</div>
+                    <div>@CultureHelper.GetTranslation("automatic_client_notification", Context.Session.GetString("SiteLanguage"))</div>
+                    <div>@CultureHelper.GetTranslation("ability_to_open_in_full_screen_mode", Context.Session.GetString("SiteLanguage"))</div>
+                    <div>@CultureHelper.GetTranslation("saving_contacts", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class="mb-0">@CultureHelper.GetTranslation("connection_of_personal_and_corporate_mailboxes", Context.Session.GetString("SiteLanguage"))</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-grey py-5 mt-5">
+    <div class="container my-5">
+        <div class="div-title">@CultureHelper.GetTranslation("flexible_settings", Context.Session.GetString("SiteLanguage")):</div>
+        <div class="vl">
+            <div class="vl-mobile-items w-88 font-weight-normal ml-4">
+                <ul>
+                    <li>@CultureHelper.GetTranslation("skin_appearance_of_the_mailbox", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("interface_language", Context.Session.GetString("SiteLanguage"));</li>
+                    <li>@CultureHelper.GetTranslation("number_of_messages_on_the_page_visible", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("number_of_contacts_on_the_page_visible", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("updating_the_message", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("customizable_time_format", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("combine_messages_into_chains", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("save_replies_to_messages_in_the_current_folder", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("enable_desktop_notifications", Context.Session.GetString("SiteLanguage"))</li>
+                    <li>@CultureHelper.GetTranslation("editing_templates_for_auto_notifications", Context.Session.GetString("SiteLanguage"))</li>
+                </ul>
+            </div>
+        </div>
+        <div class="p-dodgerblue font-weight-bold my-5">@CultureHelper.GetTranslation("if_necessary_you_can_connect_third_party_mailing", Context.Session.GetString("SiteLanguage"))</div>
+        <img class="text-center" src="~/Assets/images/mail_screen.png" />
+    </div>
+</section>
+<section class="py-5 banner-min mb-5">
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-md-6 text-center m-auto">
+                <img src="~/Assets/images/mail_mail.svg" />
+                <div class="div-title text-white my-4">@CultureHelper.GetTranslation("write_to_us", Context.Session.GetString("SiteLanguage"))</div>
+                <p class="text-white font-weight-bold fs-23 mb-5">@CultureHelper.GetTranslation("if_you_have_any_questions", Context.Session.GetString("SiteLanguage"))</p>
+                <a id="emailBtn" href="mailto:geral@diga.pt?subject=Email%20to%20Diga" class="btn_rosa py-3 text-decoration-none">@CultureHelper.GetTranslation("write", Context.Session.GetString("SiteLanguage"))</a>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

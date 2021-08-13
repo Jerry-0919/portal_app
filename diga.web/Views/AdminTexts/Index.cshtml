@@ -1,0 +1,93 @@
+﻿@using System.Text.RegularExpressions
+@model IEnumerable<diga.bl.Models.Texts>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1 class="h3 mb-2 text-gray-800">Texts</h1>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">All</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TextId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.En)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ru)
+                        </th>
+                        @*
+                        <th>
+                            @Html.DisplayNameFor(model => model.Pt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Es)
+                        </th> *@
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsHtml)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TextId)
+                        </td>
+                        <td>
+                            @Regex.Replace(item.En, "<.*?>", String.Empty).Replace("&nbsp;",string.Empty)
+                        </td>
+                        <td>
+                            @Regex.Replace(item.Ru, "<.*?>", String.Empty).Replace("&nbsp;",string.Empty)
+                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Pt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Es)
+                        </td> *@
+                        <td>
+                            @item.IsHtml
+                        </td>
+                        <td>
+                            @if (item.IsHtml == true)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.TextId">Edit</a>
+                            }
+                            else
+                            {
+                                <a asp-action="EditNonHtml" asp-route-id="@item.TextId">Edit</a>
+                            }
+                            |
+                            <a asp-action="Details" asp-route-id="@item.TextId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.TextId">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+
+    </script>
+}

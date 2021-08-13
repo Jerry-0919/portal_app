@@ -1,0 +1,84 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("history", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="banner mobile-margin-banner">
+    <div class="container-fluid">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/index"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/crm"> @CultureHelper.GetTranslation("crm", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("history", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <div class="row align-items-center py-5">
+                <div class="col-md-6 col-sm-12">
+                    <h1 class="h1-diga mb-5">
+                        @CultureHelper.GetTranslation("history", Context.Session.GetString("SiteLanguage"))
+                    </h1>
+                    <div class="w-88">
+                        <p class="text-white font-weight-bold lh-1-5-mobile mb-5">@CultureHelper.GetTranslation("history_description_1", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 text-center m-auto">
+                    <img src="~/Assets/modules/history_diga.png" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="w-88">@Html.Raw(CultureHelper.GetTranslation("history_p1", Context.Session.GetString("SiteLanguage")))</div>
+            </div>
+            <div class="col-md-4"> <img src="@CultureHelper.GetTranslation("4_history_rus.jpg", Context.Session.GetString("SiteLanguage"))" /></div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="bg-light-blue px-5 py-4 py-lg-5 px-lg-5">
+            <div class="w-88 font-weight-bold fs-24"> @CultureHelper.GetTranslation("save_important_info_about_customers", Context.Session.GetString("SiteLanguage"))</div>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5">
+    <div class="container">
+        <div class="div-title">@CultureHelper.GetTranslation("q_and_a", Context.Session.GetString("SiteLanguage"))</div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <h4 class="p-cyan mb-5 font-weight-bold w-88">@CultureHelper.GetTranslation("q_5_form_apps", Context.Session.GetString("SiteLanguage"))</h4>
+                    <p class="w-88">@CultureHelper.GetTranslation("a_5_form_apps", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <h4 class="p-cyan mb-5 font-weight-bold w-88">@CultureHelper.GetTranslation("q_6_safety_reasons", Context.Session.GetString("SiteLanguage"))</h4>
+                    <p class="w-88">@CultureHelper.GetTranslation("a_6_safety_reasons", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <h4 class="p-cyan mb-5 font-weight-bold w-88">@CultureHelper.GetTranslation("q_3_will_i_be_able_to_work_outside", Context.Session.GetString("SiteLanguage"))</h4>
+                    <p class="w-88">@CultureHelper.GetTranslation("a_3_you_can_manage", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-5">
+                    <h4 class="p-cyan mb-5 font-weight-bold w-88">@CultureHelper.GetTranslation("q_7_old_base", Context.Session.GetString("SiteLanguage"))</h4>
+                    <p class="w-88">@CultureHelper.GetTranslation("a_7_old_base", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />

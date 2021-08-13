@@ -1,0 +1,123 @@
+﻿@using diga.web.Helpers;
+@inject diga.dal.Services.ICultureService CultureHelper
+@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = CultureHelper.GetTranslation("gantt_chart", Context.Session.GetString("SiteLanguage"));
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="banner mobile-margin-banner">
+    <div class="container-fluid">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../home/index"> @CultureHelper.GetTranslation("homepage", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item"><a href="../modules/index"> @CultureHelper.GetTranslation("modules", Context.Session.GetString("SiteLanguage"))</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@CultureHelper.GetTranslation("gantt_chart", Context.Session.GetString("SiteLanguage"))</li>
+                </ol>
+            </nav>
+            <div class="row py-5 align-items-center">
+                <div class="col-md-6 col-sm-12">
+                    <h1 class="h1-diga mb-5">@CultureHelper.GetTranslation("gantt_chart", Context.Session.GetString("SiteLanguage"))</h1>
+                    <div class="w-88">
+                        <p class="text-white font-weight-bold lh-1-5-mobile mb-5">@CultureHelper.GetTranslation("gantt_banner", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 m-auto text-center">
+                    <img src="~/Assets/modules/hr_diga.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="vl">
+                <div class="vl-mobile-items ml-5 w-88 font-weight-normal">
+                    @Html.Raw(CultureHelper.GetTranslation("gantt_is_a_way_of_displaying_html", Context.Session.GetString("SiteLanguage")))
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mb-4">
+    <div class="container-fluid bg-grey py-5">
+        <div class="container">
+            <div class="text-center">
+                <img class="w-100" src=" @CultureHelper.GetTranslation("ganttchart.png", Context.Session.GetString("SiteLanguage")) " />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white my-5">
+    <div class="container">
+        <div class="w-88">
+            @Html.Raw(CultureHelper.GetTranslation("gantt_for_presentation_html", Context.Session.GetString("SiteLanguage")))
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="bg-blue px-5 py-4 p-lg-5">
+            @Html.Raw(CultureHelper.GetTranslation("gantt_combine_processes_html", Context.Session.GetString("SiteLanguage")))
+        </div>
+    </div>
+</section>
+<section class="my-5 py-4">
+    <div class="container-fluid bg-grey py-5">
+        <div class="container">
+            <div class="row py-4">
+                <div class="col-md-6 col-12 my-auto">
+                    <div class="fs-24 font-weight-bold">@CultureHelper.GetTranslation("when_creating_a_gantt", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class="vl my-5 ml-0">
+                        <div class="vl-mobile-items ml-4 font-weight-normal">
+                            @Html.Raw(CultureHelper.GetTranslation("gantt_types_html", Context.Session.GetString("SiteLanguage")))
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 my-auto">
+                    <img class="w-100" src="/Assets/images/gant_screen2.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-white my-5">
+    <div class="container">
+        <div class="w-88">
+            @Html.Raw(CultureHelper.GetTranslation("you_can_create_gantt_html", Context.Session.GetString("SiteLanguage")))
+        </div>
+    </div>
+</section>
+<section class="my-5 py-4">
+    <div class="container-fluid bg-grey">
+        <div class="container">
+            <div class="row py-5">
+                <div class="col-md-6 col-12 my-4">
+                    <div class="div-title">@CultureHelper.GetTranslation("detail_your_workload", Context.Session.GetString("SiteLanguage"))</div>
+                    <div class=" w-88">
+                        <p class="mb-4">@CultureHelper.GetTranslation("its_necessary_to_calculate_gantt", Context.Session.GetString("SiteLanguage")) </p>
+                        <p>@CultureHelper.GetTranslation("consider_the_factors_gantt", Context.Session.GetString("SiteLanguage"))</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 text-center my-4 my-md-auto">
+                    <img class="" src="/Assets/images/gantt_greybg.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="my-5">
+    <div class="container">
+        <div class="bg-light-blue font-weight-bold p-5 p-lg-5">
+            <div class="m-md-5">
+                <div class="div-title">@CultureHelper.GetTranslation("monitor_effectively", Context.Session.GetString("SiteLanguage"))</div>
+                <div class="fs-24">
+                    @CultureHelper.GetTranslation("no_matter_how_gantt", Context.Session.GetString("SiteLanguage"))
+                    <p class="mt-4">@CultureHelper.GetTranslation("find_a_tool_gantt", Context.Session.GetString("SiteLanguage"))</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<partial name="~/Views/Shared/ConnectDigaCRM.cshtml" />
